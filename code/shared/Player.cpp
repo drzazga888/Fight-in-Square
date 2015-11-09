@@ -1,7 +1,7 @@
 #include "Player.h"
 #include <string.h>
 
-Player::Player(char i, const char* n)
+Player::Player(char i, char* n)
 {
 	id = i;
 	strcpy(name, n);

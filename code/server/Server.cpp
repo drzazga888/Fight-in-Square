@@ -10,6 +10,7 @@ Server::Server()
 	port = new QLineEdit(this);
 	logs = new QTextEdit(this);
 	logs->setReadOnly(true);
+	game->setLogOutput(logs);
 	startButton = new QPushButton("Uruchom",this);
 	stopButton = new QPushButton("Zatrzymaj",this);
 	stopButton->hide();
@@ -62,11 +63,21 @@ void Server::startServer()
 		errorDialog->show();
 		return;
 	}
-	game->getServer()->start(port->text().toInt());
-	startButton->hide();
-	stopButton->show();
-	port->setDisabled(true);
-	status->setText("Uruchomiony");
+	if(game->getServer()->start(port->text().toInt()))
+	{
+		startButton->hide();
+		stopButton->show();
+		port->setDisabled(true);
+		status->setText("Uruchomiony");
+	}
+	else
+	{
+		if(errorDialog!=NULL)
+			delete errorDialog;
+		errorDialog = new ErrorDialog("Nie udało się uruchomić serwera na podanym porcie", "Błąd startu");
+		errorDialog->show();
+		return;
+	}
 }
 
 void Server::stopServer()

@@ -2,14 +2,38 @@
 #define FRAME_H
 
 #include <QObject>
+#include <QVector>
+#include "shared/Player.h"
+#include "shared/Shot.h"
+#include "shared/GameElements/BoardElement.h"
 
 class Frame : public QObject
 {
 	Q_OBJECT
 public:
-	enum Type {Action, Board};
+	class FrameType
+	{
+	public:
+		enum Type {Action, Board, Other};
+	};
+	class ActionType
+	{
+	public:
+		enum Type {Undefined, Connect, Disconnect, Action};
+	};
+	virtual Frame::FrameType::Type getType(){ return type; }
+	/* metody wirtualne dla ramki akcji */
+	virtual Frame::ActionType::Type getActionType() = 0;
+	virtual Shot::Direction::DirectionType getDir() = 0;
+	virtual bool getShot() = 0;
+	virtual char getPlayerId() = 0;
+	virtual char* getPlayerName() = 0;
+	/* metody wirtualne dla ramki planszy */ 
+	virtual QVector<Player*> getPlayers() = 0;
+	virtual QVector<Shot*> getShots() = 0;
+	virtual QVector< QVector< BoardElement* > > getElements() = 0;
 protected:
-	Type type;
+	Frame::FrameType::Type type;
 };
 
 #endif

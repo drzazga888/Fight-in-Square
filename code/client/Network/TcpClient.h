@@ -13,16 +13,18 @@ class TcpClient : public QWidget
 public:
 	TcpClient();
 	~TcpClient();
-	bool connectToHost(QHostAddress address, int port);
-	bool disconnectFromHost();
+	void connectToHost(QHostAddress address, int port);
+	void disconnectFromHost();
 public slots:
 	void read();
 	void write(QByteArray message);
+	void onConnected();
+	void onDisconnected();
 signals:
 	void connecting();
 	void disconnecting();
 	void reading(QByteArray);
-	void writing(QString);
+	void writing(QByteArray);
 private:
 	QTcpSocket* socket;
 	bool connected;

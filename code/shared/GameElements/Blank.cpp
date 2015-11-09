@@ -1,9 +1,9 @@
 #include "Blank.h"
 
 Blank::Blank(int i)
+: BoardElement(i)
 {
-	id = i;
-	type = BoardElement::Type::Blank;
+	type = BoardElement::BoardType::Blank;
 }
 
 void Blank::draw(char x, char y)

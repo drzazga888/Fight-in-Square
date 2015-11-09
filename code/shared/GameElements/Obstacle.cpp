@@ -1,11 +1,11 @@
 #include "Obstacle.h"
 
-Obstacle::Obstacle(i, h, ind)
+Obstacle::Obstacle(char i, char h, bool ind)
+: BoardElement(i)
 {
-	id = i;
 	health = h;
 	indestructible = ind;
-	type = BoardElement::Type::Obstacle;
+	type = BoardElement::BoardType::Obstacle;
 }
 
 void Obstacle::draw(char x, char y)

@@ -39,3 +39,15 @@ void Board::pusteTlo(QPaintEvent* pe)
     board->fillRect(pe->rect(), Qt::red);
     board->setCompositionMode (QPainter::CompositionMode_SourceOver);
 }
+
+void Board::addPlayer(int id, Player* p)
+{
+	players.insert(id-1, p);
+}
+
+Player* Board::removePlayer(int id)
+{
+	Player *p = players[id-1];
+	players.remove(id);
+	return p;
+}

@@ -1,4 +1,5 @@
 #include "TcpServer.h"
+#include "iostream"
 
 TcpServer::TcpServer()
 {
@@ -15,7 +16,7 @@ TcpServer::~TcpServer()
 
 bool TcpServer::start(int port)
 {
-	if (tcpServer->listen(QHostAddress::Any, port))
+	if (tcpServer->listen(QHostAddress::LocalHost, port))
 		return true;
 	else
 		return false;
@@ -53,16 +54,16 @@ bool TcpServer::disconnectAll()
 
 void TcpServer::write(int id, QByteArray message)
 {
-	if(connections[id]!=NULL)
+	if(connections[id-1]!=NULL)
 	{
-		connections[id]->write(message);
-		emit writing(message);
+		connections[id-1]->write(message);
+		emit writing(id,message);
 	}
 }
 
 void TcpServer::writeBroadcast(QByteArray message)
 {
-	for(int i=1;i<connections.size();++i)
+	for(int i=0;i<connections.size();++i)
 	{
 		if(connections[i]!=NULL)
 		{

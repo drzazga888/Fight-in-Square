@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = client1.0.0
-DISTDIR = /home/tomek/Pulpit/FightInSquare/client/.tmp/client1.0.0
+DISTDIR = /home/tomek/Pulpit/FiS-game/code/client/.tmp/client1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1 -Wl,-rpath,/opt/Qt/5.5/gcc_64 -Wl,-rpath,/opt/Qt/5.5/gcc_64/lib
 LIBS          = $(SUBLIBS) -L/opt/Qt/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Network -lQt5Core -lGL -lpthread 
@@ -51,26 +51,68 @@ OBJECTS_DIR   = ./
 SOURCES       = Client.cpp \
 		Game.cpp \
 		main.cpp \
+		Network/ClientFrameCoder.cpp \
 		Network/TcpClient.cpp \
 		shared/Board.cpp \
+		shared/lookQBA.cpp \
+		shared/Player.cpp \
+		shared/Shot.cpp \
 		shared/sleep.cpp \
-		shared/dialogs/ErrorDialog.cpp moc_Client.cpp \
+		shared/dialogs/ErrorDialog.cpp \
+		shared/Frames/ActionFrame.cpp \
+		shared/Frames/BoardFrame.cpp \
+		shared/GameElements/Blank.cpp \
+		shared/GameElements/BoardElement.cpp \
+		shared/GameElements/Obstacle.cpp \
+		shared/GameElements/Tank.cpp moc_Client.cpp \
 		moc_Game.cpp \
+		moc_ClientFrameCoder.cpp \
 		moc_TcpClient.cpp \
 		moc_Board.cpp \
-		moc_ErrorDialog.cpp
+		moc_Player.cpp \
+		moc_Shot.cpp \
+		moc_ErrorDialog.cpp \
+		moc_ActionFrame.cpp \
+		moc_BoardFrame.cpp \
+		moc_Frame.cpp \
+		moc_OtherFrame.cpp \
+		moc_Blank.cpp \
+		moc_BoardElement.cpp \
+		moc_Obstacle.cpp \
+		moc_Tank.cpp
 OBJECTS       = Client.o \
 		Game.o \
 		main.o \
+		ClientFrameCoder.o \
 		TcpClient.o \
 		Board.o \
+		lookQBA.o \
+		Player.o \
+		Shot.o \
 		sleep.o \
 		ErrorDialog.o \
+		ActionFrame.o \
+		BoardFrame.o \
+		Blank.o \
+		BoardElement.o \
+		Obstacle.o \
+		Tank.o \
 		moc_Client.o \
 		moc_Game.o \
+		moc_ClientFrameCoder.o \
 		moc_TcpClient.o \
 		moc_Board.o \
-		moc_ErrorDialog.o
+		moc_Player.o \
+		moc_Shot.o \
+		moc_ErrorDialog.o \
+		moc_ActionFrame.o \
+		moc_BoardFrame.o \
+		moc_Frame.o \
+		moc_OtherFrame.o \
+		moc_Blank.o \
+		moc_BoardElement.o \
+		moc_Obstacle.o \
+		moc_Tank.o
 DIST          = /opt/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.5/gcc_64/mkspecs/common/unix.conf \
 		/opt/Qt/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -203,16 +245,38 @@ DIST          = /opt/Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		/opt/Qt/5.5/gcc_64/mkspecs/features/lex.prf \
 		client.pro Client.h \
 		Game.h \
+		Network/ClientFrameCoder.h \
 		Network/TcpClient.h \
 		shared/Board.h \
+		shared/lookQBA.h \
+		shared/Player.h \
+		shared/Shot.h \
 		shared/sleep.h \
-		shared/dialogs/ErrorDialog.h Client.cpp \
+		shared/dialogs/ErrorDialog.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/BoardFrame.h \
+		shared/Frames/Frame.h \
+		shared/Frames/OtherFrame.h \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/GameElements/Obstacle.h \
+		shared/GameElements/Tank.h Client.cpp \
 		Game.cpp \
 		main.cpp \
+		Network/ClientFrameCoder.cpp \
 		Network/TcpClient.cpp \
 		shared/Board.cpp \
+		shared/lookQBA.cpp \
+		shared/Player.cpp \
+		shared/Shot.cpp \
 		shared/sleep.cpp \
-		shared/dialogs/ErrorDialog.cpp
+		shared/dialogs/ErrorDialog.cpp \
+		shared/Frames/ActionFrame.cpp \
+		shared/Frames/BoardFrame.cpp \
+		shared/GameElements/Blank.cpp \
+		shared/GameElements/BoardElement.cpp \
+		shared/GameElements/Obstacle.cpp \
+		shared/GameElements/Tank.cpp
 QMAKE_TARGET  = client
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = client
@@ -528,8 +592,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents Client.h Game.h Network/TcpClient.h shared/Board.h shared/sleep.h shared/dialogs/ErrorDialog.h $(DISTDIR)/
-	$(COPY_FILE) --parents Client.cpp Game.cpp main.cpp Network/TcpClient.cpp shared/Board.cpp shared/sleep.cpp shared/dialogs/ErrorDialog.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Client.h Game.h Network/ClientFrameCoder.h Network/TcpClient.h shared/Board.h shared/lookQBA.h shared/Player.h shared/Shot.h shared/sleep.h shared/dialogs/ErrorDialog.h shared/Frames/ActionFrame.h shared/Frames/BoardFrame.h shared/Frames/Frame.h shared/Frames/OtherFrame.h shared/GameElements/Blank.h shared/GameElements/BoardElement.h shared/GameElements/Obstacle.h shared/GameElements/Tank.h $(DISTDIR)/
+	$(COPY_FILE) --parents Client.cpp Game.cpp main.cpp Network/ClientFrameCoder.cpp Network/TcpClient.cpp shared/Board.cpp shared/lookQBA.cpp shared/Player.cpp shared/Shot.cpp shared/sleep.cpp shared/dialogs/ErrorDialog.cpp shared/Frames/ActionFrame.cpp shared/Frames/BoardFrame.cpp shared/GameElements/Blank.cpp shared/GameElements/BoardElement.cpp shared/GameElements/Obstacle.cpp shared/GameElements/Tank.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -552,9 +616,9 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_Client.cpp moc_Game.cpp moc_TcpClient.cpp moc_Board.cpp moc_ErrorDialog.cpp
+compiler_moc_header_make_all: moc_Client.cpp moc_Game.cpp moc_ClientFrameCoder.cpp moc_TcpClient.cpp moc_Board.cpp moc_Player.cpp moc_Shot.cpp moc_ErrorDialog.cpp moc_ActionFrame.cpp moc_BoardFrame.cpp moc_Frame.cpp moc_OtherFrame.cpp moc_Blank.cpp moc_BoardElement.cpp moc_Obstacle.cpp moc_Tank.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_Client.cpp moc_Game.cpp moc_TcpClient.cpp moc_Board.cpp moc_ErrorDialog.cpp
+	-$(DEL_FILE) moc_Client.cpp moc_Game.cpp moc_ClientFrameCoder.cpp moc_TcpClient.cpp moc_Board.cpp moc_Player.cpp moc_Shot.cpp moc_ErrorDialog.cpp moc_ActionFrame.cpp moc_BoardFrame.cpp moc_Frame.cpp moc_OtherFrame.cpp moc_Blank.cpp moc_BoardElement.cpp moc_Obstacle.cpp moc_Tank.cpp
 moc_Client.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qmainwindow.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -698,16 +762,29 @@ moc_Client.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/QTcpSocket \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qtcpsocket.h \
 		shared/sleep.h \
+		Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
 		shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
 		shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		shared/lookQBA.h \
 		Client.h
-	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FightInSquare/client -I/home/tomek/Pulpit/FightInSquare/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Client.h -o moc_Client.cpp
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Client.h -o moc_Client.cpp
 
 moc_Game.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QThread \
 		/opt/Qt/5.5/gcc_64/include/QtCore/qthread.h \
@@ -820,13 +897,25 @@ moc_Game.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QThread \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/QHostAddress \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qhostaddress.h \
 		shared/sleep.h \
+		Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
 		shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpen.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
 		shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -842,8 +931,78 @@ moc_Game.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QThread \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		shared/lookQBA.h \
 		Game.h
-	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FightInSquare/client -I/home/tomek/Pulpit/FightInSquare/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Game.h -o moc_Game.cpp
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Game.h -o moc_Game.cpp
+
+moc_ClientFrameCoder.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
+		Network/ClientFrameCoder.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Network/ClientFrameCoder.h -o moc_ClientFrameCoder.cpp
 
 moc_TcpClient.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -954,7 +1113,7 @@ moc_TcpClient.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qhostaddress.h \
 		shared/sleep.h \
 		Network/TcpClient.h
-	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FightInSquare/client -I/home/tomek/Pulpit/FightInSquare/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Network/TcpClient.h -o moc_TcpClient.cpp
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore Network/TcpClient.h -o moc_TcpClient.cpp
 
 moc_Board.cpp: /opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
@@ -1063,9 +1222,128 @@ moc_Board.cpp: /opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Shot.h \
 		shared/Board.h
-	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FightInSquare/client -I/home/tomek/Pulpit/FightInSquare/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Board.h -o moc_Board.cpp
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Board.h -o moc_Board.cpp
+
+moc_Player.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Player.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Player.h -o moc_Player.cpp
+
+moc_Shot.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Shot.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Shot.h -o moc_Shot.cpp
 
 moc_ErrorDialog.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1183,7 +1461,492 @@ moc_ErrorDialog.cpp: /opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
 		shared/dialogs/ErrorDialog.h
-	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FightInSquare/client -I/home/tomek/Pulpit/FightInSquare/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/dialogs/ErrorDialog.h -o moc_ErrorDialog.cpp
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/dialogs/ErrorDialog.h -o moc_ErrorDialog.cpp
+
+moc_ActionFrame.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Shot.h \
+		shared/Frames/Frame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/Player.h \
+		shared/GameElements/BoardElement.h \
+		shared/Frames/ActionFrame.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Frames/ActionFrame.h -o moc_ActionFrame.cpp
+
+moc_BoardFrame.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/BoardFrame.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Frames/BoardFrame.h -o moc_BoardFrame.cpp
+
+moc_Frame.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/Player.h \
+		shared/Shot.h \
+		shared/GameElements/BoardElement.h \
+		shared/Frames/Frame.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Frames/Frame.h -o moc_Frame.cpp
+
+moc_OtherFrame.cpp: shared/Frames/Frame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/Player.h \
+		shared/Shot.h \
+		shared/GameElements/BoardElement.h \
+		shared/Frames/OtherFrame.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/Frames/OtherFrame.h -o moc_OtherFrame.cpp
+
+moc_Blank.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Blank.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/GameElements/Blank.h -o moc_Blank.cpp
+
+moc_BoardElement.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Player.h \
+		shared/GameElements/BoardElement.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/GameElements/BoardElement.h -o moc_BoardElement.cpp
+
+moc_Obstacle.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Obstacle.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/GameElements/Obstacle.h -o moc_Obstacle.cpp
+
+moc_Tank.cpp: /opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h
+	/opt/Qt/5.5/gcc_64/bin/moc $(DEFINES) -I/opt/Qt/5.5/gcc_64/mkspecs/linux-g++ -I/home/tomek/Pulpit/FiS-game/code/client -I/home/tomek/Pulpit/FiS-game/code/client -I/opt/Qt/5.5/gcc_64/include -I/opt/Qt/5.5/gcc_64/include/QtWidgets -I/opt/Qt/5.5/gcc_64/include/QtGui -I/opt/Qt/5.5/gcc_64/include/QtNetwork -I/opt/Qt/5.5/gcc_64/include/QtCore shared/GameElements/Tank.h -o moc_Tank.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1343,14 +2106,27 @@ Client.o: Client.cpp Client.h \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/QTcpSocket \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qtcpsocket.h \
 		shared/sleep.h \
+		Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
 		shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
 		shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
-		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h
+		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		shared/lookQBA.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Client.o Client.cpp
 
 Game.o: Game.cpp Game.h \
@@ -1465,13 +2241,25 @@ Game.o: Game.cpp Game.h \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/QHostAddress \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qhostaddress.h \
 		shared/sleep.h \
+		Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
 		shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qtextoption.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpen.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
 		shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
@@ -1486,7 +2274,8 @@ Game.o: Game.cpp Game.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qboxlayout.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qlayout.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qlayoutitem.h \
-		/opt/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h
+		/opt/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h \
+		shared/lookQBA.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Game.o Game.cpp
 
 main.o: main.cpp /opt/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
@@ -1633,15 +2422,97 @@ main.o: main.cpp /opt/Qt/5.5/gcc_64/include/QtWidgets/QApplication \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/QTcpSocket \
 		/opt/Qt/5.5/gcc_64/include/QtNetwork/qtcpsocket.h \
 		shared/sleep.h \
+		Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h \
 		shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPainter \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qpainter.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap \
 		shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QDialog \
-		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h
+		/opt/Qt/5.5/gcc_64/include/QtWidgets/qdialog.h \
+		shared/lookQBA.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+
+ClientFrameCoder.o: Network/ClientFrameCoder.cpp Network/ClientFrameCoder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h \
+		shared/Frames/ActionFrame.h \
+		shared/Frames/OtherFrame.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ClientFrameCoder.o Network/ClientFrameCoder.cpp
 
 TcpClient.o: Network/TcpClient.cpp Network/TcpClient.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/QWidget \
@@ -1862,8 +2733,183 @@ Board.o: shared/Board.cpp shared/Board.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qvector2d.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/qtouchdevice.h \
 		/opt/Qt/5.5/gcc_64/include/QtGui/QPaintEvent \
-		/opt/Qt/5.5/gcc_64/include/QtGui/QPixmap
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		shared/GameElements/Blank.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Shot.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Board.o shared/Board.cpp
+
+lookQBA.o: shared/lookQBA.cpp shared/lookQBA.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o lookQBA.o shared/lookQBA.cpp
+
+Player.o: shared/Player.cpp shared/Player.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Player.o shared/Player.cpp
+
+Shot.o: shared/Shot.cpp shared/Shot.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Shot.o shared/Shot.cpp
 
 sleep.o: shared/sleep.cpp shared/sleep.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sleep.o shared/sleep.cpp
@@ -1986,11 +3032,374 @@ ErrorDialog.o: shared/dialogs/ErrorDialog.cpp shared/dialogs/ErrorDialog.h \
 		/opt/Qt/5.5/gcc_64/include/QtWidgets/qgridlayout.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ErrorDialog.o shared/dialogs/ErrorDialog.cpp
 
+ActionFrame.o: shared/Frames/ActionFrame.cpp shared/Frames/ActionFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Shot.h \
+		shared/Frames/Frame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/Player.h \
+		shared/GameElements/BoardElement.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ActionFrame.o shared/Frames/ActionFrame.cpp
+
+BoardFrame.o: shared/Frames/BoardFrame.cpp shared/Frames/BoardFrame.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QVector \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qpoint.h \
+		shared/GameElements/Blank.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h \
+		shared/GameElements/Tank.h \
+		shared/GameElements/Obstacle.h \
+		shared/Frames/Frame.h \
+		shared/Shot.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BoardFrame.o shared/Frames/BoardFrame.cpp
+
+Blank.o: shared/GameElements/Blank.cpp shared/GameElements/Blank.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Blank.o shared/GameElements/Blank.cpp
+
+BoardElement.o: shared/GameElements/BoardElement.cpp shared/GameElements/BoardElement.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/Player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BoardElement.o shared/GameElements/BoardElement.cpp
+
+Obstacle.o: shared/GameElements/Obstacle.cpp shared/GameElements/Obstacle.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Obstacle.o shared/GameElements/Obstacle.cpp
+
+Tank.o: shared/GameElements/Tank.cpp shared/GameElements/Tank.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/QObject \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qnumeric.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qbytearraylist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qstringmatcher.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.5/gcc_64/include/QtCore/qobject_impl.h \
+		shared/GameElements/BoardElement.h \
+		shared/Player.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Tank.o shared/GameElements/Tank.cpp
+
 moc_Client.o: moc_Client.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Client.o moc_Client.cpp
 
 moc_Game.o: moc_Game.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Game.o moc_Game.cpp
+
+moc_ClientFrameCoder.o: moc_ClientFrameCoder.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ClientFrameCoder.o moc_ClientFrameCoder.cpp
 
 moc_TcpClient.o: moc_TcpClient.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_TcpClient.o moc_TcpClient.cpp
@@ -1998,8 +3407,38 @@ moc_TcpClient.o: moc_TcpClient.cpp
 moc_Board.o: moc_Board.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Board.o moc_Board.cpp
 
+moc_Player.o: moc_Player.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Player.o moc_Player.cpp
+
+moc_Shot.o: moc_Shot.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Shot.o moc_Shot.cpp
+
 moc_ErrorDialog.o: moc_ErrorDialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ErrorDialog.o moc_ErrorDialog.cpp
+
+moc_ActionFrame.o: moc_ActionFrame.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_ActionFrame.o moc_ActionFrame.cpp
+
+moc_BoardFrame.o: moc_BoardFrame.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_BoardFrame.o moc_BoardFrame.cpp
+
+moc_Frame.o: moc_Frame.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Frame.o moc_Frame.cpp
+
+moc_OtherFrame.o: moc_OtherFrame.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_OtherFrame.o moc_OtherFrame.cpp
+
+moc_Blank.o: moc_Blank.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Blank.o moc_Blank.cpp
+
+moc_BoardElement.o: moc_BoardElement.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_BoardElement.o moc_BoardElement.cpp
+
+moc_Obstacle.o: moc_Obstacle.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Obstacle.o moc_Obstacle.cpp
+
+moc_Tank.o: moc_Tank.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_Tank.o moc_Tank.cpp
 
 ####### Install
 

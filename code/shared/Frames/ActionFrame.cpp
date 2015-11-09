@@ -1,31 +1,37 @@
-#include "Frame.h"
+#include "ActionFrame.h"
+#include <string.h>
 
 ActionFrame::ActionFrame()
-: ActionFrame(0,Shot::Direction::None,false)
 {
-	type = ActionType::Undefined;
+	ActionFrame(0,Shot::Direction::None,false);
+	actionType = Frame::ActionType::Undefined;
+	type = Frame::FrameType::Action;
 }
 
-ActionFrame::ActionFrame(int pId, Shot::Direction d, bool s)
+ActionFrame::ActionFrame(char pId, Shot::Direction::DirectionType d, bool s)
 {
 	playerId = pId;
 	dir = d;
 	shot = s;
-	type = ActionType::Action;
+	actionType = Frame::ActionType::Action;
+	type = Frame::FrameType::Action;
 }
 
-ActionFrame(int pId, char[64] pN)
+ActionFrame::ActionFrame(char pId, char* pN)
 {
 	playerId = pId;
 	dir = Shot::Direction::None;
 	shot = false;
-	type = ActionType::Connect;
+	actionType = Frame::ActionType::Connect;
+	type = Frame::FrameType::Action;
+	strcpy(playerName,pN);
 }
 
-ActionFrame(int pId)
+ActionFrame::ActionFrame(char pId, Frame::ActionType::Type at)
 {
 	playerId = pId;
 	dir = Shot::Direction::None;
 	shot = false;
-	type = ActionType::Disconnect;
+	actionType = at;
+	type = Frame::FrameType::Action;
 }

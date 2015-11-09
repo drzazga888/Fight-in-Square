@@ -3,14 +3,12 @@
 Game::Game(QWidget *parent)
 : QThread(parent)
 {
-	isConnected = false;
 	launched = true;
 	board = new Board(parent);
 	board->hide();
 	server = new  TcpServer();
+	coder = new ServerFrameCoder();
 	connect(server, SIGNAL(reading(int,QByteArray)), this, SLOT(readData(int,QByteArray)));
-	connect(server, SIGNAL(connecting()), this, SLOT(connOrDisconnect()));
-	connect(server, SIGNAL(disconnecting()), this, SLOT(connOrDisconnect()));
 	connect(this, SIGNAL(writeData(int,QByteArray)), server, SLOT(write(int,QByteArray)));
 	connect(this, SIGNAL(writeBroadcastData(QByteArray)), server, SLOT(writeBroadcast(QByteArray)));
 }
@@ -27,20 +25,36 @@ void Game::run()
 	
 	while(launched)
 	{
-		if(isConnected)
-			emit writeBroadcastData(QByteArray("czesc"));
-		QThread::msleep(40);
+		emit writeBroadcastData(coder->encodeBoard(board));
+		QThread::msleep(250);
 	}
 	emit resultReady(result);
 }
 
 void Game::readData(int id,QByteArray message)
 {
-	char* data = message.data();
-	std::cout<<data<<std::endl;
-}
-
-void Game::connOrDisconnect()
-{
-	isConnected=!isConnected;
+	if(message.size()>1)
+	{
+		Frame* frame = coder->decode(message);lookQBA(message);
+		if(frame->getType()==Frame::FrameType::Action)
+		{
+			if(frame->getActionType() == Frame::ActionType::Connect)
+			{
+				Player *p = new Player(id,frame->getPlayerName());
+				board->addPlayer(id,p);
+				logs->append(QString("Nowy gracz: ")+QString(frame->getPlayerName()));
+				emit writeData(id,coder->encodeConnectResp(id));
+			}
+			else if(frame->getActionType() == Frame::ActionType::Disconnect)
+			{
+				delete board->removePlayer(frame->getPlayerId());
+				logs->append(QString("Nowy gracz: ")+QString(frame->getPlayerName()));
+				emit writeData(id,coder->encodeDisconnectResp(id));
+			}
+			else if(frame->getActionType() == Frame::ActionType::Action)
+			{
+				
+			}
+		}
+	}
 }

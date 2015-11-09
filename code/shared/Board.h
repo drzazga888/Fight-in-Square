@@ -19,12 +19,14 @@ public:
 	Board(QWidget* parent = NULL);
 	~Board();
 	void hide();
+	void addPlayer(int id, Player* p);
+	Player* removePlayer(int id);
 	virtual void paintEvent(QPaintEvent* pe);
 private:
 	QPainter *board;
 	void pusteTlo(QPaintEvent* pe);
 	bool hidden;
-	QVector<QVector<BoardElement*>> elements;
+	QVector< QVector< BoardElement* > > elements;
 	QVector<Player*> players;
 	QVector<Shot*> shots;
 };

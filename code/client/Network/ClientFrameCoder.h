@@ -5,17 +5,21 @@
 
 #include "shared/Frames/BoardFrame.h"
 #include "shared/Frames/ActionFrame.h"
+#include "shared/Frames/OtherFrame.h"
 
 class ClientFrameCoder : public QObject
 {
 	Q_OBJECT
 public:
-	ClientFrameCoder(int gamerId);
-	QByteArray encodeConnect();
-	QByteArray encodeDisconnect();;
-	QByteArray encodeAction();
+	ClientFrameCoder();
+	QByteArray encodeConnect(char* name);
+	QByteArray encodeDisconnect();
+	QByteArray encodeAction(BoardElement::Direction::DirectionType dir, bool shot);
+	void setClientId(char id) { clientId = id; }
+	char getClientId(){ return clientId; }
+	Frame* decodeMessage(QByteArray frame);
 private:
-
+	char clientId;
 };
 
 #endif

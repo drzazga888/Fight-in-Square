@@ -1,10 +1,11 @@
 #include "Tank.h"
 
-Tank::Tank(int p, BoardElement::Direction d)
+Tank::Tank(Player* p, BoardElement::Direction::DirectionType d)
+: BoardElement(0)
 {
 	player = p;
 	dir = d;
-	type = BoardElement::Type::Tank;
+	type = BoardElement::BoardType::Tank;
 }
 
 void Tank::draw(char x, char y)

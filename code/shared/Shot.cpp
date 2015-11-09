@@ -1,6 +1,6 @@
 #include "Shot.h"
 
-Shot::Shot(char x, char y, Direction d, char p)
+Shot::Shot(char x, char y, Shot::Direction::DirectionType d, char p)
 {
 	posX = x;
 	posY = y;

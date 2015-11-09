@@ -25,10 +25,8 @@ public slots:
 	void write(int,QByteArray);
 	void writeBroadcast(QByteArray);
 signals:
-	void connecting();
-	void disconnecting();
 	void reading(int,QByteArray);
-	void writing(QByteArray);
+	void writing(int,QByteArray);
 	void broadcasting(QByteArray);
 private:
 	QTcpServer *tcpServer;

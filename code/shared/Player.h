@@ -7,7 +7,7 @@ class Player : public QObject
 {
 	Q_OBJECT
 public:
-	Player(char i, const char* n);
+	Player(char i, char* n);
 	Player* setGroup(char g);
 	Player* setPochars(char p);
 	Player* addPochars(char p);

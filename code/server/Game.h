@@ -2,13 +2,15 @@
 #define GAME_H
 
 #include <QThread>
+#include <QTextEdit>
 #include <QWidget>
 #include "Network/TcpServer.h"
-#include "shared/Network/Protocol.h"
+#include "Network/ServerFrameCoder.h"
 #include "shared/Board.h"
 #include "shared/sleep.h"
 #include "shared/dialogs/ErrorDialog.h"
-#include <iostream>
+#include "shared/GameElements/BoardElement.h"
+#include "shared/lookQBA.h"
 
 class Game : public QThread
 {
@@ -20,9 +22,9 @@ public:
 	Board* getBoard(){ return board; }
 	TcpServer* getServer(){ return server; }
 	void close(){ launched=false; }
+	void setLogOutput(QTextEdit *l){ logs = l; }
 public slots:
 	void readData(int,QByteArray);
-	void connOrDisconnect();
 signals:
 	void resultReady(const QString &s);
 	void writeData(int,QByteArray);
@@ -30,8 +32,9 @@ signals:
 private:
 	Board* board;
 	TcpServer* server;
-	bool isConnected;
-	bool launched;	
+	ServerFrameCoder* coder;
+	bool launched;
+	QTextEdit *logs;
 };
 
 #endif
