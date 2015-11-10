@@ -1,6 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#define MAX_PLAYERS 8
+
 #include <QPainter>
 #include <QWidget>
 #include <QPaintEvent>
@@ -11,6 +13,7 @@
 #include "shared/GameElements/Obstacle.h"
 #include "shared/Player.h"
 #include "shared/Shot.h"
+#include "shared/Frames/Frame.h"
 
 class Board : public QWidget
 {
@@ -19,8 +22,9 @@ public:
 	Board(QWidget* parent = NULL);
 	~Board();
 	void hide();
-	void addPlayer(int id, Player* p);
+	Frame::ErrorCode::Code addPlayer(int id, Player* p);
 	Player* removePlayer(int id);
+	Player* getPlayer(int id){ return players[id-1]; };
 	virtual void paintEvent(QPaintEvent* pe);
 private:
 	QPainter *board;
@@ -29,6 +33,7 @@ private:
 	QVector< QVector< BoardElement* > > elements;
 	QVector<Player*> players;
 	QVector<Shot*> shots;
+	int plCounter;
 };
 
 #endif

@@ -36,7 +36,7 @@ void TcpClient::disconnectFromHost()
 
 void TcpClient::write(QByteArray message)
 {
-	if(connected)
+	if(connected&&socket!=NULL)
 	{
 		int ileZapisanych = socket->write(message);
 		socket->flush();

@@ -82,11 +82,21 @@ void Server::startServer()
 
 void Server::stopServer()
 {
-	game->getServer()->stop();
-	stopButton->hide();
-	startButton->show();
-	port->setDisabled(false);
-	status->setText("Zatrzymany");
+	if(game->getServer()->stop())
+	{
+		stopButton->hide();
+		startButton->show();
+		port->setDisabled(false);
+		status->setText("Zatrzymany");
+	}
+	else
+	{
+		if(errorDialog!=NULL)
+			delete errorDialog;
+		errorDialog = new ErrorDialog("Nie udało się zatrzymać serwera", "Błąd zatrzymania");
+		errorDialog->show();
+		return;
+	}
 }
 
 void Server::handleResults(QString m)

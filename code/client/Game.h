@@ -9,6 +9,7 @@
 #include "shared/sleep.h"
 #include "shared/dialogs/ErrorDialog.h"
 #include "shared/GameElements/BoardElement.h"
+#include "shared/dialogs/ErrorDialog.h"
 #include "shared/lookQBA.h"
 #include <string>
 #include <string.h>
@@ -44,6 +45,8 @@ private:
 	bool shotted;
 	BoardElement::Direction::DirectionType dir;
 	char playerName[256];
+
+	ErrorDialog* errorDialog;
 };
 
 #endif

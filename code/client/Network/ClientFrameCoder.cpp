@@ -45,14 +45,16 @@ Frame* ClientFrameCoder::decodeMessage(QByteArray frame)
 {
 	Frame* objframe;
 	if((int)frame[0]==1&&clientId!=frame[1])
-		clientId=frame[0];
+		clientId=frame[1];
 	if((int)frame[0]==1)//odpowiedź na połączenie
 	{
 		objframe = new ActionFrame(clientId, Frame::ActionType::Connect);
+		objframe->setErrorCode((Frame::ErrorCode::Code)(int)frame[2]);
 	}
 	else if((int)frame[0]==3)//odpowiedź na rozłączenie
 	{
 		objframe = new ActionFrame(clientId, Frame::ActionType::Disconnect);
+		objframe->setErrorCode((Frame::ErrorCode::Code)(int)frame[2]);
 	}
 	else if((int)frame[0]==2)//przysłanie planszy
 	{

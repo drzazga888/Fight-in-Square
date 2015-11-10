@@ -15,8 +15,8 @@ class ServerFrameCoder : public QObject
 	Q_OBJECT
 public:
 	QByteArray encodeBoard(Board* board);
-	QByteArray encodeConnectResp(char id, char errorKey=0);
-	QByteArray encodeDisconnectResp(char id, char errorKey=0);
+	QByteArray encodeConnectResp(char id, Frame::ErrorCode::Code errorKey=Frame::ErrorCode::Undefined);
+	QByteArray encodeDisconnectResp(char id, Frame::ErrorCode::Code errorKey=Frame::ErrorCode::Undefined);
 	Frame* decode(QByteArray& frame);
 private:
 	char buffer[256];

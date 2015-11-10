@@ -25,6 +25,7 @@ public:
 	void setLogOutput(QTextEdit *l){ logs = l; }
 public slots:
 	void readData(int,QByteArray);
+	void brokeConnect(int);
 signals:
 	void resultReady(const QString &s);
 	void writeData(int,QByteArray);

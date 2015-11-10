@@ -3,9 +3,7 @@
 
 TcpServer::TcpServer()
 {
-	connId = 1;
-	tcpServer = new QTcpServer(this);
-	connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+	
 }
 
 TcpServer::~TcpServer()
@@ -16,6 +14,9 @@ TcpServer::~TcpServer()
 
 bool TcpServer::start(int port)
 {
+	connId = 1;
+	tcpServer = new QTcpServer(this);
+	connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 	if (tcpServer->listen(QHostAddress::LocalHost, port))
 		return true;
 	else
@@ -25,19 +26,26 @@ bool TcpServer::start(int port)
 bool TcpServer::stop()
 {
 	bool state = disconnectAll();
-	tcpServer->close();
+	if(tcpServer!=NULL)
+	{
+		tcpServer->close();
+		delete tcpServer;
+	}
 	return state;
 }
 
 bool TcpServer::disconnect(int id)
 {
-	if(connections[id]->getSocket()->state()!=QAbstractSocket::UnconnectedState)
+	if(connections[id-1]->getSocket()->state()!=QAbstractSocket::UnconnectedState)
 	{
-		connections[id]->getSocket()->disconnectFromHost();
-		delete connections[id];
-		connections[id] = NULL;
-		connections.remove(id);
-		return true;
+		if(connections[id-1]->disconnect())
+		{
+			if(connections[id-1]!=NULL)
+				delete connections[id-1];
+			connections[id-1] = NULL;
+			connections.remove(id-1);
+			return true;
+		}
 	}
 	return false;
 }
@@ -56,8 +64,8 @@ void TcpServer::write(int id, QByteArray message)
 {
 	if(connections[id-1]!=NULL)
 	{
-		connections[id-1]->write(message);
-		emit writing(id,message);
+		if(connections[id-1]->write(message))
+			emit writing(id,message);
 	}
 }
 
@@ -75,13 +83,27 @@ void TcpServer::writeBroadcast(QByteArray message)
 
 void TcpServer::acceptConnection()
 {
-	connections.append( new Connection( tcpServer->nextPendingConnection(), 0, Qt::Window ) );
-	connections[connId-1]->setId(connId);
-	connect(connections[connId-1],SIGNAL(reading(int,QByteArray)), this, SLOT(read(int,QByteArray)));
-	++connId;
+	Connection* conn = new Connection( tcpServer->nextPendingConnection(), 0, Qt::Window);
+	connections.append( conn );
+	if(connections[connId-1]!=NULL)
+	{
+		conn->setId(connId);
+		connect(conn,SIGNAL(reading(int,QByteArray)), this, SLOT(read(int,QByteArray)));
+		connect(conn,SIGNAL(disconnecting(int)), this, SLOT(brokeConnection(int)));
+		++connId;
+	}
+	else
+	{
+		conn->disconnect();
+	}
 }
 
 void TcpServer::read(int id, QByteArray message)
 {
 	emit reading(id,message);
+}
+
+void TcpServer::brokeConnection(int id)
+{
+		emit disconnecting(id);
 }

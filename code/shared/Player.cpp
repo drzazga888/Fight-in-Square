@@ -92,8 +92,3 @@ char Player::getPower()
 {
 	return power;
 }
-
-const char* Player::getName()
-{
-	return name;
-}

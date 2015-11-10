@@ -20,11 +20,11 @@ public:
 	Player* takePower(char pw);
 
 	char getId();
+	const char* getName(){ return name; }
 	char getGroup();
 	char getPochars();
 	char getHealth();
 	char getPower();
-	const char* getName();
 private:
 	char id;
 	char group;

@@ -6,6 +6,7 @@ Connection::Connection(QTcpSocket *inputSocket, QWidget *parent, Qt::WindowFlags
 	socket = inputSocket;
 	socket->setReadBufferSize(0);
 	connect(socket, SIGNAL(readyRead()), this, SLOT(readFromSocket()));
+	connect(socket, SIGNAL(disconnected()), this, SLOT(brokeConnection()));
 }
 
 Connection::~Connection()
@@ -15,23 +16,36 @@ Connection::~Connection()
 
 bool Connection::disconnect()
 {
-	socket->disconnectFromHost();
-	if(socket->state()==QAbstractSocket::UnconnectedState)
-		return true;
+	if(socket!=NULL)
+	{
+		socket->disconnectFromHost();
+		if(socket->state()==QAbstractSocket::UnconnectedState)
+		{
+			return true;
+		}
+	}
 	return false;
 }
 
-bool Connection::write(const char* message)
+bool Connection::write(QByteArray message)
 {
-	int ileZapisanych = socket->write(message);
-	if(ileZapisanych!=-1) {
-		emit writing(QByteArray(message));
-		return true;
-	} else 
-		return false;
+	if(socket!=NULL)
+	{
+		int ileZapisanych = socket->write(message);
+		socket->flush();
+		if(ileZapisanych!=-1) {
+			return true;
+		}
+	}
+	return false;
 }
 
 void Connection::readFromSocket()
 {
 	emit reading(id,socket->readAll());
+}
+
+void Connection::brokeConnection()
+{
+	emit disconnecting(id);
 }

@@ -27,6 +27,15 @@ ActionFrame::ActionFrame(char pId, char* pN)
 	strcpy(playerName,pN);
 }
 
+ActionFrame::ActionFrame(char pId)
+{
+	playerId = pId;
+	dir = Shot::Direction::None;
+	shot = false;
+	actionType = Frame::ActionType::Disconnect;
+	type = Frame::FrameType::Action;
+}
+
 ActionFrame::ActionFrame(char pId, Frame::ActionType::Type at)
 {
 	playerId = pId;

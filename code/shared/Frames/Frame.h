@@ -21,7 +21,15 @@ public:
 	public:
 		enum Type {Undefined, Connect, Disconnect, Action};
 	};
+	class ErrorCode
+	{
+	public:
+		enum Code {Undefined, MaxPlayers};
+	};
+	Frame(){ errorCode = Frame::ErrorCode::Undefined; }
 	virtual Frame::FrameType::Type getType(){ return type; }
+	virtual Frame::ErrorCode::Code getErrorCode(){ return errorCode; }
+	virtual void setErrorCode(Frame::ErrorCode::Code ec){ errorCode = ec; }
 	/* metody wirtualne dla ramki akcji */
 	virtual Frame::ActionType::Type getActionType() = 0;
 	virtual Shot::Direction::DirectionType getDir() = 0;
@@ -34,6 +42,7 @@ public:
 	virtual QVector< QVector< BoardElement* > > getElements() = 0;
 protected:
 	Frame::FrameType::Type type;
+	Frame::ErrorCode::Code errorCode;
 };
 
 #endif

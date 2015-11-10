@@ -24,10 +24,12 @@ public slots:
 	void read(int,QByteArray);
 	void write(int,QByteArray);
 	void writeBroadcast(QByteArray);
+	void brokeConnection(int);
 signals:
 	void reading(int,QByteArray);
 	void writing(int,QByteArray);
 	void broadcasting(QByteArray);
+	void disconnecting(int);
 private:
 	QTcpServer *tcpServer;
 	QVector<Connection*> connections;

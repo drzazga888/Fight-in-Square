@@ -1,17 +1,20 @@
 #include "Board.h"
+#include <iostream>
 
 Board::Board(QWidget* parent)
-: QWidget(parent)
+: QWidget(parent), players(MAX_PLAYERS)
 {
     board = new QPainter();
     
     setFixedSize(1020,720);
 	hidden = false;
+	plCounter=0;
 }
 
 Board::~Board()
 {
 	delete board;
+	plCounter=0;
 }
 
 void Board::paintEvent(QPaintEvent* pe)
@@ -40,14 +43,30 @@ void Board::pusteTlo(QPaintEvent* pe)
     board->setCompositionMode (QPainter::CompositionMode_SourceOver);
 }
 
-void Board::addPlayer(int id, Player* p)
+Frame::ErrorCode::Code Board::addPlayer(int id, Player* p)
 {
-	players.insert(id-1, p);
+	if(plCounter<MAX_PLAYERS)
+	{
+		if(id>=MAX_PLAYERS)
+			players.resize(players.size()+MAX_PLAYERS);
+		players.insert(id-1,p);
+		++plCounter;
+		std::cout<<"insert:"<<id<<std::endl;
+		return Frame::ErrorCode::Undefined;
+	}
+	else
+		return Frame::ErrorCode::MaxPlayers;
 }
 
 Player* Board::removePlayer(int id)
 {
-	Player *p = players[id-1];
-	players.remove(id);
-	return p;
+	if(id<players.size())
+	{
+		Player *p = players[id-1];
+		players.remove(id-1);
+		--plCounter;std::cout<<"remove:"<<id<<std::endl;
+		return p;
+	}
+	else
+		return NULL;
 }

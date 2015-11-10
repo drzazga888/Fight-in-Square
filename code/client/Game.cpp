@@ -44,32 +44,44 @@ void Game::run()
 
 void Game::readData(QByteArray message)
 {
-	Frame* frame = coder->decodeMessage(message);lookQBA(message);
+	Frame* frame = coder->decodeMessage(message);std::cout<<"recv:";lookQBA(message);
 	if(frame->getType()==Frame::FrameType::Action)
 	{
 		if(frame->getActionType()==Frame::ActionType::Connect)//odpowiedź na połączenie
 		{
-			isConnected = true;
+			if(frame->getErrorCode()==Frame::ErrorCode::Undefined)
+				isConnected = true;
+			else if(frame->getErrorCode()==Frame::ErrorCode::MaxPlayers)
+			{
+				if(errorDialog!=NULL)
+					delete errorDialog;
+				errorDialog = new ErrorDialog("Przekroczono limit graczy na serwerze", "Błąd połączenia");
+				errorDialog->show();
+				return;
+			}
 		}
 		else if(frame->getActionType()==Frame::ActionType::Disconnect)//odpowiedź na rozłączenie
 		{
 			isConnected = false;
+			client->disconnectFromHost();
 		}
 	}
 }
 
 void Game::connOrDisconnect()
 {
-	if(!isConnected)
+	isConnected=!isConnected;
+	if(isConnected)
+	{
 		emit writeData(coder->encodeConnect(playerName));
-	else
-		emit writeData(coder->encodeDisconnect());
+		std::cout<<"send:";lookQBA(coder->encodeConnect(playerName));
+	}
 }
 
 void Game::disconnect()
 {
 	emit writeData(coder->encodeDisconnect());
-	client->disconnectFromHost();
+	std::cout<<"send:";lookQBA(coder->encodeDisconnect());
 }
 
 void Game::setPlayerName(QString pn)

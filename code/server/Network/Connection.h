@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QTcpSocket>
+#include <iostream>
 
 class Connection : public QWidget
 {
@@ -14,12 +15,13 @@ public:
 	void setId(int connId){ id = connId; }
 	int getId() { return id; }
 	bool disconnect();
-	bool write(const char* message);
+	bool write(QByteArray message);
 public slots:
 	void readFromSocket();
+	void brokeConnection();
 signals:
 	void reading(int,QByteArray);
-	void writing(QByteArray);
+	void disconnecting(int);
 private:
 	QTcpSocket *socket;
 	int id;

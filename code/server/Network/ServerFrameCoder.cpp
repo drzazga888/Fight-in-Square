@@ -34,7 +34,7 @@ Frame* ServerFrameCoder::decode(QByteArray& frame)
 		bool shot = (bool)frame[3];
 		objframe = new ActionFrame(frame[1], dir, shot);
 	}
-	else if((int)frame[0]==1)//disconnect
+	else if((int)frame[0]==3)//disconnect
 	{
 		objframe = new ActionFrame(frame[1]);
 	}
@@ -47,20 +47,20 @@ Frame* ServerFrameCoder::decode(QByteArray& frame)
 	return objframe;
 }
 
-QByteArray ServerFrameCoder::encodeConnectResp(char id, char errorKey)
+QByteArray ServerFrameCoder::encodeConnectResp(char id, Frame::ErrorCode::Code errorKey)
 {
 	QByteArray frame;
 	frame.append((char)1);//typ ramki
-	frame.append(id);//id gracza
-	frame.append((char)0);//kod błędu
+	frame.append((char)id);//id gracza
+	frame.append((char)errorKey);//kod błędu
 	return frame;
 }
 
-QByteArray ServerFrameCoder::encodeDisconnectResp(char id, char errorKey)
+QByteArray ServerFrameCoder::encodeDisconnectResp(char id, Frame::ErrorCode::Code errorKey)
 {
 	QByteArray frame;
 	frame.append((char)3);//typ ramki
-	frame.append((char)0);//id gracza
-	frame.append((char)0);//kod błędu
+	frame.append((char)id);//id gracza
+	frame.append((char)errorKey);//kod błędu
 	return frame;
 }
