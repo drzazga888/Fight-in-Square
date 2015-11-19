@@ -8,5 +8,5 @@ Blank::Blank(int i)
 
 void Blank::draw(char x, char y)
 {
-
+	++x;++y;
 }

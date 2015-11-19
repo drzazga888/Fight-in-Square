@@ -14,6 +14,7 @@ public:
 	virtual void setDirection(BoardElement::Direction::DirectionType d){ int i = (int)d;++i; };
 	virtual char getHealth() { return health; };
 	virtual bool isIndestructible() { return indestructible; };
+	virtual BoardElement::Direction::DirectionType getDirection() { return BoardElement::Direction::None; }
 	virtual void draw(char x, char y);
 private:
 	char health;

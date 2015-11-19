@@ -3,7 +3,7 @@
 
 TcpServer::TcpServer()
 {
-	
+	tcpServer=NULL;
 }
 
 TcpServer::~TcpServer()

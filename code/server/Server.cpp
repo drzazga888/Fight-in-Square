@@ -15,13 +15,13 @@ Server::Server()
 	stopButton = new QPushButton("Zatrzymaj",this);
 	stopButton->hide();
 
-	QVBoxLayout *lay= new QVBoxLayout();
+	lay= new QVBoxLayout(this);
 	lay->addWidget(port);
 	lay->addWidget(startButton);
 	lay->addWidget(stopButton);
 	lay->addWidget(logs);
 
-	QWidget *window = new QWidget();
+	window = new QWidget(this);
     	window->setLayout(lay);
 	setCentralWidget(window);
 
@@ -44,13 +44,10 @@ Server::Server()
 
 Server::~Server()
 {
-	delete startButton;
-	delete stopButton;
-	delete status;
-	delete port;
-	delete logs;
+	delete window;
 	if(errorDialog!=NULL)
 		delete errorDialog;
+	delete game;
 }
 
 void Server::startServer()

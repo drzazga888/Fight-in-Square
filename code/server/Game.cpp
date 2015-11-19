@@ -18,6 +18,7 @@ Game::~Game()
 {
 	delete board;
 	delete server;
+	delete coder;
 }
 
 void Game::run()

@@ -38,6 +38,8 @@ private:
 	QLineEdit* port;
 	QTextEdit* logs;
 	ErrorDialog* errorDialog;
+	QWidget *window;
+	QVBoxLayout *lay;
 };
 
 #endif
