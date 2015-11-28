@@ -29,7 +29,7 @@ bool Connection::disconnect()
 
 bool Connection::write(QByteArray message)
 {
-	if(socket!=NULL)
+    if(socket!=NULL && socket->state() != QAbstractSocket::UnconnectedState)
 	{
 		int ileZapisanych = socket->write(message);
 		socket->flush();
