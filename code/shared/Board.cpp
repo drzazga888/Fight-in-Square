@@ -2,10 +2,10 @@
 #include <iostream>
 
 Board::Board(QWidget* parent)
-: QWidget(parent), players(MAX_PLAYERS)
+: QWidget(parent)
 {
     board = new QPainter();
-    
+    players.resize(MAX_PLAYERS);
     setFixedSize(1020,720);
 	hidden = false;
 	plCounter=0;

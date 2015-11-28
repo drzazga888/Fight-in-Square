@@ -4,9 +4,9 @@ Game::Game(QWidget *parent)
 : QThread(parent)
 {
 	launched = true;
-	board = new Board(parent);
+    board = new Board(parent);
 	board->hide();
-	server = new  TcpServer();
+    server = new TcpServer();
 	coder = new ServerFrameCoder();
 	connect(server, SIGNAL(reading(int,QByteArray)), this, SLOT(readData(int,QByteArray)));
 	connect(this, SIGNAL(writeData(int,QByteArray)), server, SLOT(write(int,QByteArray)));

@@ -47,7 +47,6 @@ Server::~Server()
 	delete window;
 	if(errorDialog!=NULL)
 		delete errorDialog;
-	delete game;
 }
 
 void Server::startServer()
