@@ -7,22 +7,22 @@ Server::Server()
 	errorDialog = NULL;
 	setWindowTitle("Fight In Square - server");
 
-	port = new QLineEdit(this);
-	logs = new QTextEdit(this);
+    port = new QLineEdit();
+    logs = new QTextEdit();
 	logs->setReadOnly(true);
 	game->setLogOutput(logs);
-	startButton = new QPushButton("Uruchom",this);
-	stopButton = new QPushButton("Zatrzymaj",this);
+    startButton = new QPushButton("Uruchom");
+    stopButton = new QPushButton("Zatrzymaj");
 	stopButton->hide();
 
-	lay= new QVBoxLayout(this);
+    lay= new QVBoxLayout();
 	lay->addWidget(port);
 	lay->addWidget(startButton);
 	lay->addWidget(stopButton);
 	lay->addWidget(logs);
 
-	window = new QWidget(this);
-    	window->setLayout(lay);
+    window = new QWidget();
+    window->setLayout(lay);
 	setCentralWidget(window);
 
 	status = new QLabel("Zatrzymany");
@@ -45,7 +45,7 @@ Server::Server()
 Server::~Server()
 {
 	delete window;
-	if(errorDialog!=NULL)
+    if(errorDialog!=NULL)
 		delete errorDialog;
 }
 

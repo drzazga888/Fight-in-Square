@@ -30,6 +30,7 @@ bool TcpServer::stop()
 	{
 		tcpServer->close();
 		delete tcpServer;
+        tcpServer = NULL;
 	}
 	return state;
 }
