@@ -1,8 +1,15 @@
-Dzień spotkania: 28.10.2015
+#\#SZYKUJESIESPOTKANIE
 
-    Łukasz - ma sprawdzić jak rysować sprite'y + ich kolorowanie
-    Kamil - poprawić rozmiar kwiatków
-    Kasia - poprawić pocisk
-    Tomek - skończyć komunikację + ma wrzucić co zrobił na git-a
+*Panowie i Panie - Szykuje się spotkanie!*
 
-Nast. spotkanie: środa 23:00
+Spotkanie ma trwać ok. 30 minut, m. in. będzie wtedy ustalony przydział do roboty
+
+**Streszczenie spotkania:**
+- Obejrzenie ramek - dyskusja, skargi i zażalenia
+- Obejrzenie diagramu sekwencji - dyskusja, skargi i zażalenia
+- Podział pracy (między KamilsON-em, KaSSHH i Lukim Skywalkerem, tBajorek pominięty bo zrobił serwer, niech sobie odpoczywa)
+- Krótko o QtCreator, qDebub, o nie usuwaniu obiektów QT i o zerowaniu wskaźników po dealokacji (...tak, naprawdę)
+- Pytanie: czy robimy branche na gicie?
+
+**Termin spotkania**
+Do ustalenia, ja też muszę się przygotować...
