@@ -29,3 +29,11 @@
 
 # Moc files
 moc_*.cpp
+
+# QtCreator
+*.pro.user
+code/build-client-Desktop-Debug/
+code/build-server-Desktop-Debug/
+
+# gedit
+*~

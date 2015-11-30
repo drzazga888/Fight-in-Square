@@ -1,5 +1,5 @@
 #include "Client.h"
-
+#include <QDebug>
 
 Client::Client()
 {
@@ -96,6 +96,7 @@ void Client::connectToServer()
 {
 	if(host->text()=="")
 	{
+        qDebug() << "Pusty port";
 		if(errorDialog!=NULL)
 			delete errorDialog;
 		errorDialog = new ErrorDialog("Proszę podać poprawny adres IP", "Błędne dane serwera");

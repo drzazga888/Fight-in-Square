@@ -22,6 +22,7 @@ Game::~Game()
 {
 	delete board;
 	delete client;
+    delete coder;
 }
 
 void Game::run()
