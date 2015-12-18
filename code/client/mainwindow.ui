@@ -50,9 +50,9 @@ QWidget#game {
 }
 
 QWidget#canvasBack {
-	background-image: url(../img/canvas_outline);
+	background-image: url(../img/canvas_outline.png);
 }
-
+s
 QLabel#title{
 	color: rgb(241, 203, 11);
 	font-size: 36px;

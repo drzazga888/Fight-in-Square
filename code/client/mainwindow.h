@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QHostAddress>
-#include "config.h"
+#include "../config.h"
 #include "canvas.h"
 #include "Game.h"
 #include "NetworkManager.h"

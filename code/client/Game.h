@@ -6,7 +6,7 @@
 #include "../config.h"
 #include "../shared/Utils/Direction.h"
 #include "MainPlayer.h"
-#include "shared/Model/Model.h"
+#include "../shared/Model/Model.h"
 
 class Game: public QObject
 {
