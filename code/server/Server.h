@@ -1,45 +1,46 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include <QMainWindow>
-#include <QPushButton>
-#include <QLabel>
-#include <QStatusBar>
-#include <QLineEdit>
-#include <QTextEdit>
-#include <QHostAddress>
-#include <QApplication>
-#include <QDesktopWidget>
-#include <QVBoxLayout>
+#include <cstdlib>
+#include <QObject>
+#include <QString>
+#include <QDateTime>
+#include "../config.h"
+#include "../shared/Model/Model.h"
+#include "TcpServer.h"
+#include "Controller.h"
 
-#include "Game.h"
-#include "shared/Board.h"
-#include "Network/TcpServer.h"
-#include "shared/sleep.h"
-#include "shared/dialogs/ErrorDialog.h"
+class Server: public QObject
+{
+    Q_OBJECT
 
-class Server : public QMainWindow {
-  Q_OBJECT
 public:
-    Server();
+    explicit Server(QObject *parent = 0);
     ~Server();
+    void log(const QString &message);
+    bool switchOn(int port);
+    bool switchOff();
+
+    void timerEvent(QTimerEvent *event);
+
+    bool isWorking;
+
 public slots:
-    void startServer();
-    void stopServer();
-    void read(int,QByteArray);
-    void handleResults(QString r);
-protected:
-	void closeEvent(QCloseEvent *event);
+    void read(int playerId, const QByteArray &message);
+
+signals:
+    void logged(const QString &message);
+    void playerAdded(Player &player);
+    void playerRemoved(int id);
+
 private:
-	Game* game;
-	QPushButton* startButton;
-	QPushButton* stopButton;
-	QLabel* status;
-	QLineEdit* port;
-	QTextEdit* logs;
-	ErrorDialog* errorDialog;
-	QWidget *window;
-	QVBoxLayout *lay;
+    Player::GROUP assignGroup();
+    Model model;
+    TcpServer tcpServer;
+    Controller controller;
+    int timerId;
+    int port;
+
 };
 
-#endif
+#endif // SERVER_H

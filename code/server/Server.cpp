@@ -1,111 +1,94 @@
 #include "Server.h"
 
-Server::Server()
+Server::Server(QObject *parent)
+    :QObject(parent), isWorking(false), model(), tcpServer(), controller(model)
 {
-	game = new Game(this);
-
-	errorDialog = NULL;
-	setWindowTitle("Fight In Square - server");
-
-    port = new QLineEdit();
-    logs = new QTextEdit();
-	logs->setReadOnly(true);
-	game->setLogOutput(logs);
-    startButton = new QPushButton("Uruchom");
-    stopButton = new QPushButton("Zatrzymaj");
-	stopButton->hide();
-
-    lay= new QVBoxLayout();
-	lay->addWidget(port);
-	lay->addWidget(startButton);
-	lay->addWidget(stopButton);
-	lay->addWidget(logs);
-
-    window = new QWidget();
-    window->setLayout(lay);
-	setCentralWidget(window);
-
-	status = new QLabel("Zatrzymany");
-	status->setFrameStyle( QFrame:: Panel | QFrame::Sunken );
-	statusBar()->addWidget( status, 1);
-
-	connect(startButton, SIGNAL(clicked()), this, SLOT(startServer()));
-	connect(stopButton, SIGNAL(clicked()), this, SLOT(stopServer()));
-
-	QRect screenGeometry = QApplication::desktop()->screenGeometry();
-	int x = (screenGeometry.width()-this->width()) / 2;
-	int y = (screenGeometry.height()-this->height()) / 2;
-	move(x,y);
-
-	connect(game, SIGNAL(resultReady(QString)), this, SLOT(handleResults(QString)));
-	connect(game, SIGNAL(finished()), game, SLOT(deleteLater()));
-	game->start();
+    srand(QDateTime::currentMSecsSinceEpoch());
+    connect(&tcpServer, SIGNAL(reading(int, QByteArray)), this, SLOT(read(int, QByteArray)));
 }
 
 Server::~Server()
 {
-	delete window;
-    if(errorDialog!=NULL)
-		delete errorDialog;
+    switchOff();
 }
 
-void Server::startServer()
+void Server::log(const QString &message)
 {
-	if(port->text()=="" || port->text().toInt()==0)
-	{
-		if(errorDialog!=NULL)
-			delete errorDialog;
-		errorDialog = new ErrorDialog("Proszę podać poprawny port", "Błędna konfiguracja");
-		errorDialog->show();
-		return;
-	}
-	if(game->getServer()->start(port->text().toInt()))
-	{
-		startButton->hide();
-		stopButton->show();
-		port->setDisabled(true);
-		status->setText("Uruchomiony");
-	}
-	else
-	{
-		if(errorDialog!=NULL)
-			delete errorDialog;
-		errorDialog = new ErrorDialog("Nie udało się uruchomić serwera na podanym porcie", "Błąd startu");
-		errorDialog->show();
-		return;
-	}
+    emit logged(QDateTime::currentDateTime().toString() + QString(":   ") + message);
 }
 
-void Server::stopServer()
+bool Server::switchOn(int port)
 {
-	if(game->getServer()->stop())
-	{
-		stopButton->hide();
-		startButton->show();
-		port->setDisabled(false);
-		status->setText("Zatrzymany");
-	}
-	else
-	{
-		if(errorDialog!=NULL)
-			delete errorDialog;
-		errorDialog = new ErrorDialog("Nie udało się zatrzymać serwera", "Błąd zatrzymania");
-		errorDialog->show();
-		return;
-	}
+    if (!isWorking)
+    {
+        if (tcpServer.start(port))
+        {
+            this->port = port;
+            isWorking = true;
+            log(QString("Serwer został włączony, port ") + QString::number(port));
+            timerId = startTimer(SERVER_SEND_INTERVAL);
+            return true;
+        }
+        else
+        {
+            log(QString("Wystąpił problem z włączeniem serwera, port ") + QString::number(port));
+            return false;
+        }
+    }
+    return false;
 }
 
-void Server::handleResults(QString m)
+bool Server::switchOff()
 {
-
+    if (isWorking)
+    {
+        if (tcpServer.stop())
+        {
+            killTimer(timerId);
+            log("Serwer został wyłączony");
+            isWorking = false;
+            return true;
+        }
+        else
+        {
+            log("Wystąpił problem z wyłączeniem serwera");
+            return false;
+        }
+    }
+    return false;
 }
 
-void Server::closeEvent(QCloseEvent *event)
+void Server::read(int playerId, const QByteArray &message)
 {
-	game->close();game->quit();unisleep(500);
+    log(QString("client->server, playerId: %1, typ wiadomości: %2").arg(playerId).arg((int)message[0]));
+    QByteArray response;
+    switch (message[0])
+    {
+    case 1:
+        emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
+        response.resize(3);
+        response[0] = 1;
+        response[1] = playerId;
+        response[2] = 0;
+        tcpServer.write(playerId, response);
+        break;
+    case 2:
+        // muszą być przechowywane ruchy dla każdego gracza... -> klasa Movement TODO!!!
+        break;
+    case 3:
+        controller.removePlayer(playerId);
+        emit playerRemoved(playerId);
+        response.resize(3);
+        response[0] = 3;
+        response[1] = playerId;
+        response[2] = 0;
+        tcpServer.write(playerId, response);
+        break;
+    }
 }
 
-void Server::read(int id,QByteArray message)
+void Server::timerEvent(QTimerEvent *event)
 {
-	logs->append(QString::fromUtf8(message));
+    //tcpServer.writeBroadcast(model.getFrame());
+    //log("Broadcast planszy");
 }
