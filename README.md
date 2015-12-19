@@ -13,4 +13,4 @@ https://git-scm.com/book/pl/v1/Ga%C5%82%C4%99zie-Gita-Czym-jest-ga%C5%82%C4%85%C
 
 #Pisanie testów
 
-http://doc.qt.io/qt-5/qttestlib-tutorial1-example.html
+http://doc.qt.io/qt-5/qtest-tutorial.html
