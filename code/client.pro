@@ -22,12 +22,12 @@ SOURCES +=\
     shared/Model/BoardElements/ObstacleBoardElement.cpp \
     shared/Model/Model.cpp \
     client/Game.cpp \
-    client/MainPlayer.cpp \
     client/Drawer.cpp \
     client/canvas.cpp \
     client/TcpClient.cpp \
     client/NetworkManager.cpp \
-    client/Sprites.cpp
+    client/Sprites.cpp \
+    shared/PlayerAction.cpp
 
 HEADERS  += client/mainwindow.h \
     config.h \
@@ -39,7 +39,6 @@ HEADERS  += client/mainwindow.h \
     shared/Model/BoardElements/ObstacleBoardElement.h \
     shared/Model/Model.h \
     client/Game.h \
-    client/MainPlayer.h \
     client/Drawer.h \
     client/canvas.h \
     shared/Utils/Direction.h \
@@ -47,7 +46,8 @@ HEADERS  += client/mainwindow.h \
     client/NetworkManager.h \
     shared/Frame/FrameGiveable.h \
     shared/Frame/FrameApplyable.h \
-    client/Sprites.h
+    client/Sprites.h \
+    shared/PlayerAction.h
 
 FORMS    += \
     client/mainwindow.ui

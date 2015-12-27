@@ -1,44 +1,55 @@
 #include "Controller.h"
 #include <QDebug>
 
-Controller::Controller(Model &model)
-    :model(model)
+Controller::Controller(Data &data)
+    :data(data)
 {
-    // for debug only
-    model.board[1][2] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), true, 40);
-    model.board[7][9] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), false, 0);
+    // przyklad testowy
+    // Swoja droga - ladowanie mapy NIE MOZE ODBYWAC SIE W KONTROLERZE!!!
+    // Musi byc oddzielna klasa wywolywania, gdy serwer zacznie dzialac!
+    // Obiekt tej nowej klasy MUSI sie znalezc jako pole w w obiekcie server.
+    data.model.board[1][2] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), true, 40);
+    data.model.board[7][9] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), false, 0);
 }
 
 Player &Controller::addPlayer(int id, QByteArray name)
 {
     QPoint freePosition = assignFreePosition();
-    model.players.append(Player(id, assignGroup(), freePosition.x(), freePosition.y(), assignDirection(), name));
-    return model.players.last();
+    data.model.players.insert(id, Player(id, assignGroup(), freePosition.x(), freePosition.y(), assignDirection(), name));
+    data.playerActions.insert(id, PlayerAction(id));
+    return data.model.players[id];
 }
 
 void Controller::removePlayer(int id)
 {
-    for (int i = 0; i < model.players.size(); ++i)
-    {
-        if (model.players[i].id == id){
-            model.players.remove(i);
-            return;
-        }
-    }
-    qDebug() << "Gracz ktorego chcesz usunac, nie istnieje, id = " << id;
+    data.model.players.remove(id);
+    data.playerActions.remove(id);
 }
 
 void Controller::nextModelStatus()
 {
     // napisac!!!
+    // przyklad testowy - kazdemu graczowi odejmuje
+    // o 1 punkt zycia, jesli jest co odjac
+    QMutableMapIterator<int, Player> i(data.model.players);
+    while (i.hasNext())
+    {
+        i.next();
+        qDebug() << "Przed: " << i.value().health;
+        if (i.value().health)
+            --i.value().health;
+        qDebug() << "Po: " << i.value().health;
+    }
 }
 
 Player::GROUP Controller::assignGroup()
 {
     int reds = 0, blues = 0;
-    for (int i = 0; i < model.players.size(); ++i)
+    QMapIterator<int, Player> i(data.model.players);
+    while (i.hasNext())
     {
-        switch (model.players[0].group)
+        i.next();
+        switch (i.value().group)
         {
         case Player::RED_GROUP:
             ++reds;

@@ -24,7 +24,9 @@ SOURCES += \
     shared/Model/BoardElements/ObstacleBoardElement.cpp \
     server/TcpServer.cpp \
     server/Controller.cpp \
-    server/Connection.cpp
+    server/Connection.cpp \
+    server/Data.cpp \
+    shared/PlayerAction.cpp
 
 HEADERS  += \
     server/serverwindow.h \
@@ -42,7 +44,9 @@ HEADERS  += \
     server/TcpServer.h \
     server/Controller.h \
     server/Connection.h \
-    config.h
+    config.h \
+    server/Data.h \
+    shared/PlayerAction.h
 
 FORMS    += \
     server/serverwindow.ui

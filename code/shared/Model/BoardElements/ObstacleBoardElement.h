@@ -3,6 +3,14 @@
 
 #include "BoardElement.h"
 
+/**
+ * @brief
+ * Reprezentacja pola na planszy, które jest przeszkodą.
+ * Klasa rozszerza BoardElement o pola takie jak:
+ * - isDestructable - stwierdza, czy pole można zniszczyć pociskami
+ * - health - zdrowie przeszkody - gdy wartość osiągnie 0, element
+ *   zostaje zniszczony.
+ */
 class ObstacleBoardElement: public BoardElement
 {
 

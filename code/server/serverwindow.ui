@@ -15,10 +15,41 @@
   </property>
   <widget class="QWidget" name="serverCentralWidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+    <item row="2" column="0">
      <layout class="QVBoxLayout" name="serverLayout">
       <item>
-       <layout class="QHBoxLayout" name="configLayout">
+       <layout class="QHBoxLayout" name="mapConfigLayout">
+        <item>
+         <widget class="QLabel" name="selectMapLabel">
+          <property name="text">
+           <string>Wybrana mapa:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="selectedMapLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>(brak)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="selectMapButton">
+          <property name="text">
+           <string>Wybór mapy</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="serverConfigLayout">
         <item>
          <widget class="QLabel" name="portLabel">
           <property name="text">
@@ -40,13 +71,6 @@
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="selectMapButton">
-          <property name="text">
-           <string>Wybór mapy</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
@@ -61,8 +85,14 @@
       </item>
       <item>
        <widget class="QTableWidget" name="gamersList">
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
         <attribute name="horizontalHeaderStretchLastSection">
          <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderVisible">
+         <bool>false</bool>
         </attribute>
         <column>
          <property name="text">

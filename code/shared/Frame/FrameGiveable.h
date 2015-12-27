@@ -3,11 +3,22 @@
 
 #include <QByteArray>
 
+/**
+ * @brief
+ * Klasa narzuca implementację metody, która
+ * produkuje ramkę na podstawie obiektu.
+ */
 class FrameGiveable {
 
 public:
     virtual ~FrameGiveable() {}
-    virtual QByteArray getFrame() = 0;
+
+    /**
+     * @brief
+     * Produkuje ramkę.
+     * @return ramka
+     */
+    virtual QByteArray getFrame() const = 0;
 
 };
 

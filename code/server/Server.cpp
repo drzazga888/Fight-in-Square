@@ -1,10 +1,11 @@
 #include "Server.h"
 
-Server::Server(QObject *parent)
-    :QObject(parent), isWorking(false), model(), tcpServer(), controller(model)
+Server::Server(Data &data, QObject *parent)
+    :QObject(parent), isWorking(false), data(data), tcpServer(), controller(data)
 {
     srand(QDateTime::currentMSecsSinceEpoch());
     connect(&tcpServer, SIGNAL(reading(int, QByteArray)), this, SLOT(read(int, QByteArray)));
+    connect(&tcpServer, SIGNAL(disconnecting(int)), this, SLOT(disconnected(int)));
 }
 
 Server::~Server()
@@ -14,7 +15,7 @@ Server::~Server()
 
 void Server::log(const QString &message)
 {
-    emit logged(QDateTime::currentDateTime().toString() + QString(":   ") + message);
+    emit logged(QString("%1:   %2").arg(QDateTime::currentDateTime().toString()).arg(message));
 }
 
 bool Server::switchOn(int port)
@@ -25,13 +26,14 @@ bool Server::switchOn(int port)
         {
             this->port = port;
             isWorking = true;
-            log(QString("Serwer został włączony, port ") + QString::number(port));
+            log(QString("Serwer został włączony, port %1").arg(port));
             timerId = startTimer(SERVER_SEND_INTERVAL);
+            gameTime.start();
             return true;
         }
         else
         {
-            log(QString("Wystąpił problem z włączeniem serwera, port ") + QString::number(port));
+            log(QString("Wystąpił problem z włączeniem serwera, port %1").arg(port));
             return false;
         }
     }
@@ -60,35 +62,48 @@ bool Server::switchOff()
 
 void Server::read(int playerId, const QByteArray &message)
 {
-    log(QString("client->server, playerId: %1, typ wiadomości: %2").arg(playerId).arg((int)message[0]));
+    qDebug() << ((gameTime.elapsed() / 1000) >> 8) << ", " << gameTime.elapsed() / 1000;
+    log(QString("Otrzymano ramkę, playerId: %1, typ: %2").arg(playerId).arg((int)message[0]));
     QByteArray response;
     switch (message[0])
     {
     case 1:
         emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
-        response.resize(3);
+        response.resize(5);
         response[0] = 1;
         response[1] = playerId;
         response[2] = 0;
+        response[3] = gameTime.elapsed() / 1000;
+        response[4] = (gameTime.elapsed() / 1000) >> 8;
         tcpServer.write(playerId, response);
         break;
     case 2:
-        // muszą być przechowywane ruchy dla każdego gracza... -> klasa Movement TODO!!!
+        data.playerActions[playerId].applyFrame(message);
         break;
     case 3:
-        controller.removePlayer(playerId);
-        emit playerRemoved(playerId);
         response.resize(3);
         response[0] = 3;
         response[1] = playerId;
         response[2] = 0;
         tcpServer.write(playerId, response);
+        tcpServer.disconnect(playerId);
         break;
     }
 }
 
-void Server::timerEvent(QTimerEvent *event)
+void Server::disconnected(int playerId)
 {
-    //tcpServer.writeBroadcast(model.getFrame());
-    //log("Broadcast planszy");
+    log(QString("Rozłączenie gracza, playerId: %1").arg(playerId));
+    controller.removePlayer(playerId);
+    emit playerRemoved(playerId);
+}
+
+void Server::timerEvent(QTimerEvent *)
+{
+    controller.nextModelStatus();
+    if (data.model.players.size())
+    {
+        tcpServer.writeBroadcast(data.model.getFrame());
+        log(QStringLiteral("Broadcast planszy"));
+    }
 }

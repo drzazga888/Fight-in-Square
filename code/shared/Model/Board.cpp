@@ -16,7 +16,7 @@ void Board::applyFrame(const QByteArray &frame)
     }
 }
 
-QByteArray Board::getFrame()
+QByteArray Board::getFrame() const
 {
     QByteArray frame(BOARD_ROWS * BOARD_COLS, '\0');
     for (int i = 0; i < BOARD_ROWS; ++i){

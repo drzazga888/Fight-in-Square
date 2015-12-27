@@ -5,15 +5,19 @@
 #include <QPainter>
 #include "../../../config.h"
 
+/**
+ * @brief
+ * Klasa przechowuje informacje o polu planszy.
+ * W swej podstawowej wersji jest to tylko id pola.
+ */
 class BoardElement
 {
 
 public:
-    BoardElement(int id = BOARD_FIELD_ID(EMPTY), QString path = QString());
+    BoardElement(int id = BOARD_FIELD_ID(EMPTY));
     virtual ~BoardElement(){}
 
     unsigned char id;
-    QString path;
 
 };
 

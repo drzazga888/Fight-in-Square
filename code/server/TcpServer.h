@@ -1,7 +1,7 @@
 #ifndef TCP_SERVER_H
 #define TCP_SERVER_H
 
-#include <QVector>
+#include <QMap>
 #include <QWidget>
 #include <QTcpServer>
 
@@ -16,7 +16,7 @@ public:
 	bool start(int port);
 	bool stop();
 	bool disconnect(int id);
-	bool disconnectAll();
+    bool disconnectAll();
 	bool write(int id, const char* message, bool emitable=true);
 	bool writeBroadcast(const char* message);
 public slots:
@@ -32,7 +32,7 @@ signals:
 	void disconnecting(int);
 private:
 	QTcpServer *tcpServer;
-	QVector<Connection*> connections;
+    QMap<int, Connection*> connections;
 	int connId;
 };
 

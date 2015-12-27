@@ -5,6 +5,11 @@
 #include "../Utils/Direction.h"
 #include "../Frame/Frameable.h"
 
+/**
+ * @brief
+ * Informacje o wystrzelonym pocisku na planszy.
+ * Obiekt takiej klasy jest "Ramkowalny"
+ */
 class Shot: public Frameable
 {
 
@@ -13,8 +18,17 @@ public:
     Shot();
 	Shot(int player_id, int x_start, int y_start, DIRECTION direction, int flight_periods, int power);
 
+    /**
+     * @brief applyFrame przyjmuje ramkę i ją aplikuje na obiekt
+     * @param frame - ramka
+     */
     virtual void applyFrame(const QByteArray &frame);
-    virtual QByteArray getFrame();
+
+    /**
+     * @brief getFrame tworzy ramkę z obiektu
+     * @return ramka
+     */
+    virtual QByteArray getFrame() const;
 
     unsigned char player_id;
     unsigned char x_start;

@@ -1,6 +1,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+/**
+* Nagłówek konfiguracyjny - zawiera define'y
+*/
+
 // rozmiar okna
 
 #define WINDOW_WIDTH 1134
@@ -13,10 +17,11 @@
 // ogolnie przyjete ustawienia
 
 #define MAX_HEALTH 100
-#define INIT_POWER 30
+#define INIT_POWER 10
 
-// czasy
+// czasy w milisekundach
 
+#define CLIENT_REDRAW_INTERVAL 17
 #define CLIENT_SEND_INTERVAL 80
 #define SERVER_SEND_INTERVAL 200
 

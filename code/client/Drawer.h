@@ -6,11 +6,24 @@
 #include "Game.h"
 #include "Sprites.h"
 
+/**
+ * @brief
+ * Klasa służy do malowania planszy, czołgów i pocisków
+ * na podstawie obiektu game.
+ */
 class Drawer
 {
 
 public:
     Drawer(Game *game);
+
+    /**
+     * @brief
+     * Główna funkjca malująca - używa game i painter
+     * do namalowania planszy.
+     * @param painter
+     * Obiekt, który daje interfejs do malowania
+     */
     void draw(QPainter *painter);
 
 private:

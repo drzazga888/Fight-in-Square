@@ -20,7 +20,7 @@ void Shot::applyFrame(const QByteArray &frame)
     power = frame[8];
 }
 
-QByteArray Shot::getFrame()
+QByteArray Shot::getFrame() const
 {
     QByteArray frame(9, '\0');
     frame[0] = player_id;

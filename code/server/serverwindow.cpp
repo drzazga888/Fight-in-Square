@@ -2,7 +2,7 @@
 #include "ui_serverwindow.h"
 
 ServerWindow::ServerWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::ServerWindow), server()
+    QMainWindow(parent), ui(new Ui::ServerWindow), data(), server(data)
 {
     ui->setupUi(this);
     connect(&server, SIGNAL(logged(QString)), this, SLOT(server_logged(QString)));
@@ -20,6 +20,7 @@ void ServerWindow::on_onOffButton_clicked()
     if (server.isWorking && server.switchOff())
     {
         ui->portEdit->setEnabled(true);
+        ui->selectMapButton->setEnabled(true);
         ui->onOffButton->setText("Uruchom serwer");
     }
     else
@@ -30,9 +31,15 @@ void ServerWindow::on_onOffButton_clicked()
         {
             ui->statusBar->clearMessage();
             ui->portEdit->setEnabled(false);
+            ui->selectMapButton->setEnabled(false);
             ui->onOffButton->setText("Rozłącz serwer");
         }
     }
+}
+
+void ServerWindow::on_selectMapButton_clicked()
+{
+    // wybieranie pliku z mapa
 }
 
 void ServerWindow::server_logged(const QString &message)

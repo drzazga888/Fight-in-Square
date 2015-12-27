@@ -3,10 +3,10 @@
 #include <QDebug>
 
 Game::Game()
-:isRunning(false), model1(), model2(), player(), time()
+    :status(Game::NO_PLAYING)
 {
 
-    /* TESTS
+    /* testy konwersji model -> ramka -> model (stare)
 
     // inicjalizacja testu
     model1 = new Model();
@@ -69,7 +69,7 @@ Game::Game()
 
 void Game::handleKeyboard(int key)
 {
-    if(isRunning){
+    if(status == Game::PLAYING){
         switch (key) {
             case Qt::Key_Up:
                 player.moving_direction = UP;
@@ -92,5 +92,22 @@ void Game::handleKeyboard(int key)
 
 float Game::getPhaseOverlay()
 {
-    return (float)time.elapsed() / SERVER_SEND_INTERVAL;
+    return (float)frameUpdateTimer.elapsed() / SERVER_SEND_INTERVAL;
+}
+
+void Game::setStatus(Game::STATUS status)
+{
+    this->status = status;
+    //qDebug() << status;
+    if (status == Game::PLAYING)
+        frameUpdateTimer.start();
+    emit gameStatusChanged(status);
+}
+
+void Game::applyFrame(const QByteArray &frame)
+{
+    frameUpdateTimer.restart();
+    model1 = model2;
+    model2.applyFrame(frame);
+    emit modelActualized();
 }

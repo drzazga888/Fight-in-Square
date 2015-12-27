@@ -6,13 +6,14 @@ Model::Model()
 
 void Model::applyFrame(const QByteArray &frame)
 {
-    int ptr = 1;
+    int ptr = 1, size;
     board.applyFrame(QByteArray(frame.data() + ptr, BOARD_COLS * BOARD_ROWS));
     ptr += BOARD_COLS * BOARD_ROWS;
-    players.resize(frame[ptr++]);
-    for (int i = 0; i < players.size(); ++i){
-        players[i].applyFrame(QByteArray(frame.data() + ptr, 24));
-        ptr += 24;
+    size = frame[ptr++];
+    players.clear();
+    for (int i = 0; i < size; ++i){
+        players.insert(frame[ptr], QByteArray(frame.data() + ptr, 26));
+        ptr += 26;
     }
     shots.resize(frame[ptr++]);
     for (int i = 0; i < shots.size(); ++i){
@@ -21,18 +22,21 @@ void Model::applyFrame(const QByteArray &frame)
     }
 }
 
-QByteArray Model::getFrame()
+QByteArray Model::getFrame() const
 {
-    int n = 3 + BOARD_COLS * BOARD_ROWS + shots.size() * 9 + players.size() * 24;
+    int n = 3 + BOARD_COLS * BOARD_ROWS + shots.size() * 9 + players.size() * 26;
     int ptr = 0;
     QByteArray frame(n, '\0');
     frame[ptr++] = 2;
     frame.insert(ptr, board.getFrame());
     ptr += BOARD_COLS * BOARD_ROWS;
     frame[ptr++] = players.size();
-    for (int i = 0; i < players.size(); ++i){
-        frame.insert(ptr, players[i].getFrame());
-        ptr += 24;
+    QMapIterator<int, Player> i(players);
+    while (i.hasNext())
+    {
+        i.next();
+        frame.insert(ptr, i.value().getFrame());
+        ptr += 26;
     }
     frame[ptr++] = shots.size();
     for (int i = 0; i < shots.size(); ++i){

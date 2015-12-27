@@ -3,35 +3,111 @@
 
 #include <QObject>
 #include <QTime>
+#include <QElapsedTimer>
 #include "../config.h"
 #include "../shared/Utils/Direction.h"
-#include "MainPlayer.h"
+#include "../shared/PlayerAction.h"
 #include "../shared/Model/Model.h"
 
-class Game: public QObject
+/**
+ * @brief
+ * Główna klasa, która zawiera wszystkie informacje
+ * o grze takie jak:
+ * - stan gry
+ * - 2 obiekty typu Model: model1 (poprzedni stan)
+ *   i model2 (następny) - potrzebne są 2 bo można
+ *   dzięki robić płynne przejścia pomiędzy stanami (modelami)
+ * - funkcje, która zwraca współczynnik nałożenia
+ *   jednego modelu na drugi, wartości od 0 do 1, może
+ *   się zdarzyć, że będzie wartość większa niż 1
+ * - akcje grającego - tzn czy został wykonany ruch,
+ *   kierunek tego ruchu i czy gracz wystrzelił pocisk
+ */
+class Game: public QObject, public FrameApplyable
 {
     Q_OBJECT
 
 public:
 
+    /**
+     * @brief Stany gry
+     */
     enum STATUS {
-        MENU,
+        NO_PLAYING,
         CONNECTING,
-        BEFORE_PLAYING,
-        PLAYING
+        SENDING_HELLO,
+        PLAYING,
+        SENDING_GOODBYE,
+        DISCONNECTING
     };
 
     Game();
+
+    /**
+     * @brief
+     * Funkcja sprawdza, czy wciśnięty klawisz
+     * nie jest czasami akcją gracza, którą
+     * trzeba przechwycić
+     * @param key
+     * Kod klawisza
+     */
     void handleKeyboard(int key);
+
+    /**
+     * @brief
+     * Metoda zwraca współczynnik nałożenia się
+     * jednego modelu na drugi
+     * @return
+     * Wartość od 0 do 1. Czasami ta wartość
+     * może być większa niż 1 - wtedy należy
+     * to traktować jako 1.
+     */
     float getPhaseOverlay();
 
-    bool isRunning;
+    /**
+     * @brief
+     * Funkcja ustawia stan gry.
+     * Po ustawieniu wysyłany jest odpowiedni sygnał.
+     * @param status
+     */
+    void setStatus(STATUS status);
+
+    /**
+     * @brief
+     * Metoda odziedziczona bo klasie abstrakcyjnej
+     * FrameApplyable. Dzięki temu
+     * klasa może na podstawie ramki
+     * ustawić w odpowiedni sposób swój stan.
+     * @param frame
+     * Ramka typu QByteArray
+     */
+    void applyFrame(const QByteArray &frame);
+
+    STATUS status;
     Model model1, model2;
-    MainPlayer player;
-    QTime time;
+    PlayerAction player;
+    QElapsedTimer frameUpdateTimer;
+    QTime gameTime;
+    QString playerName;
 
 signals:
+
+    /**
+     * @brief
+     * Sygnał wysyłany, gdy stan aplikacji ulegnie zmianie,
+     * czyli gdy zostanie wywołana metoda setStatus
+     * @param gameStatus
+     * Stan gry
+     */
     void gameStatusChanged(Game::STATUS gameStatus);
+
+    /**
+     * @brief
+     * Sygnał, który jest emitowany, gdy model został
+     * zaktualizowany - dzięki temu np. główne okno
+     * wie o tym, by przerysować interfejs.
+     */
+    void modelActualized();
 
 };
 
