@@ -9,5 +9,8 @@ Sprites::Sprites()
 
 QPixmap Sprites::get(int id)
 {
-    return collection[id - 1];
+    if (id != BOARD_FIELD_ID(EMPTY))
+        return collection[id - 1];
+    else
+        return QPixmap();
 }

@@ -29,6 +29,7 @@ public:
 private:
     Game *game;
     Sprites sprites;
+    void paint_background(QPainter *painter,const Board &board); //throw(exception)
 
 };
 
