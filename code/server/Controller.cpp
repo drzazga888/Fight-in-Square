@@ -1,9 +1,22 @@
 #include "Controller.h"
 #include <QDebug>
+#include <QVector>
+#include "config.h"
+#include "../shared/Model/Player.h"
 
 Controller::Controller(Data &data)
     :data(data)
 {
+    playerInBoard.resize(5*BOARD_ROWS);
+    for (int i = 0; i < 5*BOARD_ROWS; ++i){
+        playerInBoard.operator[](i).resize(5*BOARD_COLS);
+    }
+    for(int i=0;i<playerInBoard.size();i++){
+        for(int j=0;j<playerInBoard[i].size();j++){
+            playerInBoard[i][j]=nullptr;
+        }
+    }
+
     // przyklad testowy
     // Swoja droga - ladowanie mapy NIE MOZE ODBYWAC SIE W KONTROLERZE!!!
     // Musi byc oddzielna klasa wywolywania, gdy serwer zacznie dzialac!
@@ -28,6 +41,30 @@ void Controller::removePlayer(int id)
 
 void Controller::nextModelStatus()
 {
+
+    QMutableMapIterator<int,Player> it(data.model.players);
+    while(it.hasNext()){
+        it.next();
+        playerInBoard[it.value().x][it.value().y]=&it.value();
+    }
+
+    Board futuredBoard=data.model.board;
+    QMap<int, Player> futuredPlayers=data.model.players;
+    QVector<Shot> futuredShots=data.model.shots;
+
+    QString output="";
+    for(int i=0;i<playerInBoard.size();i++){
+        for(int j=0;j<playerInBoard[i].size();j++){
+            if(playerInBoard[i][j]==nullptr)
+            output+= "0 ";
+            else
+                output+= "P ";
+        }
+        qDebug() <<output;
+    }
+    output="koniec tablicy";
+    qDebug() <<output;
+
     // napisac!!!
     // przyklad testowy - kazdemu graczowi odejmuje
     // o 1 punkt zycia, jesli jest co odjac
@@ -35,11 +72,13 @@ void Controller::nextModelStatus()
     while (i.hasNext())
     {
         i.next();
-        qDebug() << "Przed: " << i.value().health;
+        qDebug() << "Wartość key " << i.key();
+        /*qDebug() << "Przed: " << i.value().health;
         if (i.value().health)
             --i.value().health;
         qDebug() << "Po: " << i.value().health;
-    }
+        */
+}
 }
 
 Player::GROUP Controller::assignGroup()
@@ -73,6 +112,19 @@ DIRECTION Controller::assignDirection()
 }
 
 QPoint Controller::assignFreePosition(){
-    // tak zeby dzialalo...
-    return QPoint(0, 0);
+    int x=0;int y=0;
+    do{
+        x=rand() % 5*BOARD_ROWS;
+        y=rand() % 5*BOARD_COLS;
+    }while(playerInBoard[x][y]!=nullptr);
+    return QPoint(x, y);
 }
+
+bool Controller::isConflictPlayers(QPoint player1,QPoint player2){
+    int odl_x=abs(player1.x()-player2.x());
+    int odl_y=abs(player1.y()-player2.y());
+    if(odl_x<4 && odl_y<4)  return true;
+    else return false;
+}
+
+

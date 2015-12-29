@@ -1,11 +1,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
-
 #include <QPoint>
 #include "Data.h"
 #include "../config.h"
 #include "../shared/Utils/Direction.h"
 #include "../shared/Model/BoardElements/ObstacleBoardElement.h"
+
 
 /**
  * @brief
@@ -50,6 +50,9 @@ private:
     DIRECTION assignDirection();
     QPoint assignFreePosition();
     Data &data;
+    QVector<QVector<Player*> > playerInBoard;
+    bool isConflictPlayers(QPoint player1,QPoint player2);
+
 
 };
 
