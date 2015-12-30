@@ -4,6 +4,32 @@
 #include <cmath>
 #include <QDebug>
 
+Animation::Animation(int x, int y): x(x), y(y), step(10)
+{
+}
+
+int Animation::getPhase()
+{
+    if(step<13)
+    {
+    ++step;
+    return step-1;
+}
+    else
+        return 0;
+}
+
+int Animation::getplacex()
+{
+    return x;
+}
+
+int Animation::getplacey()
+{
+    return y;
+}
+
+
 Drawer::Drawer(Game *game)
     :game(game), sprites()
 {
@@ -133,7 +159,7 @@ void Drawer::which_field(int &col, int &row, int x, int y){
 void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
 {
     QTransform transf;
-    for(int i=players.count()-1;i>=0;i--)
+    for(int i=0;i<players.size();i++)
         {
          if(players[i].direction)
             {
@@ -144,5 +170,22 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
                         BOARD_FIELD_HEIGHT,
                         sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(players[i].direction-1))));
             }
+    }
+}
+
+void Drawer::draw_bullets(QPainter *painter, QVector<Shot> shots)
+{
+    QTransform trans;
+    foreach (const Shot &shot,shots)
+    {
+        if(check_collisions(shot.x_start,shot.y_start,BULLET_TYPE,shot.direction))
+        animations.append(Animation(shot.x_start,shot.y_start));
+        else
+            painter->drawPixmap(
+                        shot.x_start,
+                        shot.y_start,
+                        BOARD_FIELD_WIDTH,
+                        BOARD_FIELD_HEIGHT,
+                        sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*shot.direction)));
     }
 }
