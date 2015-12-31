@@ -47,19 +47,20 @@ void Controller::nextModelStatus()
     QMutableMapIterator<int,Player> it(futuredPlayers);
     while(it.hasNext()){
         it.next();
-         it.value().direction=DIRECT(it.value().id);
-         data.playerActions[it.value().id].moving_direction=NONE;
+        // it.value().direction=DIRECT(it.value().id);
+  /*!!*///data.playerActions[it.value().id].moving_direction=NONE;
         movePlayer(it.value());
     }
     it.toFront();
     while(it.hasNext()){
         it.next();
+        if(!it.hasNext())   break;
         QMutableMapIterator<int,Player> it2(futuredPlayers);
         while(it2.hasNext()){
             it2.next();
             SolvePlayerConflict(it.value(),it2.value());
-            qDebug() <<"Czy jest konflikt?"<<isConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y));
-            qDebug() <<"Czy jest double konflikt?"<<isDoubleConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y));
+          //  qDebug() <<"Czy jest konflikt?"<<isConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y));
+          //  qDebug() <<"Czy jest double konflikt?"<<isDoubleConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y));
 /*
             if(it2.value().id!=it.value().id && isConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y))){
                 if(it2.value().id!=it.value().id && isDoubleConflictPlayers(QPoint((int)it.value().x,(int)it.value().y),QPoint((int)it2.value().x,(int)it2.value().y))){
@@ -71,6 +72,7 @@ void Controller::nextModelStatus()
                 //it.toBack();
             }
 */        }
+
   //      it.value().direction=NONE;
     }
     RefreshPlayerInBoard(futuredPlayers, playerInBoard);
@@ -81,6 +83,12 @@ void Controller::nextModelStatus()
     DebugDrawPlayerInBoard(playerInBoard);
 
     data.model.players=futuredPlayers;
+    it.toFront();
+    while(it.hasNext()){
+        it.next();
+        // it.value().direction=DIRECT(it.value().id);
+        data.playerActions[it.value().id].moving_direction=NONE;
+    }
 }
 
 Player::GROUP Controller::assignGroup()
@@ -116,11 +124,11 @@ DIRECTION Controller::assignDirection()
 QPoint Controller::assignFreePosition(){
    /* int x=0;int y=0;
     do{
-        x=rand() % 5*BOARD_ROWS;
-        y=rand() % 5*BOARD_COLS;
+        x=rand() % (5*BOARD_ROWS-2)+2;
+        y=rand() % (5*BOARD_COLS-2)+2;
     }while(playerInBoard[x][y]!=nullptr);
     return QPoint(x, y);*/
-    return QPoint(0,49);
+    return QPoint(2,45);
 }
 
 bool Controller::isConflictPlayers(QPoint player1,QPoint player2){
@@ -136,42 +144,43 @@ bool Controller::isDoubleConflictPlayers(QPoint player1,QPoint player2){
     else return false;
 }
 void Controller::movePlayer(Player & player){
-    switch(player.direction){
+    if(DIRECT(player.id)!=NONE) player.direction=DIRECT(player.id); //nawet, jeśli nie uda się przesunąc, to kierunek czołgu zmieniamy!
+    switch(DIRECT(player.id)){
     case UP:
-        if(player.y==0)    player.direction=NONE;
+        if(player.y==2)    DIRECT(player.id)=NONE;
         else    (player.y)--;
         break;
     case DOWN:
-        if(player.y==(5*BOARD_ROWS-1))    player.direction=NONE;
+        if(player.y==(5*BOARD_ROWS-1-2))    DIRECT(player.id)=NONE;
         else    (player.y)++;
         break;
     case LEFT:
-        if(player.x==0)    player.direction=NONE;
+        if(player.x==2)    DIRECT(player.id)=NONE;
         else    (player.x)--;
         break;
     case RIGHT:
-        if(player.x==(5*BOARD_COLS-1))    player.direction=NONE;
+        if(player.x==(5*BOARD_COLS-1-2))    DIRECT(player.id)=NONE;
         else    (player.x)++;
         break;
     }
 }
 void Controller::backmovePlayer(Player & player){
-    switch(player.direction){
+    switch(DIRECT(player.id)){
     case UP:
                 (player.y)++;
-        player.direction=NONE;
+        DIRECT(player.id)=NONE;
         break;
     case DOWN:
                 (player.y)--;
-        player.direction=NONE;
+        DIRECT(player.id)=NONE;
         break;
     case LEFT:
                 (player.x)++;
-        player.direction=NONE;
+        DIRECT(player.id)=NONE;
         break;
     case RIGHT:
                 (player.x)--;
-        player.direction=NONE;
+        DIRECT(player.id)=NONE;
         break;
     }
 }
@@ -211,12 +220,13 @@ void Controller::RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<Q
 void Controller::SolvePlayerConflict(Player & player1,Player & player2){
     int odl_x=abs(player1.x-player2.x);
     int odl_y=abs(player1.y-player2.y);
-    if(player1.direction==NONE || player2.direction==NONE){
-        if(odl_x<=3 && odl_y<=3 && player1.direction==NONE)   backmovePlayer(player2);
-        else if(odl_x<=3 && odl_y<=3 && player2.direction==NONE)  backmovePlayer(player1);
+    //DIRECT(player1.id)
+    if(DIRECT(player1.id)==NONE || DIRECT(player2.id)==NONE){
+        if(odl_x<=3 && odl_y<=3 && DIRECT(player1.id)==NONE)   backmovePlayer(player2);
+        else if(odl_x<=3 && odl_y<=3 && DIRECT(player2.id)==NONE)  backmovePlayer(player1);
 
     }
-    if(((player1.direction==LEFT && player1.direction==RIGHT) || (player1.direction==RIGHT && player1.direction==LEFT))||((player1.direction==UP && player1.direction==DOWN) || (player1.direction==DOWN && player1.direction==UP))){
+    if(((DIRECT(player1.id)==LEFT && DIRECT(player2.id)==RIGHT) || (DIRECT(player1.id)==RIGHT && DIRECT(player2.id)==LEFT))||((DIRECT(player1.id)==UP && DIRECT(player2.id)==DOWN) || (DIRECT(player1.id)==DOWN && DIRECT(player2.id)==UP))){
         if(((odl_x==3 && odl_y==3) ||(odl_y==3 && odl_x==3)) ){
             backmovePlayer(player1);
         }
@@ -229,7 +239,7 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         backmovePlayer(player1);
     }
     else if(odl_x<=2 && odl_y==3){
-        if(player1.direction==UP || player1.direction==DOWN){
+        if(DIRECT(player1.id)==UP || DIRECT(player1.id)==DOWN){
             backmovePlayer(player1);
         }
         else{
@@ -237,7 +247,7 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(odl_y<=2 && odl_x==3){
-        if(player1.direction==LEFT || player1.direction==RIGHT){
+        if(DIRECT(player1.id)==LEFT || DIRECT(player1.id)==RIGHT){
             backmovePlayer(player1);
         }
         else{
