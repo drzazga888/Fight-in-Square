@@ -5,7 +5,7 @@
 #include "../config.h"
 #include "../shared/Utils/Direction.h"
 #include "../shared/Model/BoardElements/ObstacleBoardElement.h"
-
+#define DIRECT(id) data.playerActions[id].moving_direction
 
 /**
  * @brief
@@ -18,6 +18,7 @@ class Controller
 {
 
 public:
+   // Controller();
     Controller(Data &data);
 
     /**
@@ -51,7 +52,15 @@ private:
     QPoint assignFreePosition();
     Data &data;
     QVector<QVector<Player*> > playerInBoard;
+   public:
     bool isConflictPlayers(QPoint player1,QPoint player2);
+    bool isDoubleConflictPlayers(QPoint player1,QPoint player2);
+    void movePlayer(Player & player);
+    void backmovePlayer(Player & player);
+    void SolvePlayerConflict(Player & player1,Player & player2);
+    void DebugDrawPlayerInBoard(QVector<QVector<Player*> > & playerInBoard);
+    void RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<QVector<Player*> > & playerInBoard);
+
 
 
 };
