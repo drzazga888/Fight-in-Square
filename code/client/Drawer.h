@@ -5,27 +5,7 @@
 #include "../config.h"
 #include "Game.h"
 #include "Sprites.h"
-
-#define BULLET_TYPE 0
-#define TUNK_TYPE 1
-
-/**
- * @brief
- * Klasa służy do przechowywania obiektu animacji
- * jej stadium i położenia
- */
-class Animation
-{
-public:
-    Animation(int x, int y);
-    int getPhase();
-    int getplacex();
-    int getplacey();
-private:
-    int x;
-    int y;
-    int step;
-};
+#include "animation.h"
 
 
 /**
@@ -38,6 +18,11 @@ class Drawer
 
 public:
     Drawer(Game *game);
+
+    enum TYPE{
+        TUNK_TYPE=1,
+        BULLET_TYPE=0
+    };
 
     /**
      * @brief
@@ -57,6 +42,7 @@ private:
     void which_field(int &col, int &row,int x, int y);
     void draw_players(QPainter *painter ,QMap<int, Player> players);
     void draw_bullets(QPainter *painter,QVector<Shot> shots);
+    int cast_to_pixels(int x, TYPE type, DIRECTION direction = NONE);
 };
 
 #endif // DRAWER_H

@@ -27,7 +27,8 @@ SOURCES +=\
     client/TcpClient.cpp \
     client/NetworkManager.cpp \
     client/Sprites.cpp \
-    shared/PlayerAction.cpp
+    shared/PlayerAction.cpp \
+    client/animation.cpp
 
 HEADERS  += client/mainwindow.h \
     config.h \
@@ -47,7 +48,8 @@ HEADERS  += client/mainwindow.h \
     shared/Frame/FrameGiveable.h \
     shared/Frame/FrameApplyable.h \
     client/Sprites.h \
-    shared/PlayerAction.h
+    shared/PlayerAction.h \
+    client/animation.h
 
 FORMS    += \
     client/mainwindow.ui
