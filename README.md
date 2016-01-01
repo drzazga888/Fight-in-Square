@@ -1,16 +1,3 @@
-#Branche i podzial pracy
+#Opis projektu
 
-Każdy musi sobie utworzyć brancha i ma na nim pracować!
-
-Jak robić branche:
-https://git-scm.com/book/pl/v1/Ga%C5%82%C4%99zie-Gita-Czym-jest-ga%C5%82%C4%85%C5%BA
-
-**Dostępne branche:**
-- maploader - Tomek
-- controller - Łukasz
-- drawer - Kasia
-- Master - Kamil
-
-#Pisanie testów
-
-http://doc.qt.io/qt-5/qtest-tutorial.html
+Celem projektu jest stworzenie gry polegającej na drużynowej rywalizacji on-line graczy walczących czołgami w celu pokonania przeciwnej drużyny. Aby to osiągnąć należy zebrać odpowiednią ilość punktów. Gra się kończy wówczas, gdy upłynie podstawowy czas gry lub - w wersji rozszerzonej – po przejęciu przed jedną z drużyn określonej liczby flag przeciwnika. Wygrywa gracz z największą liczbą punktów (oraz drużyna z największa liczba zdobytych flag).
