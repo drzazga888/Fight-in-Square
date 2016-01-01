@@ -226,5 +226,5 @@ DIRECTION Controller::assignDirection()
 
 QPoint Controller::assignFreePosition(){
     // tak zeby dzialalo...
-    return QPoint(rand() % (BOARD_COLS * BOARD_SUBFIELDS), rand() % (BOARD_ROWS * BOARD_SUBFIELDS));
+    return QPoint(rand() % (BOARD_COLS * BOARD_SUBFIELDS - 4) + 2, rand() % (BOARD_ROWS * BOARD_SUBFIELDS - 4) + 2);
 }
