@@ -523,5 +523,4 @@ bool Controller::isShotInFieldWall(QPoint shot,QPoint field){
     int odl_y=abs(shot.y()-5*field.y()-2);
     if(odl_x<=2 && odl_y<=2 && extendedBoard[field.y()][field.x()].isDestructable==true)  return true;
     else return false;
->>>>>>> controller
 }
