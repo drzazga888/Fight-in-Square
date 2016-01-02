@@ -62,7 +62,7 @@ bool Server::switchOff()
 
 void Server::read(int playerId, const QByteArray &message)
 {
-    qDebug() << ((gameTime.elapsed() / 1000) >> 8) << ", " << gameTime.elapsed() / 1000;
+/*LUKI*/    //qDebug() << ((gameTime.elapsed() / 1000) >> 8) << ", " << gameTime.elapsed() / 1000;
     log(QString("Otrzymano ramkę, playerId: %1, typ: %2").arg(playerId).arg((int)message[0]));
     QByteArray response;
     switch (message[0])

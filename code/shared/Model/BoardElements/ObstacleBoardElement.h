@@ -15,6 +15,7 @@ class ObstacleBoardElement: public BoardElement
 {
 
 public:
+    ObstacleBoardElement();
     ObstacleBoardElement(int id, bool isDestructable, int health);
     virtual ~ObstacleBoardElement(){}
 
