@@ -11,6 +11,13 @@ Controller::Controller(Data &data)
     // data.model.board[1][2] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), true, 40);
     // data.model.board[7][9] = ObstacleBoardElement(BOARD_FIELD_ID(WALL), false, 0);
 
+    QPoint p = assignFreePosition();
+    data.model.shots.append(Shot(0, p.x(), p.y(), assignDirection(), rand() % 20, INIT_POWER));
+    p = assignFreePosition();
+    data.model.shots.append(Shot(0, p.x(), p.y(), assignDirection(), rand() % 20, INIT_POWER));
+    p = assignFreePosition();
+    data.model.shots.append(Shot(0, p.x(), p.y(), assignDirection(), rand() % 20, INIT_POWER));
+
     BA(0, 0, DIRT);
     BA(0, 1, DIRT);
     BA(0, 2, GRASS);
