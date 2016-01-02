@@ -62,11 +62,7 @@ void Drawer::draw(QPainter *painter)
     */
   draw_players(painter,game->model2.players);
 // przyklad testowy #3 - sprawdzanie, ile zycia zzera mi serwer...
-    foreach (const Player &player, game->model2.players)
-    {
-        qDebug() << "Gracz #" << player.id << ", zdrowie: " << player.health << ", x:"<< player.x << ", y:" << player.y;
 
-    }
 
     draw_bullets(painter,game->model2.shots);
 }
@@ -141,16 +137,18 @@ void Drawer::which_field(int &col, int &row, int x, int y)
 void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
 {
     QTransform transf;
-    for(int i=0;i<players.size();i++)
+
+    foreach (const Player player, players)
         {
-         if(players[i].direction)
+
+         if(player.direction)
             {
             painter->drawPixmap(
-                        cast_to_pixels(players[i].x,TUNK_TYPE),
-                        cast_to_pixels(players[i].y,TUNK_TYPE),
+                        cast_to_pixels(player.x,TUNK_TYPE),
+                        cast_to_pixels(player.y,TUNK_TYPE),
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
-                        sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(players[i].direction-1))));
+                        sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
             }
     }
 }
