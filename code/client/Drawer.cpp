@@ -28,8 +28,8 @@ void Drawer::paint_background(QPainter *painter, const Board &board)
 void Drawer::draw(QPainter *painter)
 {
     float phaseOverlay = game->getPhaseOverlay();
-    //float lastphase;
-
+    static float lastphase = 0;
+    static QVector<Shot>shot_copy;
     /****** Kasia test *********/
 
    /* for(int a=0; a<BOARD_COLS;a++)
@@ -63,8 +63,8 @@ void Drawer::draw(QPainter *painter)
   draw_players(painter,game->model2.players);
 // przyklad testowy #3 - sprawdzanie, ile zycia zzera mi serwer...
 
-
     draw_bullets(painter,game->model2.shots);
+   lastphase = phaseOverlay;
 }
 
 
@@ -107,7 +107,7 @@ else
             which_field(col2,row2,x2,y2);
             if(col> BOARD_COLS || col2> BOARD_COLS || row>BOARD_ROWS || row2 > BOARD_ROWS )
                 return true;
-            else if(game->model2.board[col][row].id==5 || game->model2.board[col2][row2].id==5)
+           else if(game->model2.board[col][row].id==5 || game->model2.board[col2][row2].id==5)
             {
                  return true;
             }
@@ -122,11 +122,11 @@ else
 void Drawer::which_field(int &col, int &row, int x, int y)
     {
 
-    if(x>CANVAS_PADDING && y>CANVAS_PADDING){
-    col = (x-CANVAS_PADDING)%BOARD_FIELD_WIDTH;
-    col = (x-col-CANVAS_PADDING)/BOARD_FIELD_WIDTH-1;
-    row = (y-CANVAS_PADDING)%BOARD_FIELD_HEIGHT;
-    row = (y-row-CANVAS_PADDING)/BOARD_FIELD_HEIGHT-1;
+    if(cast_to_pixels(x)>CANVAS_PADDING && cast_to_pixels(y)>CANVAS_PADDING){
+    col = (cast_to_pixels(x)-CANVAS_PADDING)%BOARD_FIELD_WIDTH;
+    col = (cast_to_pixels(x)-col-CANVAS_PADDING)/BOARD_FIELD_WIDTH-1;
+    row = (cast_to_pixels(y)-CANVAS_PADDING)%BOARD_FIELD_HEIGHT;
+    row = (cast_to_pixels(y)-row-CANVAS_PADDING)/BOARD_FIELD_HEIGHT-1;
         }
     else
             {
@@ -144,8 +144,8 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
          if(player.direction)
             {
             painter->drawPixmap(
-                        cast_to_pixels(player.x,TUNK_TYPE),
-                        cast_to_pixels(player.y,TUNK_TYPE),
+                        cast_to_pixels(player.x),
+                        cast_to_pixels(player.y),
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
                         sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
@@ -153,13 +153,15 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
     }
 }
 
-void Drawer::draw_bullets(QPainter *painter, QVector<Shot> shots)
+void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
 {
     int step_x=0;
     int step_y=0;
     QTransform trans;
+
     for(int i=0;i<shots.size();i++)
     {
+
         step_x=0;
         step_y=0;
         switch(shots[i].direction)
@@ -176,27 +178,30 @@ void Drawer::draw_bullets(QPainter *painter, QVector<Shot> shots)
         case RIGHT:
             step_x=shots[i].flight_periods;
             break;
+        default:
+            step_x=0;
+            step_y=0;
+            break;
         }
 
-        shots[i].x_start+=step_x;
-        shots[i].y_start+=step_y;
-        if(check_collisions(shots[i].x_start,shots[i].y_start,BULLET_TYPE,shots[i].direction))
-        animations.append(Animation(shots[i].x_start,shots[i].y_start));
-        else
-            painter->drawPixmap(
-                        cast_to_pixels(shots[i].x_start,BULLET_TYPE,shots[i].direction),
-                        cast_to_pixels(shots[i].y_start,BULLET_TYPE,shots[i].direction),
+        //if(check_collisions(shots[i].x_start+step_x,shots[i].y_start+step_y,shots[i].direction))
+        //{
+        //animations.append(Animation(shots[i].x_start,shots[i].y_start));
+        //}
+        //else
+                painter->drawPixmap(
+                        cast_to_pixels(shots[i].x_start+step_x,shots[i].direction),
+                        cast_to_pixels(shots[i].y_start+step_y,shots[i].direction),
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
                         sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*shots[i].direction)));
+
     }
 }
 
-int Drawer::cast_to_pixels(int x,TYPE type,DIRECTION direction)
+int Drawer::cast_to_pixels(int x,DIRECTION direction)
 {
-    if(TUNK_TYPE==type)
-        return (x)*BOARD_FIELD_WIDTH/5;
-    else if(BULLET_TYPE==type)
+
         switch (direction) {
         case UP:
         case LEFT:
@@ -205,7 +210,7 @@ int Drawer::cast_to_pixels(int x,TYPE type,DIRECTION direction)
         case RIGHT:
             return (x+2)*BOARD_FIELD_WIDTH/5;
         default:
-        return x*BOARD_FIELD_WIDTH/5;
+        return (x-2)*BOARD_FIELD_WIDTH/5;
             break;
         }
 }
