@@ -10,8 +10,8 @@
 enum DIRECTION {
     NONE = 0,
     UP = 1,
-    DOWN = 2,
-    LEFT = 3,
+    LEFT = 2,
+    DOWN = 3,
     RIGHT = 4
 };
 

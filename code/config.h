@@ -50,7 +50,14 @@
 #define BOARD_ROWS 10
 #define BOARD_FIELD_WIDTH 65
 #define BOARD_FIELD_HEIGHT 65
+#define BOARD_SUBFIELDS 5
 #define BOARD_FIELD_PATH "../img/sprites/%1.png"
 #define BOARD_FIELDS_LENGTH 12
+
+// define'y szybkiego dostepu
+
+// BA - Board Assign
+#define BA(row, col, item) \
+    data.model.board[row][col] = BoardElement(BOARD_FIELD_ID(item))
 
 #endif // CONFIG_H
