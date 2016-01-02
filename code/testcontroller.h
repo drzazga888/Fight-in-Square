@@ -13,6 +13,8 @@ private slots:
     void numberOneJeden();
     void test_isConflictPlayers_data();
     void test_isConflictPlayers();
+    void test_howMuchHurt_data();
+    void test_howMuchHurt();
 
 
 };

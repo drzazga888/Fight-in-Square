@@ -4,7 +4,7 @@
 #include "config.h"
 #include "../shared/Model/Player.h"
 
-//Controller::Controller():data(nullptr){}
+
 Controller::Controller(Data &data)
     :data(data)
 {
@@ -14,10 +14,18 @@ Controller::Controller(Data &data)
     }
     for(int i=0;i<playerInBoard.size();i++){
         for(int j=0;j<playerInBoard.operator[](i).size();j++){
-            playerInBoard[i][j]=nullptr;
+            playerInBoard[i][j]='0';
         }
     }
-
+    shotInBoard.resize(5*BOARD_ROWS);
+    for (int i = 0; i < 5*BOARD_ROWS; ++i){
+        shotInBoard.operator[](i).resize(5*BOARD_COLS);
+    }
+    for(int i=0;i<shotInBoard.size();i++){
+        for(int j=0;j<shotInBoard.operator[](i).size();j++){
+            shotInBoard[i][j]=0;
+        }
+    }
     // przyklad testowy
     // Swoja droga - ladowanie mapy NIE MOZE ODBYWAC SIE W KONTROLERZE!!!
     // Musi byc oddzielna klasa wywolywania, gdy serwer zacznie dzialac!
@@ -42,20 +50,18 @@ void Controller::removePlayer(int id)
 
 void Controller::nextModelStatus()
 {
-    QMap<int, Player> futuredPlayers=data.model.players;
-    RefreshPlayerInBoard(futuredPlayers, playerInBoard);
-    QMutableMapIterator<int,Player> it(futuredPlayers);
+    RefreshPlayerInBoard(data.model.players, playerInBoard);
+    refreshShotInBoard(data.model.shots, shotInBoard);
+    QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext()){
         it.next();
-        // it.value().direction=DIRECT(it.value().id);
-  /*!!*///data.playerActions[it.value().id].moving_direction=NONE;
         movePlayer(it.value());
     }
     it.toFront();
     while(it.hasNext()){
         it.next();
         if(!it.hasNext())   break;
-        QMutableMapIterator<int,Player> it2(futuredPlayers);
+        QMutableMapIterator<int,Player> it2(data.model.players);
         while(it2.hasNext()){
             it2.next();
             SolvePlayerConflict(it.value(),it2.value());
@@ -75,20 +81,83 @@ void Controller::nextModelStatus()
 
   //      it.value().direction=NONE;
     }
-    RefreshPlayerInBoard(futuredPlayers, playerInBoard);
     Board futuredBoard=data.model.board;
-
-    QVector<Shot> futuredShots=data.model.shots;
-    RefreshPlayerInBoard(futuredPlayers, playerInBoard);
-    DebugDrawPlayerInBoard(playerInBoard);
-
-    data.model.players=futuredPlayers;
+    it.toFront();
+    //teraz pociski !!!
     it.toFront();
     while(it.hasNext()){
         it.next();
-        // it.value().direction=DIRECT(it.value().id);
-        data.playerActions[it.value().id].moving_direction=NONE;
+        if(IS_SHOT(it.value().id)==true && it.value().is_alive){
+            data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+        }
     }
+    it.toFront();
+    for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
+        // przesuwamy je !!
+        i->flight_periods++;
+        int howMuchShoted=0;
+        while(it.hasNext()){
+            it.next();
+            //czy zestrzelilisny gracza ; siebie samego zestrzelic nie mozemy
+            if(it.value().is_alive && it.value().id!=i->player_id && isShotInPlayer(getActualShotPosition(*i),QPoint(it.value().x,it.value().y))){
+                howMuchShoted++;
+                data.model.players.value(i->player_id).points;
+                if((it.value().health-howMuchHurt(i->power))<=0)    {
+                    it.value().health=0;
+                    it.value().is_alive=false;
+                    it.value().death_time=0;
+
+                    //if(it.value().points-1<0) it.value().points=0;
+                   // else    it.value().points-=1;
+                    data.model.players[i->player_id].points++;
+                    data.model.players[i->player_id].power++;
+                }
+                else{
+                    it.value().health-=howMuchHurt(i->power);
+                }
+
+            }
+        }
+        it.toFront();
+        if(howMuchShoted>0){
+            i=data.model.shots.erase(i);
+        }
+        else if(!isShotInBoard(QPoint(getActualShotPosition(*i)))){
+            i=data.model.shots.erase(i);
+        }
+        else{
+            i++;
+        }
+    }
+    //teraz zajmujemy się trupami
+    it.toFront();
+    while(it.hasNext()){
+        it.next();
+        if(it.value().is_alive==false){
+            if(it.value().death_time<REGENERATION_TIME){
+                it.value().death_time++;
+            }
+            else{
+                QPoint freePosition = assignFreePosition();
+                it.value().is_alive=true;
+                it.value().death_time=0;
+                it.value().health=MAX_HEALTH;
+                it.value().direction=assignDirection();
+                it.value().x=freePosition.x();
+                it.value().y=freePosition.y();
+             }
+        }
+    }
+    //"zerujemy"
+    it.toFront();
+    while(it.hasNext()){
+        it.next();
+        DIRECT(it.value().id)=NONE;
+        IS_SHOT(it.value().id)=false;
+    }
+    RefreshPlayerInBoard(data.model.players, playerInBoard);
+    refreshShotInBoard(data.model.shots, shotInBoard);
+    debugDrawInBoard(playerInBoard,shotInBoard);
 }
 
 Player::GROUP Controller::assignGroup()
@@ -144,6 +213,7 @@ bool Controller::isDoubleConflictPlayers(QPoint player1,QPoint player2){
     else return false;
 }
 void Controller::movePlayer(Player & player){
+    if(!player.is_alive)    return;
     if(DIRECT(player.id)!=NONE) player.direction=DIRECT(player.id); //nawet, jeśli nie uda się przesunąc, to kierunek czołgu zmieniamy!
     switch(DIRECT(player.id)){
     case UP:
@@ -165,6 +235,7 @@ void Controller::movePlayer(Player & player){
     }
 }
 void Controller::backmovePlayer(Player & player){
+    if(!player.is_alive)    return;
     switch(DIRECT(player.id)){
     case UP:
                 (player.y)++;
@@ -185,42 +256,65 @@ void Controller::backmovePlayer(Player & player){
     }
 }
 
-void Controller::DebugDrawPlayerInBoard(QVector<QVector<Player*> > & playerInBoard){
+void Controller::debugDrawInBoard(QVector<QVector<char> > & playerInBoard, QVector<QVector<int> >& shotInBoard){
     QString output="";
     for(int i=0;i<playerInBoard.size();i++){
         for(int j=0;j<playerInBoard.operator[](i).size();j++){
-            if(playerInBoard[i][j]==nullptr)
-            output+= "0 ";
-            else
-                output+= "P ";
+            if(shotInBoard[i][j]==0 && playerInBoard[i][j]=='P') output+="P ";
+            else if(shotInBoard[i][j]==0 && playerInBoard[i][j]=='W')   output+="W ";
+            else{
+                QString str=QString::number(shotInBoard[i][j]);
+                output=output+str+' ';
+            }
         }
         qDebug() <<output;
-        qDebug() <<"--------"<<i<<"-------";
+        //qDebug() <<"--------"<<i<<"-------";
         output="";
     }
    // output="koniec tablicy";
     //qDebug() << output;
-    //qDebug() <<"koniec tablicy";
+    qDebug() <<"koniec tablicy";
 }
 
-void Controller::RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<QVector<Player*> > & playerInBoard){
+void Controller::RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<QVector<char> > & playerInBoard){
     for(int i=0;i<playerInBoard.size();i++){
         for(int j=0;j<playerInBoard.operator[](i).size();j++){
-            playerInBoard[i][j]=nullptr;
+            playerInBoard[i][j]='0';
         }
     }
     QMutableMapIterator<int,Player> it(futuredPlayers);
     while(it.hasNext()){
         it.next();
-        playerInBoard[it.value().y][it.value().x]=&it.value();
- /*!!!*/
+        if(it.value().is_alive){
+            for(int i=it.value().y-2;i<=it.value().y+2;i++) {
+
+                for(int j=it.value().x-2;j<=it.value().x+2;j++){
+                    playerInBoard[i][j]='P';
+                }
+            }
+            playerInBoard[it.value().y][it.value().x]='W';
+        }
     }
+ /*!!!*/
+}
+void Controller::refreshShotInBoard(QVector<Shot> futuredShots,QVector<QVector<int> > & shotInBoard){
+    for(int i=0;i<shotInBoard.size();i++){
+        for(int j=0;j<shotInBoard.operator[](i).size();j++){
+            shotInBoard[i][j]=0;
+        }
+    }
+    for(int i=0;i<futuredShots.size();i++){
+        shotInBoard[getActualShotPosition(futuredShots[i]).y()][getActualShotPosition(futuredShots[i]).x()]++;
+    }
+ /*!!!*/
 }
 
+
 void Controller::SolvePlayerConflict(Player & player1,Player & player2){
+    if(!player1.is_alive)    return;
+    if(!player2.is_alive)    return;
     int odl_x=abs(player1.x-player2.x);
     int odl_y=abs(player1.y-player2.y);
-    //DIRECT(player1.id)
     if(DIRECT(player1.id)==NONE || DIRECT(player2.id)==NONE){
         if(odl_x<=3 && odl_y<=3 && DIRECT(player1.id)==NONE)   backmovePlayer(player2);
         else if(odl_x<=3 && odl_y<=3 && DIRECT(player2.id)==NONE)  backmovePlayer(player1);
@@ -258,4 +352,42 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         backmovePlayer(player1);
         backmovePlayer(player2);
     }
+}
+
+bool Controller::isShotInPlayer(QPoint shot,QPoint player){
+    int odl_x=abs(shot.x()-player.x());
+    int odl_y=abs(shot.y()-player.y());
+    if(odl_x<=2 && odl_y<=2)  return true;
+    else return false;
+}
+
+QPoint Controller::getActualShotPosition(const Shot & shot){
+    switch(shot.direction){
+    case UP:
+        return QPoint(shot.x_start,shot.y_start-shot.flight_periods);
+        break;
+    case DOWN:
+        return QPoint(shot.x_start,shot.y_start+shot.flight_periods);
+        break;
+    case LEFT:
+        return QPoint(shot.x_start-shot.flight_periods,shot.y_start);
+        break;
+    case RIGHT:
+        return QPoint(shot.x_start+shot.flight_periods,shot.y_start);
+        break;
+    default:
+        return QPoint(-1,-1);
+    }
+}
+
+bool Controller::isShotInBoard(const QPoint &shot){
+    if(shot.x()>=0 && shot.x()<=(5*BOARD_COLS-1) && shot.y()>=0 && shot.y()<=(5*BOARD_ROWS-1))  return true;
+    else return false;
+}
+
+int Controller::howMuchHurt(int power){
+    if(power>100)   return 10;
+    else if(power<0)    return 1;
+    int hurt=(power-1)/10 +1;
+    return hurt;
 }
