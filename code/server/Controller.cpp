@@ -144,7 +144,10 @@ void Controller::nextModelStatus()
     it.toFront();
     for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         // przesuwamy je !!
-        i->flight_periods++;
+        i->flight_periods+=2;
+        if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
+            i->flight_periods-=1;
+        }
         int howMuchShoted=0;
         while(it.hasNext()){
             it.next();
@@ -257,12 +260,12 @@ QPoint Controller::assignFreePosition(){
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext() && data.model.players.size()>0){
         it.next();
-                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) && extendedBoard[y][x].isDestructable==false){
+                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) && !(extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER))){
                     return QPoint(5*x+2, 5*y+2);
                 }
     }
 
-    }while(data.model.players.size()>0 && extendedBoard[y][x].isDestructable==true);
+    }while(data.model.players.size()>0 || (extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER)));
     return QPoint(5*x+2, 5*y+2);
     //return QPoint(2,45);
 }
@@ -495,7 +498,7 @@ void Controller::SolveFieldsWallAndPlayerConflict(Player & player){
 bool Controller::isPlayerInFieldWall(QPoint player,QPoint field){
     int odl_x=abs(player.x()-5*field.x()-2);
     int odl_y=abs(player.y()-5*field.y()-2);
-    if(odl_x<=4 && odl_y<=4 && extendedBoard[field.y()][field.x()].isDestructable==true)  return true;
+    if(odl_x<=4 && odl_y<=4 && (extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WALL) ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WATER)))  return true;
     else return false;
 }
 
@@ -506,7 +509,7 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
         for(int j=0;j<2 && d_y+j<BOARD_ROWS;j++){
             if(isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
                 if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
-                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(1,false,0);
+                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(rand()%4+1,false,0);
                 }
                 else{
                     extendedBoard[d_y+j][d_x+i].health--;
