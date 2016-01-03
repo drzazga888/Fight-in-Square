@@ -157,6 +157,8 @@ void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
 {
     int step_x=0;
     int step_y=0;
+    int pos_x=0;
+    int pos_y=0;
     QTransform trans;
 
     for(int i=0;i<shots.size();i++)
@@ -164,38 +166,48 @@ void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
 
         step_x=0;
         step_y=0;
+
+        pos_x=0;
+        pos_y=0;
+
         switch(shots[i].direction)
         {
         case UP:
             step_y=-shots[i].flight_periods;
+            pos_y=-2;
             break;
         case DOWN:
+            pos_y=2;
             step_y=shots[i].flight_periods;
             break;
         case LEFT:
+            pos_x=-2;
             step_x=-shots[i].flight_periods;
             break;
         case RIGHT:
+            pos_x=2;
             step_x=shots[i].flight_periods;
             break;
         default:
+            pos_x=0;
+            pos_y=0;
             step_x=0;
             step_y=0;
             break;
         }
-
+trans.reset();
         //if(check_collisions(shots[i].x_start+step_x,shots[i].y_start+step_y,shots[i].direction))
         //{
         //animations.append(Animation(shots[i].x_start,shots[i].y_start));
         //}
         //else
                 painter->drawPixmap(
-                        cast_to_pixels(shots[i].x_start+step_x,shots[i].direction),
-                        cast_to_pixels(shots[i].y_start+step_y,shots[i].direction),
+                        cast_to_pixels(shots[i].x_start+step_x+pos_x,shots[i].direction),
+                        cast_to_pixels(shots[i].y_start+step_y+pos_y,shots[i].direction),
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
-                        sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*shots[i].direction)));
-
+                        sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*(shots[i].direction-1))));
+qDebug() << shots[i].direction;
     }
 }
 
@@ -205,10 +217,10 @@ int Drawer::cast_to_pixels(int x,DIRECTION direction)
         switch (direction) {
         case UP:
         case LEFT:
-            return (x-2)*BOARD_FIELD_WIDTH/5;
+            return (x)*BOARD_FIELD_WIDTH/5-BOARD_FIELD_WIDTH/5*2;
         case DOWN:
         case RIGHT:
-            return (x+2)*BOARD_FIELD_WIDTH/5;
+            return (x)*BOARD_FIELD_WIDTH/5-BOARD_FIELD_WIDTH/5*2;
         default:
         return (x-2)*BOARD_FIELD_WIDTH/5;
             break;
