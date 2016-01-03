@@ -27,7 +27,7 @@ Controller::Controller(Data &data)
             QTextStream in(&file);
             int i=0;
             int j=0;
-            while(/*!linia.isEmpty() &&*/ i<10){
+            while( i<10){
                 QString linia=in.readLine();
   //              qDebug()<<"linia nr"<<linia;
                 QString::iterator itc=linia.begin();
@@ -144,10 +144,10 @@ void Controller::nextModelStatus()
     it.toFront();
     for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         // przesuwamy je !!
-        i->flight_periods+=2;
-        if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
-            i->flight_periods-=1;
-        }
+        i->flight_periods+=1;
+       // if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
+       //     i->flight_periods-=1;
+       // }
         int howMuchShoted=0;
         while(it.hasNext()){
             it.next();
@@ -155,15 +155,17 @@ void Controller::nextModelStatus()
             if(it.value().is_alive && it.value().id!=i->player_id && isShotInPlayer(getActualShotPosition(*i),QPoint(it.value().x,it.value().y))){
                 howMuchShoted++;
                 data.model.players.value(i->player_id).points;
-                if((it.value().health-howMuchHurt(i->power))<=0)    {
+                //if((it.value().health-howMuchHurt(i->power))<=0)    {
+                if((it.value().health-i->power)<=0)    {
                     it.value().health=0;
                     it.value().is_alive=false;
                     it.value().death_time=0;
                     data.model.players[i->player_id].points++;
-                    data.model.players[i->player_id].power++;
+                    //data.model.players[i->player_id].power++;
                 }
                 else{
-                    it.value().health-=howMuchHurt(i->power);
+                    //it.value().health-=howMuchHurt(i->power);
+                    it.value().health-=i->power;
                 }
             }
         }
@@ -508,11 +510,12 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
     for(int i=0;i<2 && d_x+i<BOARD_COLS;i++){
         for(int j=0;j<2 && d_y+j<BOARD_ROWS;j++){
             if(isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
-                if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
+                //if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
+                if((extendedBoard[d_y+j][d_x+i].health-shot.power)<=0)    {
                     extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(rand()%4+1,false,0);
                 }
                 else{
-                    extendedBoard[d_y+j][d_x+i].health--;
+                    extendedBoard[d_y+j][d_x+i].health-=shot.power;
                 }
                 return true;
             }
