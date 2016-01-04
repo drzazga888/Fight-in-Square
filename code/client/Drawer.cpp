@@ -28,44 +28,44 @@ void Drawer::paint_background(QPainter *painter, const Board &board)
 void Drawer::draw(QPainter *painter)
 {
     float phaseOverlay = game->getPhaseOverlay();
-    static float lastphase = 0;
-    static QVector<Shot>shot_copy;
-    /****** Kasia test *********/
 
-   /* for(int a=0; a<BOARD_COLS;a++)
-        for(int b=0; b<BOARD_ROWS;b++)
-        {
-            game->model1.board[b][a]=(a+b)%4+1;
-        }
-
-    */
     paint_background(painter,game->model2.board);
 
-	/*********** TESTY KAMILSON-A ***********/
-
-	// przyklad testowy #1 - animująca się kropka ok. 60 fps
-    //painter->drawPoint(cos(phaseOverlay * M_PI * 2.0) * 100 + 150, sin(phaseOverlay * M_PI * 2.0) * 100 + 150);
-   // painter->drawPixmap(70, 70, BOARD_FIELD_WIDTH, BOARD_FIELD_HEIGHT, sprites.get(BOARD_FIELD_ID(TANK)));
-
-    // przyklad testowy #2 - sprawdzanie, co jest pod board
-    /* qDebug() << "Board test: "
-             << game->model2.board[1][2].id
-            << ", "
-            << game->model2.board[7][9].id
-            << ", "
-            << game->model2.board[9][13].id; // wall, wall, blank
-*/
-    //test draw_players
-  /***
-      game->model2.players[0].y+=1;
-      game->model2.players[1].x+=1;
-    */
-  draw_players(painter,game->model2.players);
-// przyklad testowy #3 - sprawdzanie, ile zycia zzera mi serwer...
+    draw_players(painter,game->model1.players,game->model2.players,phaseOverlay);
 
     draw_bullets(painter,game->model2.shots);
-   lastphase = phaseOverlay;
+
 }
+
+
+void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<int,Player> players2, float phase)
+{
+    QTransform transf;
+    int x1,y1,x2,y2,delta_x,delta_y;
+
+    foreach (const Player player, players1)
+        {
+        x1 = cast_to_pixels(player.x);
+        y1 = cast_to_pixels(player.y);
+        x2 = cast_to_pixels(players2[player.id].x);
+        y2 = cast_to_pixels(players2[player.id].y);
+        delta_x = x2-x1;
+        delta_y = y2-y1;
+             transf.reset();
+         if(player.direction && player.health > 0)
+            {
+            painter->drawPixmap(
+                        x1+delta_x*phase,
+                        y1+delta_y*phase,
+                        BOARD_FIELD_WIDTH,
+                        BOARD_FIELD_HEIGHT,
+                        sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
+            }
+    }
+}
+
+
+
 
 
 bool Drawer::check_collisions(unsigned char x, unsigned char y, int type, DIRECTION direction){
@@ -134,14 +134,15 @@ void Drawer::which_field(int &col, int &row, int x, int y)
                     row=BOARD_ROWS+1;
             }
 }
-void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
+/*void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
 {
     QTransform transf;
+    //QPixmap mask(BOARD_FIELD_WIDTH,BOARD_FIELD_HEIGHT);
 
     foreach (const Player player, players)
         {
-
-         if(player.direction)
+         transf.reset();
+         if(player.direction && player.health > 0)
             {
             painter->drawPixmap(
                         cast_to_pixels(player.x),
@@ -152,7 +153,7 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
             }
     }
 }
-
+*/
 void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
 {
     int step_x=0;
@@ -195,34 +196,23 @@ void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
             step_y=0;
             break;
         }
-trans.reset();
+        trans.reset();
         //if(check_collisions(shots[i].x_start+step_x,shots[i].y_start+step_y,shots[i].direction))
         //{
         //animations.append(Animation(shots[i].x_start,shots[i].y_start));
         //}
         //else
                 painter->drawPixmap(
-                        cast_to_pixels(shots[i].x_start+step_x+pos_x,shots[i].direction),
-                        cast_to_pixels(shots[i].y_start+step_y+pos_y,shots[i].direction),
+                        cast_to_pixels(shots[i].x_start+step_x+pos_x),
+                        cast_to_pixels(shots[i].y_start+step_y+pos_y),
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
                         sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*(shots[i].direction-1))));
-qDebug() << shots[i].direction;
+
     }
 }
 
-int Drawer::cast_to_pixels(int x,DIRECTION direction)
+int Drawer::cast_to_pixels(int x)
 {
-
-        switch (direction) {
-        case UP:
-        case LEFT:
-            return (x)*BOARD_FIELD_WIDTH/5-BOARD_FIELD_WIDTH/5*2;
-        case DOWN:
-        case RIGHT:
-            return (x)*BOARD_FIELD_WIDTH/5-BOARD_FIELD_WIDTH/5*2;
-        default:
-        return (x-2)*BOARD_FIELD_WIDTH/5;
-            break;
-        }
+       return (x-2)*BOARD_FIELD_WIDTH/5;
 }

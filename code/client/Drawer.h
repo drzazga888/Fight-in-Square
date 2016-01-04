@@ -40,9 +40,9 @@ private:
     void paint_background(QPainter *painter,const Board &board); //throw(exception)
     bool check_collisions(unsigned char x, unsigned char y, int type, DIRECTION direction);
     void which_field(int &col, int &row,int x, int y);
-    void draw_players(QPainter *painter ,QMap<int, Player> players);
+    void draw_players(QPainter *painter ,QMap<int, Player> players1, QMap<int, Player> players2, float phase);
     void draw_bullets(QPainter *painter,QVector<Shot> &shots);
-    int cast_to_pixels(int x,DIRECTION direction = NONE);
+    int cast_to_pixels(int x);
 };
 
 #endif // DRAWER_H
