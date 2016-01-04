@@ -34,3 +34,31 @@ QByteArray Shot::getFrame() const
     frame[8] = power;
     return frame;
 }
+ bool Shot::operator==( const Shot & dane) const{
+    if(player_id==dane.player_id && x_start==dane.x_start && y_start==dane.y_start && direction==dane.direction && (flight_periods-dane.flight_periods)<=3*SPEEDSHOT && power==dane.power)    return true;
+    else return false;
+ }
+  bool Shot::operator%=(  Shot & dane) const{
+    if(player_id!=dane.player_id && abs(getActualShotPosition().x()-dane.getActualShotPosition().x())<=SPEEDSHOT-1 && abs(getActualShotPosition().y()-dane.getActualShotPosition().y())<=SPEEDSHOT-1)    return true;
+    else return false;
+ }
+
+ QPoint Shot::getActualShotPosition() const{
+     switch(direction){
+     case UP:
+         return QPoint(x_start,y_start-flight_periods);
+         break;
+     case DOWN:
+         return QPoint(x_start,y_start+flight_periods);
+         break;
+     case LEFT:
+         return QPoint(x_start-flight_periods,y_start);
+         break;
+     case RIGHT:
+         return QPoint(x_start+flight_periods,y_start);
+         break;
+     default:
+         return QPoint(-1,-1);
+     }
+ }
+

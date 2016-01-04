@@ -4,6 +4,7 @@
 #include "../../config.h"
 #include "../Utils/Direction.h"
 #include "../Frame/Frameable.h"
+#include<QPoint>
 
 /**
  * @brief
@@ -29,7 +30,9 @@ public:
      * @return ramka
      */
     virtual QByteArray getFrame() const;
-
+     QPoint getActualShotPosition() const;
+    bool operator ==( const Shot & dane) const;
+    bool operator %=(  Shot & dane) const;
     unsigned char player_id;
     unsigned char x_start;
     unsigned char y_start;

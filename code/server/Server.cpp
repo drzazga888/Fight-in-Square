@@ -107,3 +107,12 @@ void Server::timerEvent(QTimerEvent *)
         log(QStringLiteral("Broadcast planszy"));
     }
 }
+
+void Server::refreshController(){
+    mapFromFile.loadIDMapFromFile();
+    controller.clearModelFromDataObject();
+    controller.loadExtendedBoard(mapFromFile.getIdBoard());
+}
+void Server::setPathExtendedMap(QString load){
+    mapFromFile.SetFilePathName(load);
+}

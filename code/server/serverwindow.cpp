@@ -33,6 +33,7 @@ void ServerWindow::on_onOffButton_clicked()
             ui->portEdit->setEnabled(false);
             ui->selectMapButton->setEnabled(false);
             ui->onOffButton->setText("Rozłącz serwer");
+            server.refreshController();
         }
     }
 }
@@ -40,6 +41,9 @@ void ServerWindow::on_onOffButton_clicked()
 void ServerWindow::on_selectMapButton_clicked()
 {
     // wybieranie pliku z mapa
+    QString fileName = QFileDialog::getOpenFileName(0,"Wczytaj mapę","../server/mapa1.map","Pliki map (*.map)");
+    server.setPathExtendedMap(fileName);
+    server.refreshController();
 }
 
 void ServerWindow::server_logged(const QString &message)
