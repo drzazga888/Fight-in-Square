@@ -5,6 +5,8 @@
 * Nagłówek konfiguracyjny - zawiera define'y
 */
 
+//LUKI USTAWIENIA
+#define SPEEDSHOT 2
 // rozmiar okna
 
 #define WINDOW_WIDTH 1134

@@ -18,46 +18,6 @@ Controller::Controller(Data &data)
         }
     }
 
-/*
-    QString fileName = QFileDialog::getOpenFileName(0,"Wczytaj mapę","../server/mapa1.map","Pliki map (*.map)");
-    if(!fileName.isEmpty()){
-        qDebug()<<"Plik otwarty";
-        QFile file(fileName);
-        if(file.open(QFile::ReadOnly | QFile::Text)){
-            QTextStream in(&file);
-            int i=0;
-            int j=0;
-            while( i<10){
-                QString linia=in.readLine();
-  //              qDebug()<<"linia nr"<<linia;
-                QString::iterator itc=linia.begin();
-                j=0;
-                for(QString::iterator itc=linia.begin();itc!=linia.end() && j<14;itc=itc+1){
-                    if(!itc->isSpace()){
-                        extendedBoard[i][j]=ObstacleBoardElement(itc->digitValue(),false,0);
-                        if(extendedBoard[i][j].id==BOARD_FIELD_ID(WALL)){
-                            extendedBoard[i][j].isDestructable=true;
-                            extendedBoard[i][j].health=40;
-                        }
-      //                  qDebug()<<"j "<<j;
-                        j++;
-                    }
-                }
-
-                i++;
-            }
-
-        }
-    }
-    else{
-        for(int i=0;i<extendedBoard.size();i++){
-            for(int j=0;j<extendedBoard.operator[](i).size();j++){
-                extendedBoard[i][j]=ObstacleBoardElement(0,false,0);
-            }
-        }
-        extendedBoard[8][2]=ObstacleBoardElement(5,true,40);
-    }
-*/
     playerInBoard.resize(5*BOARD_ROWS);
     for (int i = 0; i < 5*BOARD_ROWS; ++i){
         playerInBoard.operator[](i).resize(5*BOARD_COLS);
@@ -119,6 +79,11 @@ void Controller::nextModelStatus()
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext()){
         it.next();
+        //qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
+    }
+    it.toFront();
+    while(it.hasNext()){
+        it.next();
         movePlayer(it.value());
     }
     it.toFront();
@@ -137,14 +102,41 @@ void Controller::nextModelStatus()
     it.toFront();
     while(it.hasNext()){
         it.next();
-        if(IS_SHOT(it.value().id)==true && it.value().is_alive){
-            data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+        if(IS_SHOT(it.value().id)==true && it.value().is_alive ){
+            bool flaga=false;
+            for(QVector<Shot>::iterator i=oldshots.begin();i!=oldshots.end();i++){
+                if(*i==Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power))   {
+                    flaga=true;
+                }
+            }
+            if(flaga!=true) data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+        }
+    }
+    for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
+        int flaga=0;
+        if((1+i)!=data.model.shots.end()){
+
+            for(QVector<Shot>::iterator j=i+1;j!=data.model.shots.end();/*j++*/){
+                if(*i%=*j)  {
+                    j=data.model.shots.erase(j);
+                    flaga++;
+                }
+                else{
+                    j++;
+                }
+            }
+        }
+        if(flaga==0){
+            i++;
+        }
+        else{
+            i=data.model.shots.erase(i);
         }
     }
     it.toFront();
     for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         // przesuwamy je !!
-        i->flight_periods+=1;
+        i->flight_periods+=SPEEDSHOT;
        // if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
        //     i->flight_periods-=1;
        // }
@@ -217,11 +209,17 @@ void Controller::nextModelStatus()
         }
     }
 
-
+    oldshots=data.model.shots;
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     refreshBoardInBoard(boardInBoard);
-    debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+   // debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+    it.toFront();
+    while(it.hasNext()){
+        it.next();
+        qDebug()<<"Kierunek :"<<it.value().direction<<"Czy strzelił "<<it.value().name;
+    }
+
 }
 
 Player::GROUP Controller::assignGroup()
@@ -280,30 +278,50 @@ void Controller::movePlayer(Player & player){
     case UP:
         if(player.direction==UP){
             if(player.y==2)    DIRECT(player.id)=NONE;
-            else    (player.y)--;
+            else    {
+                (player.y)--;
+                player.direction=DIRECT(player.id);
+            }
         }
-        player.direction=DIRECT(player.id);
+        else{
+            player.direction=DIRECT(player.id);
+        }
         break;
     case DOWN:
         if(player.direction==DOWN){
             if(player.y==(5*BOARD_ROWS-1-2))    DIRECT(player.id)=NONE;
-            else    (player.y)++;
+            else    {
+                (player.y)++;
+                player.direction=DIRECT(player.id);
+            }
         }
-        player.direction=DIRECT(player.id);
+        else{
+            player.direction=DIRECT(player.id);
+        }
         break;
     case LEFT:
         if(player.direction==LEFT){
             if(player.x==2)    DIRECT(player.id)=NONE;
-            else    (player.x)--;
+            else    {
+                (player.x)--;
+                player.direction=DIRECT(player.id);
+            }
         }
-        player.direction=DIRECT(player.id);
+        else{
+            player.direction=DIRECT(player.id);
+        }
         break;
     case RIGHT:
         if(player.direction==RIGHT){
             if(player.x==(5*BOARD_COLS-1-2))    DIRECT(player.id)=NONE;
-            else    (player.x)++;
+            else    {
+                (player.x)++;
+                player.direction=DIRECT(player.id);
+            }
         }
-        player.direction=DIRECT(player.id);
+        else{
+            player.direction=DIRECT(player.id);
+        }
         break;
     }
 }
@@ -512,7 +530,7 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
             if(isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
                 //if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
                 if((extendedBoard[d_y+j][d_x+i].health-shot.power)<=0)    {
-                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(rand()%4+1,false,0);
+                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(1,false,0);
                 }
                 else{
                     extendedBoard[d_y+j][d_x+i].health-=shot.power;

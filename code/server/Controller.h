@@ -56,6 +56,8 @@ private:
     DIRECTION assignDirection();
     QPoint assignFreePosition();
     Data &data;
+    QVector<Shot> oldshots;
+
     QVector<QVector<char> > playerInBoard; /*!<Do debugowania. NIE RUSZAĆ! NIE USUWAĆ*/
     QVector<QVector<char> > shotInBoard; /*!<Do debugowania. NIE RUSZAĆ! NIE USUWAĆ*/
     QVector<QVector<int> > boardInBoard; /*!<Do debugowania. NIE RUSZAĆ! NIE USUWAĆ*/
