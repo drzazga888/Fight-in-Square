@@ -27,7 +27,7 @@ Controller::Controller(Data &data)
             QTextStream in(&file);
             int i=0;
             int j=0;
-            while(/*!linia.isEmpty() &&*/ i<10){
+            while( i<10){
                 QString linia=in.readLine();
   //              qDebug()<<"linia nr"<<linia;
                 QString::iterator itc=linia.begin();
@@ -144,7 +144,10 @@ void Controller::nextModelStatus()
     it.toFront();
     for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         // przesuwamy je !!
-        i->flight_periods++;
+        i->flight_periods+=1;
+       // if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
+       //     i->flight_periods-=1;
+       // }
         int howMuchShoted=0;
         while(it.hasNext()){
             it.next();
@@ -152,15 +155,17 @@ void Controller::nextModelStatus()
             if(it.value().is_alive && it.value().id!=i->player_id && isShotInPlayer(getActualShotPosition(*i),QPoint(it.value().x,it.value().y))){
                 howMuchShoted++;
                 data.model.players.value(i->player_id).points;
-                if((it.value().health-howMuchHurt(i->power))<=0)    {
+                //if((it.value().health-howMuchHurt(i->power))<=0)    {
+                if((it.value().health-i->power)<=0)    {
                     it.value().health=0;
                     it.value().is_alive=false;
                     it.value().death_time=0;
                     data.model.players[i->player_id].points++;
-                    data.model.players[i->player_id].power++;
+                    //data.model.players[i->player_id].power++;
                 }
                 else{
-                    it.value().health-=howMuchHurt(i->power);
+                    //it.value().health-=howMuchHurt(i->power);
+                    it.value().health-=i->power;
                 }
             }
         }
@@ -257,12 +262,12 @@ QPoint Controller::assignFreePosition(){
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext() && data.model.players.size()>0){
         it.next();
-                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) && extendedBoard[y][x].isDestructable==false){
+                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) && !(extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER))){
                     return QPoint(5*x+2, 5*y+2);
                 }
     }
 
-    }while(data.model.players.size()>0 && extendedBoard[y][x].isDestructable==true);
+    }while(data.model.players.size()>0 || (extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER)));
     return QPoint(5*x+2, 5*y+2);
     //return QPoint(2,45);
 }
@@ -495,7 +500,7 @@ void Controller::SolveFieldsWallAndPlayerConflict(Player & player){
 bool Controller::isPlayerInFieldWall(QPoint player,QPoint field){
     int odl_x=abs(player.x()-5*field.x()-2);
     int odl_y=abs(player.y()-5*field.y()-2);
-    if(odl_x<=4 && odl_y<=4 && extendedBoard[field.y()][field.x()].isDestructable==true)  return true;
+    if(odl_x<=4 && odl_y<=4 && (extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WALL) ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WATER)))  return true;
     else return false;
 }
 
@@ -505,11 +510,12 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
     for(int i=0;i<2 && d_x+i<BOARD_COLS;i++){
         for(int j=0;j<2 && d_y+j<BOARD_ROWS;j++){
             if(isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
-                if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
-                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(1,false,0);
+                //if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
+                if((extendedBoard[d_y+j][d_x+i].health-shot.power)<=0)    {
+                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(rand()%4+1,false,0);
                 }
                 else{
-                    extendedBoard[d_y+j][d_x+i].health--;
+                    extendedBoard[d_y+j][d_x+i].health-=shot.power;
                 }
                 return true;
             }
