@@ -48,7 +48,7 @@ public:
      * zmienia planszę, graczy i pociski.
      */
     void nextModelStatus();
-
+    void loadExtendedBoard();
 private:
 
     QVector<QVector<ObstacleBoardElement> > extendedBoard;  /*!<Pole, które przechowuje planszę z dodatkowymi informacjami: czy pole planszy mozna zniszczyć, ilość życia ma dane pole */
@@ -81,6 +81,8 @@ private:
     bool isShotInFieldWall(QPoint shot,QPoint field);
 public:
     QPoint getActualShotPosition(const Shot & shot);
+    void loadExtendedBoard(QVector<QVector<int> > idBoard);
+    void clearModelFromDataObject();
 
 };
 

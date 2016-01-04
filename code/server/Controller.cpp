@@ -18,7 +18,7 @@ Controller::Controller(Data &data)
         }
     }
 
-
+/*
     QString fileName = QFileDialog::getOpenFileName(0,"Wczytaj mapę","../server/mapa1.map","Pliki map (*.map)");
     if(!fileName.isEmpty()){
         qDebug()<<"Plik otwarty";
@@ -57,7 +57,7 @@ Controller::Controller(Data &data)
         }
         extendedBoard[8][2]=ObstacleBoardElement(5,true,40);
     }
-
+*/
     playerInBoard.resize(5*BOARD_ROWS);
     for (int i = 0; i < 5*BOARD_ROWS; ++i){
         playerInBoard.operator[](i).resize(5*BOARD_COLS);
@@ -529,4 +529,19 @@ bool Controller::isShotInFieldWall(QPoint shot,QPoint field){
     int odl_y=abs(shot.y()-5*field.y()-2);
     if(odl_x<=2 && odl_y<=2 && extendedBoard[field.y()][field.x()].isDestructable==true)  return true;
     else return false;
+}
+void Controller::loadExtendedBoard(QVector<QVector<int> > idBoard){
+    for(int i=0;i<extendedBoard.size();i++){
+        for(int j=0;j<extendedBoard.operator[](i).size();j++){
+            extendedBoard[i][j]=ObstacleBoardElement(idBoard[i][j],false,0);
+            if(extendedBoard[i][j].id==BOARD_FIELD_ID(WALL)){
+                extendedBoard[i][j].isDestructable=true;
+                extendedBoard[i][j].health=40;
+            }
+        }
+    }
+}
+
+void Controller::clearModelFromDataObject(){
+    data.model=Model();
 }

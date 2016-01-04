@@ -10,6 +10,7 @@
 #include "Data.h"
 #include "TcpServer.h"
 #include "Controller.h"
+#include "loader.h"
 
 /**
  * @brief
@@ -58,7 +59,8 @@ public:
     bool switchOff();
 
     bool isWorking;
-
+    void refreshController();
+    void setPathExtendedMap(QString load);
 public slots:
 
     /**
@@ -75,7 +77,6 @@ public slots:
      * @param playerId - nr id gracza
      */
     void disconnected(int playerId);
-
 signals:
 
     /**
@@ -99,6 +100,7 @@ signals:
      */
     void playerRemoved(int id);
 
+
 private:
 
     /**
@@ -109,6 +111,7 @@ private:
      */
     void timerEvent(QTimerEvent *);
 
+    Loader mapFromFile;
     Data &data;
     TcpServer tcpServer;
     Controller controller;
