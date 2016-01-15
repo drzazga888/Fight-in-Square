@@ -49,6 +49,7 @@ void Game::setStatus(Game::STATUS status)
 
 void Game::applyFrame(const QByteArray &frame)
 {
+    qDebug() << frameUpdateTimer.elapsed();
     frameUpdateTimer.restart();
     model1 = model2;
     model2.applyFrame(frame);
