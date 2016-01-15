@@ -18,7 +18,10 @@ bool TcpServer::start(int port)
 	tcpServer = new QTcpServer(this);
 	connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 	if (tcpServer->listen(QHostAddress::LocalHost, port))
+    {
+        qDebug() << "server is running...";
 		return true;
+    }
 	else
 		return false;
 }
@@ -31,6 +34,7 @@ bool TcpServer::stop()
 		tcpServer->close();
 		delete tcpServer;
         tcpServer = NULL;
+        qDebug() << "serveer is closing...";
 	}
 	return state;
 }
@@ -84,6 +88,7 @@ void TcpServer::acceptConnection()
     connections.insert(connId++, conn);
     connect(conn,SIGNAL(reading(int,QByteArray)), this, SLOT(read(int,QByteArray)));
     connect(conn,SIGNAL(disconnecting(int)), this, SLOT(brokeConnection(int)));
+    qDebug() << "aaccepting connection...";
 }
 
 void TcpServer::read(int id, QByteArray message)
