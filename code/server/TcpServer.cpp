@@ -16,9 +16,9 @@ bool TcpServer::start(int port)
 {
 	connId = 1;
 	tcpServer = new QTcpServer(this);
-	connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
-	if (tcpServer->listen(QHostAddress::LocalHost, port))
+    if (tcpServer->listen(QHostAddress::Any, port))
     {
+        connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
         qDebug() << "server is running...";
 		return true;
     }
