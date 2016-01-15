@@ -3,7 +3,7 @@
 #include <QDebug>
 
 Game::Game()
-    :status(Game::NO_PLAYING)
+    :status(Game::NO_PLAYING), frameToFrameElapsed(0)
 {
 
 
@@ -35,7 +35,7 @@ void Game::handleKeyboard(int key)
 
 float Game::getPhaseOverlay()
 {
-    return (float)frameUpdateTimer.elapsed() / SERVER_SEND_INTERVAL;
+    return (float)frameUpdateTimer.elapsed() / frameToFrameElapsed;
 }
 
 void Game::setStatus(Game::STATUS status)
@@ -49,7 +49,8 @@ void Game::setStatus(Game::STATUS status)
 
 void Game::applyFrame(const QByteArray &frame)
 {
-    qDebug() << frameUpdateTimer.elapsed();
+    frameToFrameElapsed = frameUpdateTimer.elapsed();
+    qDebug() << frameToFrameElapsed;
     frameUpdateTimer.restart();
     model1 = model2;
     model2.applyFrame(frame);

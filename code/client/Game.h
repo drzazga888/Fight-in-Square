@@ -109,6 +109,9 @@ signals:
      */
     void modelActualized();
 
+private:
+    int frameToFrameElapsed;
+
 };
 
 #endif
