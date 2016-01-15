@@ -25,7 +25,7 @@
 
 #define CLIENT_REDRAW_INTERVAL 17
 #define CLIENT_SEND_INTERVAL 80
-#define SERVER_SEND_INTERVAL 200
+#define SERVER_SEND_INTERVAL 100
 
 // numery id elementów planszy
 // id o numerze 0 nie jest brany pod uwagę!!!
