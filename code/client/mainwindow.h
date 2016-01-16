@@ -87,6 +87,14 @@ private:
      */
     void keyPressEvent(QKeyEvent *e);
 
+    /**
+     * @brief
+     * Obsługa zdarzenia puszczenia klawisza.
+     * @param e
+     * Obiekt zdarzenia
+     */
+    void keyReleaseEvent(QKeyEvent *e);
+
     Ui::MainWindow *ui;
     Game game;
     Canvas canvas;

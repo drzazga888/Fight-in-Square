@@ -21,7 +21,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
-    game.handleKeyboard(e->key());
+    game.handleKeyPress(e->key());
+}
+
+void MainWindow::keyReleaseEvent(QKeyEvent *e)
+{
+    game.handleKeyRelease(e->key());
 }
 
 void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)

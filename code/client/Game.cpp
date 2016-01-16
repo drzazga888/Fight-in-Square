@@ -5,12 +5,9 @@
 Game::Game()
     :status(Game::NO_PLAYING), frameToFrameElapsed(0)
 {
-
-
-
 }
 
-void Game::handleKeyboard(int key)
+void Game::handleKeyPress(int key)
 {
     if(status == Game::PLAYING){
         switch (key) {
@@ -28,6 +25,30 @@ void Game::handleKeyboard(int key)
                 break;
             case Qt::Key_Space:
                 player.player_shooted = true;
+                break;
+        }
+    }
+}
+
+void Game::handleKeyRelease(int key)
+{
+    if(status == Game::PLAYING){
+        switch (key) {
+            case Qt::Key_Up:
+                if (player.moving_direction == UP)
+                    player.moving_direction = NONE;
+                break;
+            case Qt::Key_Down:
+                if (player.moving_direction == DOWN)
+                    player.moving_direction = NONE;
+                break;
+            case Qt::Key_Left:
+                if (player.moving_direction == LEFT)
+                    player.moving_direction = NONE;
+                break;
+            case Qt::Key_Right:
+                if (player.moving_direction == RIGHT)
+                    player.moving_direction = NONE;
                 break;
         }
     }

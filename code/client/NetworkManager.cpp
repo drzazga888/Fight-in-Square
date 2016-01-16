@@ -83,6 +83,5 @@ void NetworkManager::timerEvent(QTimerEvent *)
         qDebug() << "Sending to server";
         tcpClient.write(game->player.getFrame());
         game->player.player_shooted = false;
-        game->player.moving_direction = NONE;
     }
 }

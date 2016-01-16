@@ -51,7 +51,17 @@ public:
      * @param key
      * Kod klawisza
      */
-    void handleKeyboard(int key);
+    void handleKeyPress(int key);
+
+    /**
+     * @brief
+     * Funkcja sprawdza, czy wciśnięty puszczony
+     * nie jest czasami akcją gracza, którą
+     * trzeba przechwycić
+     * @param key
+     * Kod klawisza
+     */
+    void handleKeyRelease(int key);
 
     /**
      * @brief
