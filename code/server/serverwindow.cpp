@@ -2,7 +2,7 @@
 #include "ui_serverwindow.h"
 
 ServerWindow::ServerWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::ServerWindow), data(), server(data)
+    QMainWindow(parent), ui(new Ui::ServerWindow), data(), server(data), mapLoaded(false)
 {
     ui->setupUi(this);
     connect(&server, SIGNAL(logged(QString)), this, SLOT(server_logged(QString)));
@@ -27,6 +27,8 @@ void ServerWindow::on_onOffButton_clicked()
     {
         if (ui->portEdit->text().toInt() == 0)
             ui->statusBar->showMessage("Wprowadzono nieprawidłowy numer portu");
+        else if (!mapLoaded)
+            ui->statusBar->showMessage("Nie załadowano mapy");
         else if (server.switchOn(ui->portEdit->text().toInt()))
         {
             ui->statusBar->clearMessage();
@@ -42,6 +44,14 @@ void ServerWindow::on_selectMapButton_clicked()
 {
     // wybieranie pliku z mapa
     QString fileName = QFileDialog::getOpenFileName(0,"Wczytaj mapę","../server/mapa1.map","Pliki map (*.map)");
+    if (!fileName.isEmpty()){
+        mapLoaded = true;
+        ui->selectedMapLabel->setText(fileName);
+    }
+    else {
+        mapLoaded = false;
+        ui->selectedMapLabel->setText(QStringLiteral("(brak)"));
+    }
     server.setPathExtendedMap(fileName);
     server.refreshController();
 }

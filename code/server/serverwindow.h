@@ -70,6 +70,7 @@ private:
     Ui::ServerWindow *ui;
     Data data;
     Server server;
+    bool mapLoaded;
 
 };
 
