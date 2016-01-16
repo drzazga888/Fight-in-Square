@@ -21,6 +21,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    if (e->key() == Qt::Key_Space && e->isAutoRepeat())
+        return;
     game.handleKeyPress(e->key());
 }
 
