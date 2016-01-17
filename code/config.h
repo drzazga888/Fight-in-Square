@@ -5,8 +5,13 @@
 * Nagłówek konfiguracyjny - zawiera define'y
 */
 
-//LUKI USTAWIENIA
+// logika
+
 #define SPEEDSHOT 2
+
+// nazwa gracza
+#define NAME_REGEX "^[a-zA-Z0-9_\\.]{1,16}$"
+
 // rozmiar okna
 
 #define WINDOW_WIDTH 1134
@@ -20,12 +25,14 @@
 
 #define MAX_HEALTH 100
 #define INIT_POWER 10
+#define MAX_PLAYERS 8
 
 // czasy w milisekundach
 
 #define CLIENT_REDRAW_INTERVAL 17
 #define CLIENT_SEND_INTERVAL 80
 #define SERVER_SEND_INTERVAL 100
+#define CLIENT_CONNECTION_TIMEOUT 10000
 
 // numery id elementów planszy
 // id o numerze 0 nie jest brany pod uwagę!!!
@@ -61,5 +68,11 @@
 // BA - Board Assign
 #define BA(row, col, item) \
     data.model.board[row][col] = BoardElement(BOARD_FIELD_ID(item))
+
+// bledy
+
+#define USER_NAME_IS_NOT_UNIQUE 1
+#define SERVER_IS_FULL 2
+#define SERVER_IS_EMPTY 3
 
 #endif // CONFIG_H

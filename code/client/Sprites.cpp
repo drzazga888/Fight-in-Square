@@ -1,4 +1,5 @@
 #include "Sprites.h"
+#include <QDebug>
 
 Sprites::Sprites()
     :collection(BOARD_FIELDS_LENGTH)
@@ -9,8 +10,12 @@ Sprites::Sprites()
 
 QPixmap Sprites::get(int id)
 {
-    if (id != BOARD_FIELD_ID(EMPTY))
-        return collection[id - 1];
+    if (id != BOARD_FIELD_ID(EMPTY)){
+        if (id < 1 || id > BOARD_FIELDS_LENGTH)
+            qDebug() << "Błedny indeks sprite'a: " << id;
+        else
+            return collection[id - 1];
+    }
     else
         return QPixmap();
 }

@@ -120,7 +120,7 @@ QLabel#playerName{
         <item row="1" column="1">
          <widget class="QLineEdit" name="serverIpEdit">
           <property name="text">
-           <string>127.0.0.1</string>
+           <string>92.222.1.215</string>
           </property>
          </widget>
         </item>

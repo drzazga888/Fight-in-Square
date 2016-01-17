@@ -108,17 +108,20 @@ void MainWindow::onModelActualized()
 
 void MainWindow::on_connectButton_clicked()
 {
+    QHostAddress ip;
+    bool portValid;
+    int port;
     switch (game.status)
     {
     case Game::NO_PLAYING:
-        if (ui->playerNameEdit->text() == "")
-            ui->statusbar->showMessage("Proszę podać nazwę gracza.");
-        else if (ui->serverIpEdit->text() == "")
-            ui->statusbar->showMessage("Proszę podać adres IP.");
-        else if (ui->serverPortEdit->text() == "" || ui->serverPortEdit->text().toInt() == 0)
-            ui->statusbar->showMessage("Proszę podać poprawny port.");
+        if (!ui->playerNameEdit->text().contains(QRegExp(NAME_REGEX)))
+            ui->statusbar->showMessage("Nazwa gracza musi zawierać od 1 do 16 znaków, które są literami, cyframi, '_' lub '.'");
+        else if (!ip.setAddress(ui->serverIpEdit->text()))
+            ui->statusbar->showMessage("Proszę podać poprawny adres IP");
+        else if (port = ui->serverPortEdit->text().toInt(&portValid), !portValid)
+            ui->statusbar->showMessage("Proszę podać poprawny port");
         else
-            networkManager.connectToHost(QHostAddress(ui->serverIpEdit->text()), ui->serverPortEdit->text().toInt(), ui->playerNameEdit->text());
+            networkManager.connectToHost(ip, port, ui->playerNameEdit->text());
         break;
     default:
         networkManager.disconnectFromHost();

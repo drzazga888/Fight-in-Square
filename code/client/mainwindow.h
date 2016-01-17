@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include <QHostAddress>
+#include <QRegularExpression>
 #include "../config.h"
 #include "canvas.h"
 #include "Game.h"
