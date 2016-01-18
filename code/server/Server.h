@@ -11,6 +11,8 @@
 #include "TcpServer.h"
 #include "Controller.h"
 #include "loader.h"
+#include "../shared/Model/Player.h"
+#include <QByteArray>
 
 /**
  * @brief
@@ -59,8 +61,11 @@ public:
     bool switchOff();
 
     bool isWorking;
+
     void refreshController();
-    void setPathExtendedMap(QString load);
+
+    void setPathExtendedMap(QString &load);
+
 public slots:
 
     /**
@@ -110,6 +115,8 @@ private:
      * nowego stanu ramek i wysłanie go graczom.
      */
     void timerEvent(QTimerEvent *);
+
+    bool isNameUnique(QString name);
 
     Loader mapFromFile;
     Data &data;

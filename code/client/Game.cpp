@@ -69,6 +69,12 @@ void Game::setStatus(Game::STATUS status)
     emit gameStatusChanged(status);
 }
 
+void Game::setErrorCode(int errCode)
+{
+    this->errCode = errCode;
+    emit errorCodeChanged(errCode);
+}
+
 void Game::applyFrame(const QByteArray &frame)
 {
     frameToFrameElapsed = frameUpdateTimer.elapsed();

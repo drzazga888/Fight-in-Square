@@ -3,19 +3,19 @@
 
 TcpServer::TcpServer()
 {
-	tcpServer=NULL;
+    tcpServer=NULL;
 }
 
 TcpServer::~TcpServer()
 {
 	stop();
-	connections.clear();
+    connections.clear();
 }
 
 bool TcpServer::start(int port)
 {
 	connId = 1;
-	tcpServer = new QTcpServer(this);
+    tcpServer = new QTcpServer(this);
     if (tcpServer->listen(QHostAddress::Any, port))
     {
         connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
@@ -29,14 +29,14 @@ bool TcpServer::start(int port)
 bool TcpServer::stop()
 {
 	bool state = disconnectAll();
-	if(tcpServer!=NULL)
-	{
-		tcpServer->close();
-		delete tcpServer;
+    if(tcpServer!=NULL)
+    {
+        tcpServer->close();
+        delete tcpServer;
         tcpServer = NULL;
         qDebug() << "serveer is closing...";
-	}
-	return state;
+    }
+    return state;
 }
 
 bool TcpServer::disconnect(int id)

@@ -28,8 +28,8 @@ public slots:
     /**
      * @brief
      * Slot, który podpięty jest pod zmianę stanu gry.
-     * @param gameStatus
-     * nowy status gry
+     * @param gameStatus nowy status gry
+     * @param errCode kod błędu
      */
     void onGameStatusChanged(Game::STATUS gameStatus);
 

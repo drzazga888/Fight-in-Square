@@ -37,3 +37,6 @@ code/build-server-Desktop-Debug/
 
 # gedit
 *~
+
+# Doxygen
+docs/FIS_kod/

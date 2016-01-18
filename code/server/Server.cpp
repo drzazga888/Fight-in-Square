@@ -68,14 +68,25 @@ void Server::read(int playerId, const QByteArray &message)
     switch (message[0])
     {
     case 1:
-        emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
-        response.resize(5);
-        response[0] = 1;
-        response[1] = playerId;
-        response[2] = 0;
-        response[3] = gameTime.elapsed() / 1000;
-        response[4] = (gameTime.elapsed() / 1000) >> 8;
-        tcpServer.write(playerId, response);
+        if (!isNameUnique(QByteArray(message.data() + 2, 16)))
+        {
+            response.resize(3);
+            response[0] = 1;
+            response[1] = playerId;
+            response[2] = USER_NAME_IS_NOT_UNIQUE;
+            tcpServer.write(playerId, response);
+            tcpServer.disconnect(playerId);
+        }
+        else {
+            emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
+            response.resize(5);
+            response[0] = 1;
+            response[1] = playerId;
+            response[2] = 0;
+            response[3] = gameTime.elapsed() / 1000;
+            response[4] = (gameTime.elapsed() / 1000) >> 8;
+            tcpServer.write(playerId, response);
+        }
         break;
     case 2:
         data.playerActions[playerId].applyFrame(message);
@@ -108,11 +119,24 @@ void Server::timerEvent(QTimerEvent *)
     }
 }
 
-void Server::refreshController(){
+void Server::refreshController()
+{
     mapFromFile.loadIDMapFromFile();
     controller.clearModelFromDataObject();
     controller.loadExtendedBoard(mapFromFile.getIdBoard());
 }
-void Server::setPathExtendedMap(QString load){
+
+void Server::setPathExtendedMap(QString &load)
+{
     mapFromFile.SetFilePathName(load);
+}
+
+bool Server::isNameUnique(QString name)
+{
+    foreach (const Player &player, data.model.players) {
+        if (QString::fromLatin1(player.name) == name)
+            return false;
+    }
+    qDebug() << "Unikalne!";
+    return true;
 }

@@ -35,9 +35,15 @@ public slots:
      * Dzięki temu główne okno wie, kiedy przełączyć
      * się na tryb wyświetlania menu/gry,
      * wie kiedy zmienić nazwy przycisków itd...
-     * @param gameStatus
+     * @param gameStatus nowy stan gry
      */
     void onGameStatusChanged(Game::STATUS gameStatus);
+
+    /**
+     * @brief onErrorCodeChanged
+     * @param errCode kod błędu
+     */
+    void onErrorCodeChanged(int errCode);
 
     /**
      * @brief

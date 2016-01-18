@@ -11,6 +11,7 @@ QMainWindow(parent), ui(new Ui::MainWindow), game(), canvas(&game), networkManag
     ui->top->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->top->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     connect(&game, SIGNAL(gameStatusChanged(Game::STATUS)), this, SLOT(onGameStatusChanged(Game::STATUS)));
+    connect(&game, SIGNAL(errorCodeChanged(int)), this, SLOT(onErrorCodeChanged(int)));
     connect(&game, SIGNAL(modelActualized()), this, SLOT(onModelActualized()));
 }
 
@@ -39,9 +40,11 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
         //canvas.releaseKeyboard();
         ui->connectButton->setText("Połącz");
         ui->stackedWidget->setCurrentWidget(ui->menu);
-        ui->statusbar->showMessage("");
+        if (!game.errCode)
+            ui->statusbar->showMessage("");
         break;
     case Game::CONNECTING:
+        game.errCode = 0;
         ui->connectButton->setText("Rozłącz");
         ui->statusbar->showMessage("Łączenie z serwerem...");
         break;
@@ -49,7 +52,6 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
         ui->statusbar->showMessage("Wysyłanie komunikatu powitalnego...");
         break;
     case Game::PLAYING:
-        //canvas.grabKeyboard();
         ui->stackedWidget->setCurrentWidget(ui->game);
         ui->exitGameButton->setEnabled(true);
         ui->statusbar->showMessage("Połączono!");
@@ -61,6 +63,16 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
         break;
     case Game::DISCONNECTING:
         ui->statusbar->showMessage("Rozłączanie...");
+        break;
+    }
+}
+
+void MainWindow::onErrorCodeChanged(int errCode)
+{
+    switch (errCode)
+    {
+    case USER_NAME_IS_NOT_UNIQUE:
+        ui->statusbar->showMessage("Nazwa gracza nie jest unikalna. Wybierz inną nazwę.");
         break;
     }
 }

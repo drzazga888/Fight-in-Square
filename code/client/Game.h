@@ -78,9 +78,15 @@ public:
      * @brief
      * Funkcja ustawia stan gry.
      * Po ustawieniu wysyłany jest odpowiedni sygnał.
-     * @param status
+     * @param status stan gry
      */
     void setStatus(STATUS status);
+
+    /**
+     * @brief setErrorCode
+     * @param errCode kod błędu
+     */
+    void setErrorCode(int errCode);
 
     /**
      * @brief
@@ -94,6 +100,7 @@ public:
     void applyFrame(const QByteArray &frame);
 
     STATUS status;
+    int errCode;
     Model model1, model2;
     PlayerAction player;
     QElapsedTimer frameUpdateTimer;
@@ -106,10 +113,16 @@ signals:
      * @brief
      * Sygnał wysyłany, gdy stan aplikacji ulegnie zmianie,
      * czyli gdy zostanie wywołana metoda setStatus
-     * @param gameStatus
-     * Stan gry
+     * @param status stan gry
+     * @param errCode kod błędu
      */
     void gameStatusChanged(Game::STATUS gameStatus);
+
+    /**
+     * @brief errorCodeChanged
+     * @param errCode kod błędu
+     */
+    void errorCodeChanged(int errCode);
 
     /**
      * @brief
