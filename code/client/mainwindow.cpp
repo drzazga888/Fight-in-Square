@@ -80,6 +80,11 @@ void MainWindow::onErrorCodeChanged(int errCode)
     }
 }
 
+bool playerPointsLessThen(const Player &a, const Player &b)
+{
+    return a.points > b.points;
+}
+
 void MainWindow::onModelActualized()
 {
     game.gameTime = game.gameTime.addMSecs(SERVER_SEND_INTERVAL);
@@ -94,22 +99,18 @@ void MainWindow::onModelActualized()
     ui->powerBar->setValue(player.power);
     ui->pointsLabel->setText(QString("Punkty: %1").arg(player.points));
     ui->timeLabel->setText(QString("Czas: %1").arg(game.gameTime.toString("mm:ss")));
-    QMap<int, Player> playerPoints;
-    QMapIterator<int, Player> i(game.model2.players);
-    while (i.hasNext())
-    {
-        i.next();
-        playerPoints.insert(i.value().points, i.value());
-    }
-    i = QMapIterator<int, Player>(playerPoints);
+    QList<Player> playerPoints = game.model2.players.values();
+    qStableSort(playerPoints.begin(), playerPoints.end(), playerPointsLessThen);
+    QListIterator<Player> i(playerPoints);
     for (int j = 0; j < ui->top->rowCount(); ++j)
     {
         QTableWidgetItem *name, *points;
         if (i.hasNext())
         {
-            i.next();
-            name = new QTableWidgetItem(i.value().name.data());
-            points = new QTableWidgetItem(QString::number(i.value().points));
+            const Player &player = i.next();
+            //qDebug() << "gracz #" << player.id << " " << i.;
+            name = new QTableWidgetItem(player.name.data());
+            points = new QTableWidgetItem(QString::number(player.points));
         }
         else
         {
