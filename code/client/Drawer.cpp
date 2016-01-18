@@ -61,6 +61,8 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<in
                         BOARD_FIELD_HEIGHT,
                         sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
             }
+         else
+             qDebug() << "nie wchodzę do funkcji rysującej, a direction to:" << player.direction;
     }
 }
 
