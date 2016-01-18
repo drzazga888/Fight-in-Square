@@ -56,18 +56,15 @@ void NetworkManager::applyFrame(const QByteArray &frame)
     switch (frame[0])
     {
     case 1:
-        switch (frame[2])
+        if (!frame[2])
         {
-        case 0:
             game->player.id = frame[1];
             game->gameTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 3)));
             timerId = startTimer(CLIENT_SEND_INTERVAL);
             game->setStatus(Game::PLAYING);
-            break;
-        case USER_NAME_IS_NOT_UNIQUE:
-            game->setErrorCode(USER_NAME_IS_NOT_UNIQUE);
-            break;
         }
+        else
+            game->setErrorCode(frame[2]);
         break;
     case 2:
         game->applyFrame(frame);

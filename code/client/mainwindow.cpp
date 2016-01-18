@@ -74,6 +74,9 @@ void MainWindow::onErrorCodeChanged(int errCode)
     case USER_NAME_IS_NOT_UNIQUE:
         ui->statusbar->showMessage("Nazwa gracza nie jest unikalna. Wybierz inną nazwę.");
         break;
+    case SERVER_IS_FULL:
+        ui->statusbar->showMessage(QString("Serwer jest pełny - jest już na nim %1 graczy").arg(MAX_PLAYERS));
+        break;
     }
 }
 

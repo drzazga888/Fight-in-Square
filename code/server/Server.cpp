@@ -77,6 +77,15 @@ void Server::read(int playerId, const QByteArray &message)
             tcpServer.write(playerId, response);
             tcpServer.disconnect(playerId);
         }
+        else if (data.model.players.size() == MAX_PLAYERS)
+        {
+            response.resize(3);
+            response[0] = 1;
+            response[1] = playerId;
+            response[2] = SERVER_IS_FULL;
+            tcpServer.write(playerId, response);
+            tcpServer.disconnect(playerId);
+        }
         else {
             emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
             response.resize(5);
