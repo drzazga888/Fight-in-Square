@@ -213,11 +213,11 @@ void Controller::nextModelStatus()
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     refreshBoardInBoard(boardInBoard);
-   // debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+    debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
     it.toFront();
     while(it.hasNext()){
         it.next();
-        qDebug()<<"Kierunek :"<<it.value().direction<<"Czy strzelił "<<it.value().name;
+       // qDebug()<<"Kierunek :"<<it.value().direction<<"Czy strzelił "<<it.value().name;
     }
 
 }
@@ -366,7 +366,7 @@ void Controller::debugDrawInBoard(QVector<QVector<char> > & playerInBoard, QVect
         output="";
     }
     //qDebug() << output;
-    qDebug() <<"koniec tablicy";
+    //qDebug() <<"koniec tablicy";
 }
 void Controller::refreshBoardInBoard(QVector<QVector<int> > & boardInBoard){
     for(int i=0;i<boardInBoard.size();i++){
