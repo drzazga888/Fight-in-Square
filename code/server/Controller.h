@@ -56,7 +56,7 @@ private:
     DIRECTION assignDirection();
     QPoint assignFreePosition();
     Data &data;
-    QVector<Shot> oldshots;
+    QMap<int,Shot> oldshots;
 
     QVector<QVector<char> > playerInBoard; /*!<Do debugowania. NIE RUSZAĆ! NIE USUWAĆ*/
     QVector<QVector<char> > shotInBoard; /*!<Do debugowania. NIE RUSZAĆ! NIE USUWAĆ*/
@@ -74,17 +74,20 @@ private:
     void RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<QVector<char> > & playerInBoard);
     bool isShotInPlayer(QPoint shot,QPoint player);
     bool isShotInBoard(const QPoint &shot);
-    void refreshShotInBoard(QVector<Shot> futuredShots,QVector<QVector<char> > & shotInBoard);
+    void refreshShotInBoard(QMap<int,Shot> futuredShots,QVector<QVector<char> > & shotInBoard);
     void refreshBoardInBoard(QVector<QVector<int> > & boardInBoard);
     int howMuchHurt(int power);
     void SolveFieldsWallAndPlayerConflict(Player & player);
     bool isPlayerInFieldWall(QPoint player,QPoint field);
     bool isFieldsWallAndShotConflict(Shot & shot);
     bool isShotInFieldWall(QPoint shot,QPoint field);
+
 public:
     QPoint getActualShotPosition(const Shot & shot);
     void loadExtendedBoard(QVector<QVector<int> > idBoard);
     void clearModelFromDataObject();
+    static int getNewShotID;
+
 
 };
 
