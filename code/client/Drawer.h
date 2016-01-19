@@ -109,7 +109,7 @@ private:
      * @param x
      * pozycja w grze
      * @return
-     * pixele w których mieści się obiekt o pozycji x
+     * położenie w którym należy rysować obiekt o pozycji x
      */
     int cast_to_pixels(int x);
 };
