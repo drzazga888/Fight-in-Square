@@ -63,10 +63,22 @@ void NetworkManager::applyFrame(const QByteArray &frame)
             timerId = startTimer(CLIENT_SEND_INTERVAL);
             game->setStatus(Game::PLAYING);
         }
+        else if (frame[2] == SERVER_IS_EMPTY)
+        {
+            game->player.id = frame[1];
+            game->gameTime = QTime(0, 0);
+            qDebug() << game->gameTime.toString("mm:ss");
+            game->setStatus(Game::WAITING_FOR_PLAYER);
+        }
         else
             game->setErrorCode(frame[2]);
         break;
     case 2:
+        if (game->status == Game::WAITING_FOR_PLAYER)
+        {
+            timerId = startTimer(CLIENT_SEND_INTERVAL);
+            game->setStatus(Game::PLAYING);
+        }
         game->applyFrame(frame);
         break;
     case 3:

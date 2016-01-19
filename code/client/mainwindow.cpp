@@ -51,6 +51,9 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
     case Game::SENDING_HELLO:
         ui->statusbar->showMessage("Wysyłanie komunikatu powitalnego...");
         break;
+    case Game::WAITING_FOR_PLAYER:
+        ui->statusbar->showMessage("Oczekiwanie na graczy...");
+        break;
     case Game::PLAYING:
         ui->stackedWidget->setCurrentWidget(ui->game);
         ui->exitGameButton->setEnabled(true);
