@@ -7,3 +7,5 @@
 
 #DEADLINE: 22.01.2016
 Ustawiony jest nawet milestone na to, aby zbierał wszystkie problemy (issues) w projekcie.
+
+#Można wygenerować już sobie dokumentację przez doxygena! WOW! Amazing
