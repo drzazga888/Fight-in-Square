@@ -145,12 +145,14 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
     int flight_periods;
     int anim_x=0;
     int anim_y=0;
-
+    bool animate = true;
     QTransform trans;
+
 
     foreach(const Shot shot, shots1)
     {
 
+        animate=true;
         step_x=0;
         step_y=0;
 
@@ -199,16 +201,29 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
         }
         trans.reset();
       //  int static n=0;
-        if(!shots2.contains(shot.id))
+
+        foreach (const Shot shott, shots2) {
+         if(shott.id == shot.id){
+             animate=false;
+                break;
+         }//else animate = true;
+        }
+
+        if(animate)
         {
-           // n++;
-            //qDebug() << "animacja nr:" + n;
+            foreach (const Shot sh, shots1) {
+                qDebug() << "1: " << sh.id << ", ";
+            }
+            foreach (const Shot shott, shots2) {
+                qDebug() << "2: " << shott.id <<", ";
+            }
+            qDebug() << "warunek: " << shots2.contains(shot.id);
         animations.append(Animation(
                               cast_to_pixels(shot.x_start+pos_x+anim_x)+step_x,
                               cast_to_pixels(shot.y_start+pos_y+anim_y)+step_y));
         }
                 painter->drawPixmap(
-                        cast_to_pixels(shot.x_start+pos_x)+step_x,
+                         cast_to_pixels(shot.x_start+pos_x)+step_x,
                         cast_to_pixels(shot.y_start+pos_y)+step_y,
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
