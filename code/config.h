@@ -7,9 +7,10 @@
 
 // logika
 
-#define SPEEDSHOT 2
+#define SPEEDSHOT 3
 
 // nazwa gracza
+
 #define NAME_REGEX "^[a-zA-Z0-9_\\.]{1,16}$"
 
 // rozmiar okna
@@ -74,5 +75,10 @@
 #define USER_NAME_IS_NOT_UNIQUE 1
 #define SERVER_IS_FULL 2
 #define SERVER_IS_EMPTY 3
+
+// ramki
+
+#define PLAYER_FRAME_SIZE 26
+#define SHOT_FRAME_SIZE 10
 
 #endif // CONFIG_H

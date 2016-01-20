@@ -33,8 +33,9 @@ void Drawer::draw(QPainter *painter)
 
     draw_players(painter,game->model1.players,game->model2.players,phaseOverlay);
 
-    draw_bullets(painter,game->model2.shots);
+    draw_bullets(painter,game->model1.shots,game->model2.shots,phaseOverlay);
 
+    draw_animation(painter,animations);
 }
 
 
@@ -61,6 +62,8 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<in
                         BOARD_FIELD_HEIGHT,
                         sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
             }
+         else
+             qDebug() << "nie wchodzę do funkcji rysującej, a direction to:" << player.direction;
     }
 }
 
@@ -134,62 +137,64 @@ void Drawer::which_field(int &col, int &row, int x, int y)
                     row=BOARD_ROWS+1;
             }
 }
-/*void Drawer::draw_players(QPainter *painter, QMap<int, Player> players)
-{
-    QTransform transf;
-    //QPixmap mask(BOARD_FIELD_WIDTH,BOARD_FIELD_HEIGHT);
 
-    foreach (const Player player, players)
-        {
-         transf.reset();
-         if(player.direction && player.health > 0)
-            {
-            painter->drawPixmap(
-                        cast_to_pixels(player.x),
-                        cast_to_pixels(player.y),
-                        BOARD_FIELD_WIDTH,
-                        BOARD_FIELD_HEIGHT,
-                        sprites.get(TANK_BOARD_FIELD_ID).transformed(transf.rotate(90*(player.direction-1))));
-            }
-    }
-}
-*/
-void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
+void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, Shot> &shots2, float phase)
 {
     int step_x=0;
     int step_y=0;
     int pos_x=0;
     int pos_y=0;
+    int flight_periods;
+    int anim_x=0;
+    int anim_y=0;
+    bool animate = true;
     QTransform trans;
 
-    for(int i=0;i<shots.size();i++)
+
+    foreach(const Shot shot, shots1)
     {
 
+        animate=true;
         step_x=0;
         step_y=0;
 
         pos_x=0;
         pos_y=0;
 
-        switch(shots[i].direction)
+        anim_x=0;
+        anim_y=0;
+
+        if(shots2.contains(shot.id)){
+        flight_periods = cast_to_pixels(shots2[shot.id].flight_periods - shot.flight_periods)*phase;
+        }
+        else
+            flight_periods = 0;//cast_to_pixels(shot.flight_periods);
+
+        switch(shot.direction)
         {
         case UP:
-            step_y=-shots[i].flight_periods;
+            step_y=-(cast_to_pixels(shot.flight_periods)+flight_periods);
             pos_y=-2;
+            anim_y=-3;
             break;
         case DOWN:
             pos_y=2;
-            step_y=shots[i].flight_periods;
+            step_y=(cast_to_pixels(shot.flight_periods)+flight_periods);
+            anim_y=3;
             break;
         case LEFT:
             pos_x=-2;
-            step_x=-shots[i].flight_periods;
+            step_x=-(cast_to_pixels(shot.flight_periods)+flight_periods);
+            anim_x=-3;
             break;
         case RIGHT:
             pos_x=2;
-            step_x=shots[i].flight_periods;
+            anim_x=3;
+            step_x=(cast_to_pixels(shot.flight_periods)+flight_periods);
             break;
         default:
+            anim_x=0;
+            anim_y=0;
             pos_x=0;
             pos_y=0;
             step_x=0;
@@ -197,22 +202,61 @@ void Drawer::draw_bullets(QPainter *painter, QVector<Shot> &shots)
             break;
         }
         trans.reset();
-        //if(check_collisions(shots[i].x_start+step_x,shots[i].y_start+step_y,shots[i].direction))
-        //{
-        //animations.append(Animation(shots[i].x_start,shots[i].y_start));
-        //}
-        //else
+      //  int static n=0;
+
+        foreach (const Shot shott, shots2) {
+         if(shott.id == shot.id){
+             animate=false;
+                break;
+         }//else animate = true;
+        }
+
+        if(animate)
+        {
+            foreach (const Shot sh, shots1) {
+                qDebug() << "1: " << sh.id << ", ";
+            }
+            foreach (const Shot shott, shots2) {
+                qDebug() << "2: " << shott.id <<", ";
+            }
+            qDebug() << "warunek: " << shots2.contains(shot.id);
+        animations.append(Animation(
+                              cast_to_pixels(shot.x_start+pos_x+anim_x)+step_x,
+                              cast_to_pixels(shot.y_start+pos_y+anim_y)+step_y));
+        }
                 painter->drawPixmap(
-                        cast_to_pixels(shots[i].x_start+step_x+pos_x),
-                        cast_to_pixels(shots[i].y_start+step_y+pos_y),
+                         cast_to_pixels(shot.x_start+pos_x)+step_x,
+                        cast_to_pixels(shot.y_start+pos_y)+step_y,
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
-                        sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*(shots[i].direction-1))));
+                        sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*(shot.direction-1))));
 
     }
+
 }
 
 int Drawer::cast_to_pixels(int x)
 {
        return (x-2)*BOARD_FIELD_WIDTH/5;
+}
+
+
+void Drawer::draw_animation(QPainter *painter, QList<Animation> &animations){
+
+    QMutableListIterator<Animation> ian(animations);
+            while(ian.hasNext()){
+    Animation an = ian.next();
+        painter->drawPixmap(
+            an.getplacex(),
+            an.getplacey(),
+            BOARD_FIELD_WIDTH,
+            BOARD_FIELD_HEIGHT,
+            sprites.get(an.getPhase()));
+
+        an.changePhase();
+        if(an.getPhase() < 10)
+            ian.remove();
+        else
+            ian.setValue(an);
+    }
 }

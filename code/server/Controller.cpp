@@ -104,20 +104,23 @@ void Controller::nextModelStatus()
         it.next();
         if(IS_SHOT(it.value().id)==true && it.value().is_alive ){
             bool flaga=false;
-            for(QVector<Shot>::iterator i=oldshots.begin();i!=oldshots.end();i++){
-                if(*i==Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power))   {
+            for(QMap<int,Shot>::iterator i=oldshots.begin();i!=oldshots.end();i++){
+                if(i.value()==Shot(0,it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power))   {
                     flaga=true;
                 }
             }
-            if(flaga!=true) data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+            if(flaga!=true) {
+                //data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+                data.model.shots.insert(Controller::getNewShotID,Shot(Controller::getNewShotID++,it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+            }
         }
     }
-    for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
+    for(QMap<int,Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         int flaga=0;
-        if((1+i)!=data.model.shots.end()){
+        if((i+1)!=data.model.shots.end()){
 
-            for(QVector<Shot>::iterator j=i+1;j!=data.model.shots.end();/*j++*/){
-                if(*i%=*j)  {
+            for(QMap<int,Shot>::iterator j=i+1;j!=data.model.shots.end();/*j++*/){
+                if(i.value()%=j.value())  {
                     j=data.model.shots.erase(j);
                     flaga++;
                 }
@@ -134,9 +137,9 @@ void Controller::nextModelStatus()
         }
     }
     it.toFront();
-    for(QVector<Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
+    for(QMap<int,Shot>::iterator i=data.model.shots.begin();i!=data.model.shots.end();/*i++*/){
         // przesuwamy je !!
-        i->flight_periods+=SPEEDSHOT;
+        i.value().flight_periods+=SPEEDSHOT;
        // if(!isShotInBoard(QPoint(getActualShotPosition(*i))) || isFieldsWallAndShotConflict(*i)){
        //     i->flight_periods-=1;
        // }
@@ -144,20 +147,20 @@ void Controller::nextModelStatus()
         while(it.hasNext()){
             it.next();
             //czy zestrzelilisny gracza ; siebie samego zestrzelic nie mozemy
-            if(it.value().is_alive && it.value().id!=i->player_id && isShotInPlayer(getActualShotPosition(*i),QPoint(it.value().x,it.value().y))){
+            if(it.value().is_alive && it.value().id!=i.value().player_id && isShotInPlayer(getActualShotPosition(i.value()),QPoint(it.value().x,it.value().y))){
                 howMuchShoted++;
-                data.model.players.value(i->player_id).points;
+                data.model.players.value(i.value().player_id).points;
                 //if((it.value().health-howMuchHurt(i->power))<=0)    {
                 if((it.value().health-i->power)<=0)    {
                     it.value().health=0;
                     it.value().is_alive=false;
                     it.value().death_time=0;
-                    data.model.players[i->player_id].points++;
+                    data.model.players[i.value().player_id].points++;
                     //data.model.players[i->player_id].power++;
                 }
                 else{
                     //it.value().health-=howMuchHurt(i->power);
-                    it.value().health-=i->power;
+                    it.value().health-=i.value().power;
                 }
             }
         }
@@ -215,10 +218,12 @@ void Controller::nextModelStatus()
     refreshBoardInBoard(boardInBoard);
     debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
     it.toFront();
-    while(it.hasNext()){
+    /*while(it.hasNext()){
         it.next();
        // qDebug()<<"Kierunek :"<<it.value().direction<<"Czy strzelił "<<it.value().name;
     }
+        qDebug()<<"Kierunek :"<<it.value().direction<<"Czy strzelił "<<it.value().name;
+    }*/
 
 }
 
@@ -408,7 +413,7 @@ void Controller::RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<Q
         }
     }
 }
-void Controller::refreshShotInBoard(QVector<Shot> futuredShots, QVector<QVector<char> > &shotInBoard){
+void Controller::refreshShotInBoard(QMap<int,Shot> futuredShots, QVector<QVector<char> > &shotInBoard){
     for(int i=0;i<shotInBoard.size();i++){
         for(int j=0;j<shotInBoard.operator[](i).size();j++){
             shotInBoard[i][j]='0';
@@ -563,3 +568,7 @@ void Controller::loadExtendedBoard(QVector<QVector<int> > idBoard){
 void Controller::clearModelFromDataObject(){
     data.model=Model();
 }
+
+
+//zmienna statyczna;
+int Controller::getNewShotID=0;

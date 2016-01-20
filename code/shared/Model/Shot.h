@@ -17,7 +17,8 @@ class Shot: public Frameable
 public:
 
     Shot();
-	Shot(int player_id, int x_start, int y_start, DIRECTION direction, int flight_periods, int power);
+    Shot(int id, int player_id, int x_start, int y_start, DIRECTION direction, int flight_periods, int power);
+    Shot(const QByteArray &frame);
 
     /**
      * @brief applyFrame przyjmuje ramkę i ją aplikuje na obiekt
@@ -30,9 +31,14 @@ public:
      * @return ramka
      */
     virtual QByteArray getFrame() const;
-     QPoint getActualShotPosition() const;
+
+    QPoint getActualShotPosition() const;
+
     bool operator ==( const Shot & dane) const;
+
     bool operator %=(  Shot & dane) const;
+
+    unsigned char id;
     unsigned char player_id;
     unsigned char x_start;
     unsigned char y_start;
