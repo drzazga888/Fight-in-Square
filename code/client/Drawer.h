@@ -1,6 +1,7 @@
 #ifndef DRAWER_H
 #define DRAWER_H
 
+#include <QList>
 #include <QPainter>
 #include "../config.h"
 #include "Game.h"
@@ -34,7 +35,7 @@ public:
     void draw(QPainter *painter);
 
 private:
-    QVector<Animation> animations;
+    QList<Animation> animations;
     Game *game;
     Sprites sprites;
 
@@ -93,6 +94,7 @@ private:
      */
     void draw_players(QPainter *painter ,QMap<int, Player> players1, QMap<int, Player> players2, float phase);
 
+
     /**
      * @brief draw_bullets
      * funkcja rysująca lecące pociski
@@ -101,7 +103,7 @@ private:
      * @param shots
      * vector pocisków
      */
-    void draw_bullets(QPainter *painter,QVector<Shot> &shots);
+    void draw_bullets(QPainter *painter,QMap<int,Shot> &shots1, QMap<int,Shot>&shots2, float phase);
 
     /**
      * @brief cast_to_pixels
@@ -112,6 +114,7 @@ private:
      * położenie w którym należy rysować obiekt o pozycji x
      */
     int cast_to_pixels(int x);
+    void draw_animation(QPainter *painter, QList<Animation>&animations);
 };
 
 #endif // DRAWER_H

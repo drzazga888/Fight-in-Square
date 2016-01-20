@@ -28,13 +28,15 @@ bool TcpServer::start(int port)
 
 bool TcpServer::stop()
 {
-	bool state = disconnectAll();
+    qDebug() << "stop function()";
+    bool state = false;
     if(tcpServer!=NULL)
     {
+        state = disconnectAll();
         tcpServer->close();
         delete tcpServer;
         tcpServer = NULL;
-        qDebug() << "serveer is closing...";
+        qDebug() << "server is closing...";
     }
     return state;
 }

@@ -56,20 +56,29 @@ void NetworkManager::applyFrame(const QByteArray &frame)
     switch (frame[0])
     {
     case 1:
-        switch (frame[2])
+        if (!frame[2])
         {
-        case 0:
             game->player.id = frame[1];
             game->gameTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 3)));
             timerId = startTimer(CLIENT_SEND_INTERVAL);
             game->setStatus(Game::PLAYING);
-            break;
-        case USER_NAME_IS_NOT_UNIQUE:
-            game->setErrorCode(USER_NAME_IS_NOT_UNIQUE);
-            break;
         }
+        else if (frame[2] == SERVER_IS_EMPTY)
+        {
+            game->player.id = frame[1];
+            game->gameTime = QTime(0, 0);
+          //  qDebug() << game->gameTime.toString("mm:ss");
+            game->setStatus(Game::WAITING_FOR_PLAYER);
+        }
+        else
+            game->setErrorCode(frame[2]);
         break;
     case 2:
+        if (game->status == Game::WAITING_FOR_PLAYER)
+        {
+            timerId = startTimer(CLIENT_SEND_INTERVAL);
+            game->setStatus(Game::PLAYING);
+        }
         game->applyFrame(frame);
         break;
     case 3:
@@ -85,7 +94,7 @@ void NetworkManager::timerEvent(QTimerEvent *)
 {
     if (game->player.player_shooted || game->player.moving_direction != NONE)
     {
-        qDebug() << "Sending to server";
+      //  qDebug() << "Sending to server";
         tcpClient.write(game->player.getFrame());
         game->player.player_shooted = false;
     }

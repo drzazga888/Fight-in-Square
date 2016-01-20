@@ -124,6 +124,7 @@ private:
     Controller controller;
     QElapsedTimer gameTime;
     int timerId;
+    bool isTimerRunning;
     int port;
 
 };

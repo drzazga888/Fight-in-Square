@@ -1,22 +1,15 @@
 #include "animation.h"
 
-Animation::Animation(int x, int y): x(x), y(y), step(10)
+Animation::Animation(int x, int y, int st): x(x), y(y), step(st)
 {
 }
-
 Animation::Animation(): x(0), y(0), step(10)
 {
 }
 
 int Animation::getPhase()
 {
-    if(step<13)
-    {
-    ++step;
-    return step-1;
-    }
-    else
-        return 0;
+    return step;
 }
 
 int Animation::getplacex()
@@ -29,4 +22,9 @@ int Animation::getplacey()
     return y;
 }
 
-
+void Animation::changePhase(){
+    if(step < 12 && step >0)
+        step+=1;
+    else
+        step=0;
+}

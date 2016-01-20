@@ -36,6 +36,7 @@ public:
         NO_PLAYING,
         CONNECTING,
         SENDING_HELLO,
+        WAITING_FOR_PLAYER,
         PLAYING,
         SENDING_GOODBYE,
         DISCONNECTING

@@ -10,14 +10,16 @@ class Animation
 {
 public:
     Animation();
-    Animation(int x, int y);
+    Animation(int x, int y,int st=10);
     int getPhase();
+    void changePhase();
     int getplacex();
     int getplacey();
 private:
+    int step;
     int x;
     int y;
-    int step;
+
 };
 
 #endif // ANIMATION_H

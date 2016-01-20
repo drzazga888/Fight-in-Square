@@ -1,7 +1,6 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QVector>
 #include <QMap>
 #include "../../config.h"
 #include "../Frame/Frameable.h"
@@ -37,8 +36,7 @@ public:
 
     Board board;
     QMap<int, Player> players;
-    QVector<Shot> shots;
-
+    QMap<int, Shot> shots;
 };
 
 #endif // MODEL_H

@@ -51,6 +51,9 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
     case Game::SENDING_HELLO:
         ui->statusbar->showMessage("Wysyłanie komunikatu powitalnego...");
         break;
+    case Game::WAITING_FOR_PLAYER:
+        ui->statusbar->showMessage("Oczekiwanie na graczy...");
+        break;
     case Game::PLAYING:
         ui->stackedWidget->setCurrentWidget(ui->game);
         ui->exitGameButton->setEnabled(true);
@@ -74,7 +77,15 @@ void MainWindow::onErrorCodeChanged(int errCode)
     case USER_NAME_IS_NOT_UNIQUE:
         ui->statusbar->showMessage("Nazwa gracza nie jest unikalna. Wybierz inną nazwę.");
         break;
+    case SERVER_IS_FULL:
+        ui->statusbar->showMessage(QString("Serwer jest pełny - jest już na nim %1 graczy").arg(MAX_PLAYERS));
+        break;
     }
+}
+
+bool playerPointsLessThen(const Player &a, const Player &b)
+{
+    return a.points > b.points;
 }
 
 void MainWindow::onModelActualized()
@@ -91,22 +102,18 @@ void MainWindow::onModelActualized()
     ui->powerBar->setValue(player.power);
     ui->pointsLabel->setText(QString("Punkty: %1").arg(player.points));
     ui->timeLabel->setText(QString("Czas: %1").arg(game.gameTime.toString("mm:ss")));
-    QMap<int, Player> playerPoints;
-    QMapIterator<int, Player> i(game.model2.players);
-    while (i.hasNext())
-    {
-        i.next();
-        playerPoints.insert(i.value().points, i.value());
-    }
-    i = QMapIterator<int, Player>(playerPoints);
+    QList<Player> playerPoints = game.model2.players.values();
+    qStableSort(playerPoints.begin(), playerPoints.end(), playerPointsLessThen);
+    QListIterator<Player> i(playerPoints);
     for (int j = 0; j < ui->top->rowCount(); ++j)
     {
         QTableWidgetItem *name, *points;
         if (i.hasNext())
         {
-            i.next();
-            name = new QTableWidgetItem(i.value().name.data());
-            points = new QTableWidgetItem(QString::number(i.value().points));
+            const Player &player = i.next();
+            //qDebug() << "gracz #" << player.id << " " << i.;
+            name = new QTableWidgetItem(player.name.data());
+            points = new QTableWidgetItem(QString::number(player.points));
         }
         else
         {

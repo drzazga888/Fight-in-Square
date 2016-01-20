@@ -24,11 +24,10 @@ bool Server::switchOn(int port)
     {
         if (tcpServer.start(port))
         {
+            isTimerRunning = false;
             this->port = port;
             isWorking = true;
             log(QString("Serwer został włączony, port %1").arg(port));
-            timerId = startTimer(SERVER_SEND_INTERVAL);
-            gameTime.start();
             return true;
         }
         else
@@ -77,8 +76,27 @@ void Server::read(int playerId, const QByteArray &message)
             tcpServer.write(playerId, response);
             tcpServer.disconnect(playerId);
         }
+        else if (data.model.players.size() == MAX_PLAYERS)
+        {
+            response.resize(3);
+            response[0] = 1;
+            response[1] = playerId;
+            response[2] = SERVER_IS_FULL;
+            tcpServer.write(playerId, response);
+            tcpServer.disconnect(playerId);
+        }
+        else if (data.model.players.isEmpty())
+        {
+            emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
+            response.resize(5);
+            response[0] = 1;
+            response[1] = playerId;
+            response[2] = SERVER_IS_EMPTY;
+            tcpServer.write(playerId, response);
+        }
         else {
             emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
+            gameTime.start();
             response.resize(5);
             response[0] = 1;
             response[1] = playerId;
@@ -86,6 +104,8 @@ void Server::read(int playerId, const QByteArray &message)
             response[3] = gameTime.elapsed() / 1000;
             response[4] = (gameTime.elapsed() / 1000) >> 8;
             tcpServer.write(playerId, response);
+            timerId = startTimer(SERVER_SEND_INTERVAL);
+            isTimerRunning = true;
         }
         break;
     case 2:
@@ -111,11 +131,14 @@ void Server::disconnected(int playerId)
 
 void Server::timerEvent(QTimerEvent *)
 {
-    controller.nextModelStatus();
-    if (data.model.players.size())
+    if (isTimerRunning)
     {
-        tcpServer.writeBroadcast(data.model.getFrame());
-        log(QStringLiteral("Broadcast planszy"));
+        controller.nextModelStatus();
+        if (data.model.players.size())
+        {
+            tcpServer.writeBroadcast(data.model.getFrame());
+            log(QStringLiteral("Broadcast planszy"));
+        }
     }
 }
 
