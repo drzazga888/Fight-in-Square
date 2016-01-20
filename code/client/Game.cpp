@@ -78,7 +78,7 @@ void Game::setErrorCode(int errCode)
 void Game::applyFrame(const QByteArray &frame)
 {
     frameToFrameElapsed = frameUpdateTimer.elapsed();
-    qDebug() << frameToFrameElapsed;
+   // qDebug() << frameToFrameElapsed;
     frameUpdateTimer.restart();
     model1 = model2;
     model2.applyFrame(frame);

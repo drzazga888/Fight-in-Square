@@ -67,7 +67,7 @@ void NetworkManager::applyFrame(const QByteArray &frame)
         {
             game->player.id = frame[1];
             game->gameTime = QTime(0, 0);
-            qDebug() << game->gameTime.toString("mm:ss");
+          //  qDebug() << game->gameTime.toString("mm:ss");
             game->setStatus(Game::WAITING_FOR_PLAYER);
         }
         else
@@ -94,7 +94,7 @@ void NetworkManager::timerEvent(QTimerEvent *)
 {
     if (game->player.player_shooted || game->player.moving_direction != NONE)
     {
-        qDebug() << "Sending to server";
+      //  qDebug() << "Sending to server";
         tcpClient.write(game->player.getFrame());
         game->player.player_shooted = false;
     }
