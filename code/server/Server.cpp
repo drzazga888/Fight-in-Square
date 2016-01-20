@@ -95,8 +95,8 @@ void Server::read(int playerId, const QByteArray &message)
             tcpServer.write(playerId, response);
         }
         else {
+            startPlaying();
             emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
-            gameTime.start();
             response.resize(5);
             response[0] = 1;
             response[1] = playerId;
@@ -104,8 +104,6 @@ void Server::read(int playerId, const QByteArray &message)
             response[3] = gameTime.elapsed() / 1000;
             response[4] = (gameTime.elapsed() / 1000) >> 8;
             tcpServer.write(playerId, response);
-            timerId = startTimer(SERVER_SEND_INTERVAL);
-            isTimerRunning = true;
         }
         break;
     case 2:
@@ -119,6 +117,16 @@ void Server::read(int playerId, const QByteArray &message)
         tcpServer.write(playerId, response);
         tcpServer.disconnect(playerId);
         break;
+    }
+}
+
+void Server::startPlaying()
+{
+    if (!isTimerRunning)
+    {
+        isTimerRunning = true;
+        gameTime.start();
+        timerId = startTimer(SERVER_SEND_INTERVAL);
     }
 }
 

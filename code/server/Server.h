@@ -60,6 +60,18 @@ public:
      */
     bool switchOff();
 
+    /**
+     * @brief startPlaying
+     * Jeśli conajmniej dwóch graczy się połączy,
+     * to serwer może zacząć rozsyłać planszę i naliczać
+     * czas gry.
+     * To jest funkcja, która wykonuje tą akcję,
+     * jest ona niezależna względem switchOn,
+     * bo wspomniana metoda włącza serwer i
+     * pozwala tylko połączyć się z serwerem.
+     */
+    void startPlaying();
+
     bool isWorking;
 
     void refreshController();
