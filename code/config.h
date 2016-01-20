@@ -7,7 +7,7 @@
 
 // logika
 
-#define SPEEDSHOT 2
+#define SPEEDSHOT 3
 
 // nazwa gracza
 
