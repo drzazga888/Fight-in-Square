@@ -46,6 +46,8 @@ bool Server::switchOff()
     {
         if (tcpServer.stop())
         {
+            data.model = Model();
+            data.playerActions = QMap<int, PlayerAction>();
             if (isTimerRunning)
                 killTimer(timerId);
             log("Serwer został wyłączony");

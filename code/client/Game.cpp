@@ -65,6 +65,11 @@ void Game::setStatus(Game::STATUS status)
     this->status = status;
     if (status == Game::PLAYING)
         frameUpdateTimer.start();
+    else if (status == Game::NO_PLAYING)
+    {
+        model1 = Model();
+        model2 = Model();
+    }
     emit gameStatusChanged(status);
 }
 

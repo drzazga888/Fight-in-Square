@@ -80,10 +80,10 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
                 break;
             }
         }
-        ui->redPointsLabel->setText(QString("Czerwoni: %1 punktów").arg(redPoints));
-        ui->bluePointsLabel->setText(QString("Niebiescy: %1 punktów").arg(bluePoints));
+        ui->redPointsLabel->setText(QString("Czerwoni: %1 pkt.").arg(redPoints));
+        ui->bluePointsLabel->setText(QString("Niebiescy: %1 pkt.").arg(bluePoints));
         if (redPoints == bluePoints)
-            ui->yourStatusLabel->setText(QStringLiteral("<font color='ff0'>Remis!</font>"));
+            ui->yourStatusLabel->setText(QStringLiteral("<font color='#ff0'>Remis!</font>"));
         else if (
                  ((redPoints > bluePoints) && (game.model2.players[game.player.id].group == Player::RED_GROUP)) ||
                  ((redPoints < bluePoints) && (game.model2.players[game.player.id].group == Player::BLUE_GROUP))

@@ -44,18 +44,22 @@
 #define GRASS_BOARD_FIELD_ID 3
 #define FLOWERGRASS_BOARD_FIELD_ID 4
 #define WALL_BOARD_FIELD_ID 5
-#define WATER_BOARD_FIELD_ID 6
-#define TANK_BOARD_FIELD_ID 7
-#define SHIELD_BOARD_FIELD_ID 8
-#define BULLET_BOARD_FIELD_ID 9
-#define BOOM_1_BOARD_FIELD_ID 10
-#define BOOM_2_BOARD_FIELD_ID 11
-#define BOOM_3_BOARD_FIELD_ID 12
-#define TANK_BLUE_BOARD_FIELD_ID 13
-#define TANK_RED_BOARD_FIELD_ID 14
-#define TANK_RED_ME_BOARD_FIELD_ID 15
-#define TANK_BLUE_ME_BOARD_FIELD_ID 16
-#define THICK_WALL_BOARD_FIELD_ID 17
+#define THICK_WALL_BOARD_FIELD_ID 6
+#define WATER_BOARD_FIELD_ID 7
+
+#define BOOM_1_BOARD_FIELD_ID 8
+#define BOOM_2_BOARD_FIELD_ID 9
+#define BOOM_3_BOARD_FIELD_ID 10
+
+#define TANK_BOARD_FIELD_ID 11
+#define TANK_BLUE_BOARD_FIELD_ID 12
+#define TANK_RED_BOARD_FIELD_ID 13
+#define TANK_RED_ME_BOARD_FIELD_ID 14
+#define TANK_BLUE_ME_BOARD_FIELD_ID 15
+
+#define BULLET_BOARD_FIELD_ID 16
+
+#define SHIELD_BOARD_FIELD_ID 17
 
 #define BOARD_FIELD_ID(item) item##_BOARD_FIELD_ID
 
@@ -67,13 +71,7 @@
 #define BOARD_FIELD_HEIGHT 65
 #define BOARD_SUBFIELDS 5
 #define BOARD_FIELD_PATH "../img/sprites/%1.png"
-#define BOARD_FIELDS_LENGTH 12
-
-// define'y szybkiego dostepu
-
-// BA - Board Assign
-#define BA(row, col, item) \
-    data.model.board[row][col] = BoardElement(BOARD_FIELD_ID(item))
+#define BOARD_FIELDS_LENGTH 17
 
 // bledy
 

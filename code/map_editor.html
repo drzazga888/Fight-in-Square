@@ -1,0 +1,81 @@
+<!doctype html>
+
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>Edytor map</title>
+	<style>
+
+.podglad table {
+	border-collapse: collapse;
+}
+
+.podglad td {
+	border: dotted 1px #ccc;
+	width: 63px;
+	height: 63px;
+}
+
+.edytowanie {
+	width: 400px;
+	height: 300px;
+}
+
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+	<script>
+
+$(document).ready(function(){
+
+	$(".edytowanie").bind("input", function(){
+		// parsowanie
+		var map = $(".edytowanie").val().split('\n');
+		for (var i = 0; i < map.length; ++i)
+			map[i] = map[i].split(' ');
+		// nowa tabela
+		var table = "<table><tbody>";
+		for (var row = 0; row < 10; ++row){
+			table += "<tr>";
+			for (var col = 0; col < 14; ++col){
+				table += '<td style="background: url(img/sprites/' + map[row][col] + '.png)"></td>';
+			}
+			table += "</tr>";
+		}
+		table += "</tbody></table>";
+		// podmiana
+		var hand = $('.podglad');
+		hand.children().remove();
+		hand.append(table);
+	}).trigger("input");
+
+	$("#fill").on("click", function(){
+		var str = "";
+		for (var row = 0; row < 10; ++row){
+			for (var col = 0; col < 14; ++col){
+				str += $(".fill_param").val() + " ";
+			}
+			str += "\n";
+		}
+		$(".edytowanie").val(str).trigger("input");
+	});
+
+});
+
+	</script>
+</head>
+
+<body>
+	<h1>Fight in sqare</h1>
+	<h2>Edytor map</h2>
+	<h3>Podgląd</h3>
+	<div class="podglad"></div>
+	<h3>Edytowanie</h3>
+	<textarea class="edytowanie"></textarea>
+	<div>
+		Wypełnianie spritem: <input type="text" class="fill_param" />
+		<button id="fill">Wypełnij</button>
+	</div>
+</body>
+
+</html>

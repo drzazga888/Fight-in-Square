@@ -76,6 +76,13 @@
           <property name="displayFormat">
            <string>mm:ss</string>
           </property>
+          <property name="time">
+           <time>
+            <hour>0</hour>
+            <minute>2</minute>
+            <second>0</second>
+           </time>
+          </property>
          </widget>
         </item>
         <item>
