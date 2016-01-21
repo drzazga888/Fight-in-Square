@@ -65,6 +65,20 @@
          </widget>
         </item>
         <item>
+         <widget class="QLabel" name="timeLabel">
+          <property name="text">
+           <string>Czas gry:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTimeEdit" name="timeEdit">
+          <property name="displayFormat">
+           <string>mm:ss</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="onOffButton">
           <property name="text">
            <string>Uruchom serwer</string>

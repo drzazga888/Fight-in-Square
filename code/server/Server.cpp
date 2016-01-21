@@ -18,7 +18,7 @@ void Server::log(const QString &message)
     emit logged(QString("%1:   %2").arg(QDateTime::currentDateTime().toString()).arg(message));
 }
 
-bool Server::switchOn(int port)
+bool Server::switchOn(int port, const QTime &maxTime)
 {
     if (!isWorking)
     {
@@ -26,6 +26,7 @@ bool Server::switchOn(int port)
         {
             isTimerRunning = false;
             this->port = port;
+            this->maxTime = maxTime;
             isWorking = true;
             log(QString("Serwer został włączony, port %1").arg(port));
             return true;
@@ -45,7 +46,8 @@ bool Server::switchOff()
     {
         if (tcpServer.stop())
         {
-            killTimer(timerId);
+            if (isTimerRunning)
+                killTimer(timerId);
             log("Serwer został wyłączony");
             isWorking = false;
             return true;
@@ -141,6 +143,11 @@ void Server::timerEvent(QTimerEvent *)
 {
     if (isTimerRunning)
     {
+        if (QTime(0, 0).addMSecs(gameTime.elapsed()) >= maxTime)
+        {
+            // obsługa końca gry
+            emit serverClosed();
+        }
         controller.nextModelStatus();
         if (data.model.players.size())
         {

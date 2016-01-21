@@ -8,6 +8,7 @@ ServerWindow::ServerWindow(QWidget *parent) :
     connect(&server, SIGNAL(logged(QString)), this, SLOT(server_logged(QString)));
     connect(&server, SIGNAL(playerAdded(Player&)), this, SLOT(server_playerAdded(Player&)));
     connect(&server, SIGNAL(playerRemoved(int)), this, SLOT(server_playerRemoved(int)));
+    connect(&server, SIGNAL(serverClosed()), this, SLOT(on_onOffButton_clicked()));
 }
 
 ServerWindow::~ServerWindow()
@@ -29,7 +30,11 @@ void ServerWindow::on_onOffButton_clicked()
             ui->statusBar->showMessage("Wprowadzono nieprawidłowy numer portu");
         else if (!mapLoaded)
             ui->statusBar->showMessage("Nie załadowano mapy");
-        else if (server.switchOn(ui->portEdit->text().toInt()))
+        else if (ui->timeEdit->time() < QTime(0, 0, 30))
+            ui->statusBar->showMessage("Ustawiony czas gry musi być równy conajmniej 30 s.");
+        else if (ui->timeEdit->time() > QTime(0, 10))
+            ui->statusBar->showMessage("Czas gry nie może być dłuższy niż 10 min.");
+        else if (server.switchOn(ui->portEdit->text().toInt(), ui->timeEdit->time()))
         {
             ui->statusBar->clearMessage();
             ui->portEdit->setEnabled(false);

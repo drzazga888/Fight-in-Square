@@ -49,7 +49,7 @@ public:
      * true - wszystko ok
      * false - błąd
      */
-    bool switchOn(int port);
+    bool switchOn(int port, const QTime &maxTime);
 
     /**
      * @brief
@@ -117,6 +117,11 @@ signals:
      */
     void playerRemoved(int id);
 
+    /**
+     * @brief serverClosed
+     * Sygnał emitowany, gdy serwer zostanie wyłączony
+     */
+    void serverClosed();
 
 private:
 
@@ -138,6 +143,7 @@ private:
     int timerId;
     bool isTimerRunning;
     int port;
+    QTime maxTime;
 
 };
 
