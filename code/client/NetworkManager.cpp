@@ -88,6 +88,12 @@ void NetworkManager::applyFrame(const QByteArray &frame)
             killTimer(timerId);
             game->setStatus(Game::DISCONNECTING);
         }
+        break;
+    case 4:
+        killTimer(timerId);
+        game->applyFrame(frame);
+        game->setStatus(Game::Game::GAME_OVER);
+        break;
     }
 }
 
@@ -95,7 +101,6 @@ void NetworkManager::timerEvent(QTimerEvent *)
 {
     if (game->player.player_shooted || game->player.moving_direction != NONE)
     {
-      //  qDebug() << "Sending to server";
         tcpClient.write(game->player.getFrame());
         game->player.player_shooted = false;
     }

@@ -133,6 +133,7 @@ void Server::startPlaying()
         isTimerRunning = true;
         gameTime.start();
         timerId = startTimer(SERVER_SEND_INTERVAL);
+        log(QStringLiteral("Rozpoczęto broadcast planszy"));
     }
 }
 
@@ -149,14 +150,27 @@ void Server::timerEvent(QTimerEvent *)
     {
         if (gameTime.elapsed() >= maxTime.msecsSinceStartOfDay())
         {
-            // obsługa końca gry
+            log(QStringLiteral("Broadcast ramki końca gry"));
+            int players_n = data.model.players.size();
+            int n = players_n * PLAYER_FRAME_SIZE + 2;
+            int ptr = 0;
+            QByteArray frame(n, '\0');
+            frame[ptr++] = 4;
+            frame[ptr++] = players_n;
+            foreach (const Player &player, data.model.players)
+            {
+                frame.insert(ptr, player.getFrame());
+                ptr += PLAYER_FRAME_SIZE;
+            }
+            frame.resize(n);
+            tcpServer.writeBroadcast(frame);
             emit serverClosed();
         }
-        controller.nextModelStatus();
-        if (data.model.players.size())
+        else
         {
-            tcpServer.writeBroadcast(data.model.getFrame());
-            log(QStringLiteral("Broadcast planszy"));
+            controller.nextModelStatus();
+            if (data.model.players.size())
+                tcpServer.writeBroadcast(data.model.getFrame());
         }
     }
 }

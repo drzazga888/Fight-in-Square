@@ -38,6 +38,7 @@ public:
         SENDING_HELLO,
         WAITING_FOR_PLAYER,
         PLAYING,
+        GAME_OVER,
         SENDING_GOODBYE,
         DISCONNECTING
     };

@@ -63,7 +63,6 @@ float Game::getPhaseOverlay()
 void Game::setStatus(Game::STATUS status)
 {
     this->status = status;
-    //qDebug() << status;
     if (status == Game::PLAYING)
         frameUpdateTimer.start();
     emit gameStatusChanged(status);
@@ -78,7 +77,6 @@ void Game::setErrorCode(int errCode)
 void Game::applyFrame(const QByteArray &frame)
 {
     frameToFrameElapsed = frameUpdateTimer.elapsed();
-   // qDebug() << frameToFrameElapsed;
     frameUpdateTimer.restart();
     model1 = model2;
     model2.applyFrame(frame);

@@ -6,7 +6,6 @@ QMainWindow(parent), ui(new Ui::MainWindow), game(), canvas(&game), networkManag
 {
     ui->setupUi(this);
     canvas.setParent(ui->canvasBack);
-    //ui->stackedWidget->setCurrentWidget(ui->menu);
     setFixedSize(WINDOW_WIDTH, WINDOW_HEIGHT + 22);
     ui->top->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
     ui->top->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
@@ -37,9 +36,9 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
     switch (gameStatus)
     {
     case Game::NO_PLAYING:
-        //canvas.releaseKeyboard();
         ui->connectButton->setText("Połącz");
-        ui->stackedWidget->setCurrentWidget(ui->menu);
+        if (ui->stackedWidget->currentWidget() != ui->gameOver)
+            ui->stackedWidget->setCurrentWidget(ui->menu);
         if (!game.errCode)
             ui->statusbar->showMessage("");
         break;
@@ -66,6 +65,34 @@ void MainWindow::onGameStatusChanged(Game::STATUS gameStatus)
         break;
     case Game::DISCONNECTING:
         ui->statusbar->showMessage("Rozłączanie...");
+        break;
+    case Game::GAME_OVER:
+        int redPoints = 0, bluePoints = 0;
+        foreach (const Player &player, game.model2.players)
+        {
+            switch (player.group)
+            {
+            case Player::RED_GROUP:
+                redPoints += player.points;
+                break;
+            case Player::BLUE_GROUP:
+                bluePoints += player.points;
+                break;
+            }
+        }
+        ui->redPointsLabel->setText(QString("Czerwoni: %1 punktów").arg(redPoints));
+        ui->bluePointsLabel->setText(QString("Niebiescy: %1 punktów").arg(bluePoints));
+        if (redPoints == bluePoints)
+            ui->yourStatusLabel->setText(QStringLiteral("<font color='ff0'>Remis!</font>"));
+        else if (
+                 ((redPoints > bluePoints) && (game.model2.players[game.player.id].group == Player::RED_GROUP)) ||
+                 ((redPoints < bluePoints) && (game.model2.players[game.player.id].group == Player::BLUE_GROUP))
+        )
+            ui->yourStatusLabel->setText(QStringLiteral("<font color='#6f6'>Wygrana!</font>"));
+        else
+            ui->yourStatusLabel->setText(QStringLiteral("<font color='#f66'>Przegrana!</font>"));
+        fillInTable(ui->topSummary);
+        ui->stackedWidget->setCurrentWidget(ui->gameOver);
         break;
     }
 }
@@ -102,27 +129,7 @@ void MainWindow::onModelActualized()
     ui->powerBar->setValue(player.power);
     ui->pointsLabel->setText(QString("Punkty: %1").arg(player.points));
     ui->timeLabel->setText(QString("Czas: %1 / %2").arg(game.gameTime.toString("mm:ss"), game.maxTime.toString("mm:ss")));
-    QList<Player> playerPoints = game.model2.players.values();
-    qStableSort(playerPoints.begin(), playerPoints.end(), playerPointsLessThen);
-    QListIterator<Player> i(playerPoints);
-    for (int j = 0; j < ui->top->rowCount(); ++j)
-    {
-        QTableWidgetItem *name, *points;
-        if (i.hasNext())
-        {
-            const Player &player = i.next();
-            //qDebug() << "gracz #" << player.id << " " << i.;
-            name = new QTableWidgetItem(player.name.data());
-            points = new QTableWidgetItem(QString::number(player.points));
-        }
-        else
-        {
-            name = new QTableWidgetItem("---");
-            points = new QTableWidgetItem("---");
-        }
-        ui->top->setItem(j, 0, name);
-        ui->top->setItem(j, 1, points);
-    }
+    fillInTable(ui->top);
 }
 
 void MainWindow::on_connectButton_clicked()
@@ -148,6 +155,31 @@ void MainWindow::on_connectButton_clicked()
     }
 }
 
+void MainWindow::fillInTable(QTableWidget *table)
+{
+    QList<Player> playerPoints = game.model2.players.values();
+    qStableSort(playerPoints.begin(), playerPoints.end(), playerPointsLessThen);
+    QListIterator<Player> i(playerPoints);
+    for (int j = 0; j < table->rowCount(); ++j)
+    {
+        QTableWidgetItem *name, *points;
+        if (i.hasNext())
+        {
+            const Player &player = i.next();
+            name = new QTableWidgetItem(player.name.data());
+            name->setBackgroundColor(QColor(player.group == Player::RED_GROUP ? "#900" : "#009"));
+            points = new QTableWidgetItem(QString::number(player.points));
+        }
+        else
+        {
+            name = new QTableWidgetItem("---");
+            points = new QTableWidgetItem("---");
+        }
+        table->setItem(j, 0, name);
+        table->setItem(j, 1, points);
+    }
+}
+
 void MainWindow::on_helpButton_clicked()
 {
     ui->statusbar->showMessage("Brak dołączonej pomocy.");
@@ -161,4 +193,9 @@ void MainWindow::on_exitButton_clicked()
 void MainWindow::on_exitGameButton_clicked()
 {
     networkManager.disconnectFromHost();
+}
+
+void MainWindow::on_exitGameOverButton_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->menu);
 }

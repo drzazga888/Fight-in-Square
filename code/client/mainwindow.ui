@@ -79,6 +79,11 @@ QLabel#title{
 	font-family: serif;
 }
 
+QLabel#playerName{
+	color: #ccc;
+	font-size: 26px;
+}
+
 QWidget#gameOverBlock {
 	background: rgba(0, 0, 0, 0.7);
 	border-width: 2px;
@@ -86,18 +91,21 @@ QWidget#gameOverBlock {
 	border-style: solid;
 }
 
-QLabel#playerName{
-	color: #ccc;
+QLabel#yourStatusLabel {
+	font-size: 40px;
+}
+
+QLabel#bluePointsLabel,
+QLabel#redPointsLabel {
 	font-size: 26px;
 }
 
-QLabel#yourStatusLabel{
-	color: #0f0;
-	font-size: 52px;
+QLabel#bluePointsLabel {
+	color: #09f;
 }
 
-QLabel#statusLabel{
-	font-size: 26px;
+QLabel#redPointsLabel {
+	color: #f00;
 }</string>
   </property>
   <widget class="QStackedWidget" name="stackedWidget">
@@ -600,9 +608,9 @@ square</string>
      <property name="geometry">
       <rect>
        <x>170</x>
-       <y>270</y>
+       <y>200</y>
        <width>791</width>
-       <height>391</height>
+       <height>441</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -619,9 +627,19 @@ square</string>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="statusLabel">
+         <widget class="QLabel" name="redPointsLabel">
           <property name="text">
-           <string>Wygrała drużyna &lt;font color=&quot;#f00&quot;&gt;czerwonych&lt;/font&gt;</string>
+           <string>&lt;font color=&quot;#f00&quot;&gt;Czerwoni: 0 punktów&lt;/font&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bluePointsLabel">
+          <property name="text">
+           <string>Niebiescy: 0 punktów</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -695,6 +713,13 @@ square</string>
             <string>Punkty</string>
            </property>
           </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exitGameOverButton">
+          <property name="text">
+           <string>Wróć do menu</string>
+          </property>
          </widget>
         </item>
        </layout>

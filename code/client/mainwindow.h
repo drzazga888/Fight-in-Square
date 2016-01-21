@@ -6,6 +6,7 @@
 #include <QHostAddress>
 #include <QRegularExpression>
 #include <QtAlgorithms>
+#include <QTableWidget>
 #include "../config.h"
 #include "canvas.h"
 #include "Game.h"
@@ -85,6 +86,14 @@ private slots:
      */
     void on_exitGameButton_clicked();
 
+    /**
+     * @brief on_exitGameOverButton_clicked
+     * Slot do obsługi naciśniętego przycisku
+     * powrotu do menu głównego z ekranu
+     * game over
+     */
+    void on_exitGameOverButton_clicked();
+
 private:
 
     /**
@@ -102,6 +111,8 @@ private:
      * Obiekt zdarzenia
      */
     void keyReleaseEvent(QKeyEvent *e);
+
+    void fillInTable(QTableWidget *table);
 
     Ui::MainWindow *ui;
     Game game;
