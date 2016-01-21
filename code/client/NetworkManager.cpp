@@ -59,15 +59,16 @@ void NetworkManager::applyFrame(const QByteArray &frame)
         if (!frame[2])
         {
             game->player.id = frame[1];
-            game->gameTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 3)));
+            game->maxTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 3)));
+            game->gameTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 5)));
             timerId = startTimer(CLIENT_SEND_INTERVAL);
             game->setStatus(Game::PLAYING);
         }
         else if (frame[2] == SERVER_IS_EMPTY)
         {
             game->player.id = frame[1];
+            game->maxTime = QTime(0, 0).addSecs(*((unsigned short *)(frame.data() + 3)));
             game->gameTime = QTime(0, 0);
-          //  qDebug() << game->gameTime.toString("mm:ss");
             game->setStatus(Game::WAITING_FOR_PLAYER);
         }
         else

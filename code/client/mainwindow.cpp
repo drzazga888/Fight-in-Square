@@ -101,7 +101,7 @@ void MainWindow::onModelActualized()
     ui->healthBar->setValue(player.health);
     ui->powerBar->setValue(player.power);
     ui->pointsLabel->setText(QString("Punkty: %1").arg(player.points));
-    ui->timeLabel->setText(QString("Czas: %1").arg(game.gameTime.toString("mm:ss")));
+    ui->timeLabel->setText(QString("Czas: %1 / %2").arg(game.gameTime.toString("mm:ss"), game.maxTime.toString("mm:ss")));
     QList<Player> playerPoints = game.model2.players.values();
     qStableSort(playerPoints.begin(), playerPoints.end(), playerPointsLessThen);
     QListIterator<Player> i(playerPoints);

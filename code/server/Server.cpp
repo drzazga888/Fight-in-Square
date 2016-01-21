@@ -94,17 +94,21 @@ void Server::read(int playerId, const QByteArray &message)
             response[0] = 1;
             response[1] = playerId;
             response[2] = SERVER_IS_EMPTY;
+            response[3] = maxTime.msecsSinceStartOfDay() / 1000;
+            response[4] = (maxTime.msecsSinceStartOfDay() / 1000) >> 8;
             tcpServer.write(playerId, response);
         }
         else {
             startPlaying();
             emit playerAdded(controller.addPlayer(playerId, message.data() + 2));
-            response.resize(5);
+            response.resize(7);
             response[0] = 1;
             response[1] = playerId;
             response[2] = 0;
-            response[3] = gameTime.elapsed() / 1000;
-            response[4] = (gameTime.elapsed() / 1000) >> 8;
+            response[3] = maxTime.msecsSinceStartOfDay() / 1000;
+            response[4] = (maxTime.msecsSinceStartOfDay() / 1000) >> 8;
+            response[5] = gameTime.elapsed() / 1000;
+            response[6] = (gameTime.elapsed() / 1000) >> 8;
             tcpServer.write(playerId, response);
         }
         break;
@@ -143,7 +147,7 @@ void Server::timerEvent(QTimerEvent *)
 {
     if (isTimerRunning)
     {
-        if (QTime(0, 0).addMSecs(gameTime.elapsed()) >= maxTime)
+        if (gameTime.elapsed() >= maxTime.msecsSinceStartOfDay())
         {
             // obsługa końca gry
             emit serverClosed();

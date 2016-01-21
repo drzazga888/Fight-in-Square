@@ -379,7 +379,7 @@ square</string>
         <item>
          <widget class="QLabel" name="timeLabel">
           <property name="text">
-           <string>Czas: 23:45</string>
+           <string>Czas: 23:45 / 23:45</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>

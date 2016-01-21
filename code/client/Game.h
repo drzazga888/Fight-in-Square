@@ -107,6 +107,7 @@ public:
     QElapsedTimer frameUpdateTimer;
     QTime gameTime;
     QString playerName;
+    QTime maxTime;
 
 signals:
 
