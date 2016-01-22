@@ -115,7 +115,7 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
     int step_y=0;
     int pos_x=0;
     int pos_y=0;
-    static int flight_periods;
+    int flight_periods=0;
     int anim_x=0;
     int anim_y=0;
     bool animate = true;
@@ -135,15 +135,20 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
         anim_x=0;
         anim_y=0;
 
-        foreach (const Shot shott, shots2) {
-         if(shott.id == shot.id){
+      //  qDebug() << "1. pos_x: " << shot.x_start+shot.flight_periods;
+        qDebug() << "1. pos_y: " << shot.y_start+shot.flight_periods << "pl.id: " << shot.player_id;
+qDebug() << "phase:" << phase;
+        foreach (Shot shott, shots2) {
+        //    qDebug() << "2. pos_x: " << shott.x_start+shott.flight_periods;
+            qDebug() << "2. pos_y: " << shott.y_start+shott.flight_periods;
+            if(shott.id == shot.id){
              animate=false;
                 break;
          }
         }
 
         if(!animate){
-        flight_periods = (cast_to_pixels(shots2[shot.id].flight_periods) - cast_to_pixels(shot.flight_periods))*phase;
+        flight_periods = fabs(cast_to_pixels(shots2[shot.id].flight_periods) - cast_to_pixels(shot.flight_periods))*phase;
         }
         else
             flight_periods = 0;
@@ -181,6 +186,8 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
         }
         trans.reset();
 
+      //  anim_x=0;
+      //  anim_y=0;
         if(animate)
         {
 
