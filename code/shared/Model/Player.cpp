@@ -51,6 +51,6 @@ QByteArray Player::getFrame() const
     frame[24] = is_alive;
     frame[25] = death_time;
     frame.resize(26);
-    qDebug() << id << ": " << health;
+    //qDebug() << id << ": " << health;
     return frame;
 }

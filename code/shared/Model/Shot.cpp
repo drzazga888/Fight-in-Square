@@ -43,7 +43,7 @@ QByteArray Shot::getFrame() const
 }
 
 bool Shot::operator==( const Shot & dane) const{
-    if(player_id==dane.player_id && x_start==dane.x_start && y_start==dane.y_start && direction==dane.direction && (flight_periods-dane.flight_periods)<=3*SPEEDSHOT && power==dane.power)    return true;
+    if(player_id==dane.player_id && x_start==dane.x_start && y_start==dane.y_start && direction==dane.direction && (flight_periods-dane.flight_periods)<=SPEEDSHOT && power==dane.power)    return true;
     else return false;
 }
 
