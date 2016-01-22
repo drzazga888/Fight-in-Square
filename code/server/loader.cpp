@@ -45,11 +45,11 @@ bool Loader::loadIDMapFromFile(){
             QTextStream in(&file);
             int i=0;
             int j=0;
-            while( i<10){
+            while( i<BOARD_ROWS){
                 QString linia=in.readLine();
   //              qDebug()<<"linia nr"<<linia;
                 j=0;
-                for(QString::iterator itc=linia.begin();itc!=linia.end() && j<14;itc=itc+1){
+                for(QString::iterator itc=linia.begin();itc!=linia.end() && j<BOARD_COLS;itc=itc+1){
                     if(!itc->isSpace()){
                         idBoard[i][j]=itc->digitValue();
       //                  qDebug()<<"j "<<j;

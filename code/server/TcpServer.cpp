@@ -50,8 +50,10 @@ bool TcpServer::disconnect(int id)
             connections.remove(id);
             return true;
         }
+        else return false;
     }
-    return false;
+    connections.remove(id);
+    return true;
 }
 
 bool TcpServer::disconnectAll()
@@ -100,5 +102,6 @@ void TcpServer::read(int id, QByteArray message)
 
 void TcpServer::brokeConnection(int id)
 {
+    disconnect(id);
     emit disconnecting(id);
 }
