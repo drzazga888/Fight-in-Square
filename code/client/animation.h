@@ -1,6 +1,8 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
+#include "../config.h"
+
 /**
  * @brief
  * Klasa służy do przechowywania obiektu animacji
@@ -10,7 +12,7 @@ class Animation
 {
 public:
     Animation();
-    Animation(int x, int y,int st=10);
+    Animation(int x, int y,int st=BOOM_1_BOARD_FIELD_ID);
     int getPhase();
     void changePhase();
     int getplacex();

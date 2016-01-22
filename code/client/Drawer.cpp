@@ -213,13 +213,7 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
 
         if(animate)
         {
-            foreach (const Shot sh, shots1) {
-                qDebug() << "1: " << sh.id << ", ";
-            }
-            foreach (const Shot shott, shots2) {
-                qDebug() << "2: " << shott.id <<", ";
-            }
-            qDebug() << "warunek: " << shots2.contains(shot.id);
+
         animations.append(Animation(
                               cast_to_pixels(shot.x_start+pos_x+anim_x)+step_x,
                               cast_to_pixels(shot.y_start+pos_y+anim_y)+step_y));
@@ -254,7 +248,7 @@ void Drawer::draw_animation(QPainter *painter, QList<Animation> &animations){
             sprites.get(an.getPhase()));
 
         an.changePhase();
-        if(an.getPhase() < 10)
+        if(an.getPhase() == EMPTY_BOARD_FIELD_ID)
             ian.remove();
         else
             ian.setValue(an);
