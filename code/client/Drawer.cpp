@@ -144,7 +144,7 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
     int step_y=0;
     int pos_x=0;
     int pos_y=0;
-    int flight_periods;
+    static int flight_periods;
     int anim_x=0;
     int anim_y=0;
     bool animate = true;
@@ -164,11 +164,18 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
         anim_x=0;
         anim_y=0;
 
-        if(shots2.contains(shot.id)){
-        flight_periods = cast_to_pixels(shots2[shot.id].flight_periods - shot.flight_periods)*phase;
+        foreach (const Shot shott, shots2) {
+         if(shott.id == shot.id){
+             animate=false;
+                break;
+         }
+        }
+
+        if(!animate){
+        flight_periods = (cast_to_pixels(shots2[shot.id].flight_periods) - cast_to_pixels(shot.flight_periods))*phase;
         }
         else
-            flight_periods = 0;//cast_to_pixels(shot.flight_periods);
+            flight_periods = 0;
 
         switch(shot.direction)
         {
@@ -202,14 +209,6 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
             break;
         }
         trans.reset();
-      //  int static n=0;
-
-        foreach (const Shot shott, shots2) {
-         if(shott.id == shot.id){
-             animate=false;
-                break;
-         }//else animate = true;
-        }
 
         if(animate)
         {
@@ -218,13 +217,14 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
                               cast_to_pixels(shot.x_start+pos_x+anim_x)+step_x,
                               cast_to_pixels(shot.y_start+pos_y+anim_y)+step_y));
         }
+        else{
                 painter->drawPixmap(
                          cast_to_pixels(shot.x_start+pos_x)+step_x,
                         cast_to_pixels(shot.y_start+pos_y)+step_y,
                         BOARD_FIELD_WIDTH,
                         BOARD_FIELD_HEIGHT,
                         sprites.get(BULLET_BOARD_FIELD_ID).transformed(trans.rotate(90*(shot.direction-1))));
-
+            }
     }
 
 }
