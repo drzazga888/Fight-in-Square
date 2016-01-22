@@ -49,23 +49,6 @@ private:
      */
     void paint_background(QPainter *painter,const Board &board); //throw(exception)
 
-
-    /**
-     * @brief check_collisions
-     * funkcja sprwdzająca zajście kolizji
-     * @param x
-     * współrzędna x przemieszczającego się obiektu
-     * @param y
-     * współrzędna y przemieszczającego się obiektu
-     * @param type
-     * typ lecącego obiektu - możliwy typ zderzenia
-     * @param direction
-     * kierunek w którym porusza się obiekt
-     * @return
-     * prawda gdy dojdzie do zderzenia, fałsz, gdy nie dojdzie
-     */
-    bool check_collisions(unsigned char x, unsigned char y, int type, DIRECTION direction);
-
     /**
      * @brief
      * funkcja sprawdzająca w którym polu (kolumnie i wierszu) znajduje się przekazany punkt
@@ -114,6 +97,15 @@ private:
      * położenie w którym należy rysować obiekt o pozycji x
      */
     int cast_to_pixels(int x);
+
+    /**
+     * @brief draw_animation
+     * funcka odpowiedzialna za narysowanie animacji
+     * @param painter
+     * Obiekt, który daje interfejs do malowania
+     * @param animations
+     * lista z animacjami do narysowania
+     */
     void draw_animation(QPainter *painter, QList<Animation>&animations);
 };
 

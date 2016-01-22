@@ -1,9 +1,10 @@
 #include "animation.h"
+#include <QDebug>
 
-Animation::Animation(int x, int y, int st): x(x), y(y), step(st)
+Animation::Animation(int x, int y, int st): step(st), x(x), y(y)
 {
 }
-Animation::Animation(): x(0), y(0), step(10)
+Animation::Animation(): step(BOOM_1_BOARD_FIELD_ID), x(0),  y(0)
 {
 }
 
@@ -23,8 +24,17 @@ int Animation::getplacey()
 }
 
 void Animation::changePhase(){
-    if(step < 12 && step >0)
-        step+=1;
-    else
-        step=0;
+   switch (step) {
+    case BOOM_3_BOARD_FIELD_ID:
+        step=EMPTY_BOARD_FIELD_ID;
+        break;
+    case BOOM_2_BOARD_FIELD_ID:
+        step=BOOM_3_BOARD_FIELD_ID;
+        break;
+    case BOOM_1_BOARD_FIELD_ID:
+        step=BOOM_2_BOARD_FIELD_ID;
+        break;
+    default:
+        break;
+    }
 }
