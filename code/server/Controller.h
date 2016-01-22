@@ -83,12 +83,14 @@ private:
     bool isShotInFieldWall(QPoint shot,QPoint field);
     void givePointsTeam(QMap<int, Player> &players, Player::GROUP grupa, int howPoints);
     int fetchVariablePointsToRange(int i);
+    bool isConflictTwoPlayers(QPoint player,QPoint player2 );
 
 public:
     QPoint getActualShotPosition(const Shot & shot);
     void loadExtendedBoard(QVector<QVector<int> > idBoard);
     void clearModelFromDataObject();
     static int getNewShotID;
+    static int testVariable;
 
 
 };

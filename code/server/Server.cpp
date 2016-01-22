@@ -195,6 +195,6 @@ bool Server::isNameUnique(QString name)
         if (QString::fromLatin1(player.name) == name)
             return false;
     }
-    qDebug() << "Unikalne!";
+   // qDebug() << "Unikalne!";
     return true;
 }
