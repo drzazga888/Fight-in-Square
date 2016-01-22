@@ -97,6 +97,15 @@ private:
      * położenie w którym należy rysować obiekt o pozycji x
      */
     int cast_to_pixels(int x);
+
+    /**
+     * @brief draw_animation
+     * funcka odpowiedzialna za narysowanie animacji
+     * @param painter
+     * Obiekt, który daje interfejs do malowania
+     * @param animations
+     * lista z animacjami do narysowania
+     */
     void draw_animation(QPainter *painter, QList<Animation>&animations);
 };
 
