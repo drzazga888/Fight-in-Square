@@ -79,7 +79,10 @@ void Controller::nextModelStatus()
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext()){
         it.next();
-        //qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
+        qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
+        if(IS_SHOT(it.value().id)==true){
+             QString str;
+        }
     }
     it.toFront();
     while(it.hasNext()){
@@ -149,13 +152,25 @@ void Controller::nextModelStatus()
             //czy zestrzelilisny gracza ; siebie samego zestrzelic nie mozemy
             if(it.value().is_alive && it.value().id!=i.value().player_id && isShotInPlayer(getActualShotPosition(i.value()),QPoint(it.value().x,it.value().y))){
                 howMuchShoted++;
-                data.model.players.value(i.value().player_id).points;
+                //data.model.players.value(i.value().player_id).points;
                 //if((it.value().health-howMuchHurt(i->power))<=0)    {
                 if((it.value().health-i->power)<=0)    {
                     it.value().health=0;
                     it.value().is_alive=false;
                     it.value().death_time=0;
-                    data.model.players[i.value().player_id].points++;
+                    //czy zestrzeli kogos ze swoich
+                    if(data.model.players[i.value().player_id].group==it.value().group){
+                        data.model.players[i.value().player_id].points=
+                                fetchVariablePointsToRange(data.model.players[i.value().player_id].points - 5);
+
+                    }
+                    //jeśli zestrzelil kogos z druzyny przeciwnej
+                    else{
+                        data.model.players[i.value().player_id].points=
+                                fetchVariablePointsToRange(data.model.players[i.value().player_id].points + 2);
+                        givePointsTeam(data.model.players,data.model.players[i.value().player_id].group,1);
+                    }
+
                     //data.model.players[i->player_id].power++;
                 }
                 else{
@@ -216,7 +231,7 @@ void Controller::nextModelStatus()
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     refreshBoardInBoard(boardInBoard);
-    debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+    //debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
     it.toFront();
     /*while(it.hasNext()){
         it.next();
@@ -265,12 +280,13 @@ QPoint Controller::assignFreePosition(){
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext() && data.model.players.size()>0){
         it.next();
-                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) && !(extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER))){
+                if(!isPlayerInFieldWall(QPoint(it.value().x,it.value().y),QPoint(y,x)) &&
+                        !(extendedBoard[y][x].id==BOARD_FIELD_ID(WALL)) && !(extendedBoard[y][x].id==BOARD_FIELD_ID(THICK_WALL))){
                     return QPoint(5*x+2, 5*y+2);
                 }
     }
 
-    }while(data.model.players.size()>0 || (extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER)));
+    }while(data.model.players.size()>0 || (extendedBoard[y][x].id==BOARD_FIELD_ID(WALL) ||extendedBoard[y][x].id==BOARD_FIELD_ID(WATER) || extendedBoard[y][x].id==BOARD_FIELD_ID(THICK_WALL)));
     return QPoint(5*x+2, 5*y+2);
     //return QPoint(2,45);
 }
@@ -523,7 +539,10 @@ void Controller::SolveFieldsWallAndPlayerConflict(Player & player){
 bool Controller::isPlayerInFieldWall(QPoint player,QPoint field){
     int odl_x=abs(player.x()-5*field.x()-2);
     int odl_y=abs(player.y()-5*field.y()-2);
-    if(odl_x<=4 && odl_y<=4 && (extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WALL) ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WATER)))  return true;
+    if(odl_x<=4 && odl_y<=4 &&
+            (extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WALL)
+             ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WATER)
+             ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(THICK_WALL)))  return true;
     else return false;
 }
 
@@ -532,15 +551,19 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
     int d_y=qFloor((getActualShotPosition(shot).y()-2)/5.);
     for(int i=0;i<2 && d_x+i<BOARD_COLS;i++){
         for(int j=0;j<2 && d_y+j<BOARD_ROWS;j++){
-            if(isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
+            if(  isShotInFieldWall(QPoint(getActualShotPosition(shot).x(),getActualShotPosition(shot).y()),QPoint(d_x+i,d_y+j))){
                 //if((extendedBoard[d_y+j][d_x+i].health-howMuchHurt(shot.power))<=0)    {
-                if((extendedBoard[d_y+j][d_x+i].health-shot.power)<=0)    {
-                    extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(1,false,0);
-                }
-                else{
-                    extendedBoard[d_y+j][d_x+i].health-=shot.power;
+                if(extendedBoard[d_y+j][d_x+i].id==BOARD_FIELD_ID(WALL)){
+                    if((extendedBoard[d_y+j][d_x+i].health-shot.power)<=0  )    {
+                        extendedBoard[d_y+j][d_x+i]=ObstacleBoardElement(1,false,0);
+                    }
+                    else{
+                        extendedBoard[d_y+j][d_x+i].health-=shot.power;
+                    }
+
                 }
                 return true;
+
             }
         }
     }
@@ -550,7 +573,8 @@ bool Controller::isFieldsWallAndShotConflict(Shot & shot){
 bool Controller::isShotInFieldWall(QPoint shot,QPoint field){
     int odl_x=abs(shot.x()-5*field.x()-2);
     int odl_y=abs(shot.y()-5*field.y()-2);
-    if(odl_x<=2 && odl_y<=2 && extendedBoard[field.y()][field.x()].isDestructable==true)  return true;
+    if(odl_x<=2 && odl_y<=2 && (extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(WALL)
+                                ||extendedBoard[field.y()][field.x()].id==BOARD_FIELD_ID(THICK_WALL) ))  return true;
     else return false;
 }
 void Controller::loadExtendedBoard(QVector<QVector<int> > idBoard){
@@ -572,3 +596,19 @@ void Controller::clearModelFromDataObject(){
 
 //zmienna statyczna;
 int Controller::getNewShotID=0;
+
+void Controller::givePointsTeam(QMap<int, Player> &players, Player::GROUP grupa, int howPoints){
+         QMutableMapIterator<int,Player> it(players);
+    while(it.hasNext()){
+        it.next();
+        if(it.value().group==grupa){
+            it.value().points=fetchVariablePointsToRange(it.value().points+howPoints);
+        }
+    }
+}
+int Controller::fetchVariablePointsToRange(int i){
+    if(i<0) return 0;
+    else if(i>255)  return 255;
+    else    return i;
+}
+

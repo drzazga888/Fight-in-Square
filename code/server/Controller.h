@@ -81,6 +81,8 @@ private:
     bool isPlayerInFieldWall(QPoint player,QPoint field);
     bool isFieldsWallAndShotConflict(Shot & shot);
     bool isShotInFieldWall(QPoint shot,QPoint field);
+    void givePointsTeam(QMap<int, Player> &players, Player::GROUP grupa, int howPoints);
+    int fetchVariablePointsToRange(int i);
 
 public:
     QPoint getActualShotPosition(const Shot & shot);
