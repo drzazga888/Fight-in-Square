@@ -75,7 +75,7 @@ private:
      * @param phase
      * procentowy wskaźnik zamiany pierwszego modelu na drugi
      */
-    void draw_players(QPainter *painter ,QMap<int, Player> players1, QMap<int, Player> players2, float phase);
+    void draw_players(QPainter *painter ,QMap<int, Player> players1, QMap<int, Player> players2, float phase, int myid);
 
 
     /**

@@ -31,7 +31,7 @@ void Drawer::draw(QPainter *painter)
 
     paint_background(painter,game->model2.board);
 
-    draw_players(painter,game->model1.players,game->model2.players,phaseOverlay);
+    draw_players(painter,game->model1.players,game->model2.players,phaseOverlay,game->player.id);
 
     draw_bullets(painter,game->model1.shots,game->model2.shots,phaseOverlay);
 
@@ -39,7 +39,7 @@ void Drawer::draw(QPainter *painter)
 }
 
 
-void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<int,Player> players2, float phase)
+void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<int,Player> players2, float phase, int myid)
 {
     QTransform transf;
     int x1,y1,x2,y2,delta_x,delta_y;
@@ -49,27 +49,27 @@ void Drawer::draw_players(QPainter *painter, QMap<int, Player> players1, QMap<in
         {
         switch (player.group) {
         case Player::RED_GROUP:
-            tank= TANK_RED_BOARD_FIELD_ID;
+            if(myid == player.id)
+                tank = TANK_RED_ME_BOARD_FIELD_ID;
+            else
+                tank= TANK_RED_BOARD_FIELD_ID;
             break;
         case Player::BLUE_GROUP:
-            tank= TANK_BLUE_BOARD_FIELD_ID;
+            if(myid == player.id)
+                tank = TANK_BLUE_ME_BOARD_FIELD_ID;
+            else
+                tank= TANK_BLUE_BOARD_FIELD_ID;
             break;
         default:
             tank = TANK_BOARD_FIELD_ID;
             break;
         }
-        qDebug() << "players1: ";
-        foreach (const Player play, players1) {
-            qDebug() << play.id << ", ";
-        }
-        qDebug() << "players2: ";
         foreach (const Player pla, players2) {
             if(pla.id==player.id)
             {
                 draw=true;
                 break;
             }
-            qDebug() << pla.id << ", ";
         }
 
         x1 = cast_to_pixels(player.x);
