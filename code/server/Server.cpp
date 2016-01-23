@@ -24,6 +24,7 @@ bool Server::switchOn(int port, const QTime &maxTime)
     {
         if (tcpServer.start(port))
         {
+            Controller::getNewShotID=0;
             isTimerRunning = false;
             this->port = port;
             this->maxTime = maxTime;
