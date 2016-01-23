@@ -56,7 +56,7 @@ void Game::handleKeyRelease(int key)
 
 float Game::getPhaseOverlay()
 {
-    float phaseOverlay = (float)frameUpdateTimer.elapsed() / frameToFrameElapsed;
+    float phaseOverlay = (float)frameUpdateTimer.elapsed() / SERVER_SEND_INTERVAL;
     return phaseOverlay > 1.0 ? 1.0 : phaseOverlay;
 }
 

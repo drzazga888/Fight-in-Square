@@ -138,7 +138,7 @@ void Drawer::draw_bullets(QPainter *painter, QMap<int, Shot> &shots1, QMap<int, 
       //  qDebug() << "1. pos_x: " << shot.x_start+shot.flight_periods;
         qDebug() << "1. pos_y: " << shot.y_start+shot.flight_periods << "pl.id: " << shot.player_id;
 qDebug() << "phase:" << phase;
-        foreach (Shot shott, shots2) {
+                  foreach (Shot shott, shots2) {
         //    qDebug() << "2. pos_x: " << shott.x_start+shott.flight_periods;
             qDebug() << "2. pos_y: " << shott.y_start+shott.flight_periods;
             if(shott.id == shot.id){
