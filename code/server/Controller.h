@@ -40,6 +40,7 @@ public:
      * Metoda usuwa gracza z plaszy i z akcji graczy.
      * @param id - id gracza do usunięcia
      */
+
     void removePlayer(int id);
 
     /**
@@ -50,9 +51,23 @@ public:
     void nextModelStatus();
     void loadExtendedBoard();
 private:
-
+    /**
+     * @brief extendedBoard Przechowuje informacje o planszy, w tym informacje,
+     *  czy dane pole jest zniszczalne, jaki poziom zdrowia ma dane pole.
+     * Pierwszy index odpowiada kolumnie, drugi index odpowiada wierszowi.
+     */
     QVector<QVector<ObstacleBoardElement> > extendedBoard;  /*!<Pole, które przechowuje planszę z dodatkowymi informacjami: czy pole planszy mozna zniszczyć, ilość życia ma dane pole */
+    /**
+     * @brief assignGroup Zwraca wartość enumową, która oznacza jedną z dwóch drużyn: RED_GROUP lub BLUE_GROUP
+     * @return Player::BLUE_GROUP, jeśli graczy drużyny RED_GROUP więcej,lub
+     * Player::RED_GROUP, jeśli graczy drużyny RED_GROUP więcej,lub
+     * Player::BLUE_GROUP lub Player::RED_GROUP, jeśli liczba graczy RED_GROUP jest równa liczbie graczy BLUE_GROUP
+     */
     Player::GROUP assignGroup();
+    /**
+     * @brief assignDirection Zwraca wartość enumową, która oznacza jedną z dwóch drużyn:
+     * @return
+     */
     DIRECTION assignDirection();
     QPoint assignFreePosition();
     Data &data;
@@ -74,7 +89,7 @@ private:
     void RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<QVector<char> > & playerInBoard);
     bool isShotInPlayer(QPoint shot,QPoint player);
     bool isShotInBoard(const QPoint &shot);
-    void refreshShotInBoard(QMap<int,Shot> futuredShots,QVector<QVector<char> > & shotInBoard);
+    void refreshShotInBoard(const QMap<int,Shot>& futuredShots,QVector<QVector<char> > & shotInBoard);
     void refreshBoardInBoard(QVector<QVector<int> > & boardInBoard);
     int howMuchHurt(int power);
     void SolveFieldsWallAndPlayerConflict(Player & player);
@@ -86,7 +101,7 @@ private:
     bool isConflictTwoPlayers(QPoint player,QPoint player2 );
 
 public:
-    QPoint getActualShotPosition(const Shot & shot);
+    QPoint getActualShotPosition(const Shot & shot) const;
     void loadExtendedBoard(QVector<QVector<int> > idBoard);
     void clearModelFromDataObject();
     static int getNewShotID;

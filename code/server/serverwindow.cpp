@@ -32,8 +32,8 @@ void ServerWindow::on_onOffButton_clicked()
             ui->statusBar->showMessage("Nie załadowano mapy");
         else if (ui->timeEdit->time() < QTime(0, 0, 30))
             ui->statusBar->showMessage("Ustawiony czas gry musi być równy conajmniej 30 s.");
-        else if (ui->timeEdit->time() > QTime(0, 10))
-            ui->statusBar->showMessage("Czas gry nie może być dłuższy niż 10 min.");
+        else if (ui->timeEdit->time() > QTime(0, 30))
+            ui->statusBar->showMessage("Czas gry nie może być dłuższy niż 30 min.");
         else if (server.switchOn(ui->portEdit->text().toInt(), ui->timeEdit->time()))
         {
             ui->statusBar->clearMessage();

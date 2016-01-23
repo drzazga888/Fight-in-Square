@@ -62,13 +62,13 @@ Player &Controller::addPlayer(int id, QByteArray name)
 {
     QPoint freePosition = assignFreePosition();
 
- /*
-    if(name=="Luki") {
-        data.model.players.insert(id, Player(id, assignGroup(), 5, 10, LEFT, name));
+
+  /*  if(name=="Luki") {
+        data.model.players.insert(id, Player(id, assignGroup(), 5, 10, RIGHT, name));
             data.playerActions.insert(id, PlayerAction(false,NONE,id));
     }
     else if(name=="Marko") {
-        data.model.players.insert(id, Player(id, assignGroup(), 50, 10, LEFT, name));
+        data.model.players.insert(id, Player(id, assignGroup(), 40, 10, LEFT, name));
             data.playerActions.insert(id, PlayerAction(false,NONE,id));
     }
     else if(name=="Tomcio"){
@@ -93,27 +93,34 @@ void Controller::removePlayer(int id)
 
 void Controller::nextModelStatus()
 {
-    /*QMap<int,PlayerAction>::iterator i=
+/*    QMap<int,PlayerAction>::iterator i=
     data.playerActions.begin();
     while(i!=data.playerActions.end()){
         if(data.model.players[i.key()].name=="Luki"){
-            if(testVariable%2==0)
-                i.value().moving_direction=RIGHT;
-            else    i.value().moving_direction=LEFT;
+            if(testVariable%50==0)
+                i.value().moving_direction=NONE;
+            else   {
+                i.value().player_shooted=true;
+
+            }
+            i.value().player_shooted=true;
         testVariable++;
         }
         if(i!=data.playerActions.end() && data.model.players[i.key()].name=="Marko"){
-            i.value().moving_direction=LEFT;
+            i.value().moving_direction=NONE;
+            i.value().player_shooted=true;
         }
         if(i!=data.playerActions.end() && data.model.players[i.key()].name=="Tomcio"){
-            i.value().moving_direction=DOWN;
+            i.value().moving_direction=NONE;
+            i.value().player_shooted=true;
         }
         if(i!=data.playerActions.end() && data.model.players[i.key()].name=="Kamcio"){
-            i.value().moving_direction=RIGHT;
+            i.value().moving_direction=NONE;
+            i.value().player_shooted=true;
         }
         i++;
     }
-    */
+*/
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     QMutableMapIterator<int,Player> it(data.model.players);
@@ -155,6 +162,7 @@ void Controller::nextModelStatus()
             if(flaga!=true) {
                 //data.model.shots.append(Shot(it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
                 data.model.shots.insert(Controller::getNewShotID,Shot(Controller::getNewShotID++,it.value().id,it.value().x,it.value().y,it.value().direction,0,it.value().power));
+                if(getNewShotID>127)    getNewShotID=0;
             }
         }
     }
@@ -271,7 +279,7 @@ void Controller::nextModelStatus()
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     refreshBoardInBoard(boardInBoard);
-    debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+  //  debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
     it.toFront();
     /*while(it.hasNext()){
         it.next();
@@ -314,7 +322,7 @@ DIRECTION Controller::assignDirection()
 
 QPoint Controller::assignFreePosition(){
     int x=0;int y=0;
-    if(data.model.players.empty())    return QPoint(7,40);
+    //if(data.model.players.empty())    return QPoint(7,40);
     QMutableMapIterator<int,Player> it(data.model.players);
     while(!data.model.players.empty()){
         y=rand() % (BOARD_ROWS);
@@ -491,14 +499,19 @@ void Controller::RefreshPlayerInBoard(QMap<int, Player> futuredPlayers,QVector<Q
         }
     }
 }
-void Controller::refreshShotInBoard(QMap<int,Shot> futuredShots, QVector<QVector<char> > &shotInBoard){
+void Controller::refreshShotInBoard(const QMap<int, Shot> &futuredShots, QVector<QVector<char> > &shotInBoard){
     for(int i=0;i<shotInBoard.size();i++){
         for(int j=0;j<shotInBoard.operator[](i).size();j++){
             shotInBoard[i][j]='0';
         }
     }
-    for(int i=0;i<futuredShots.size();i++){
-        shotInBoard[getActualShotPosition(futuredShots[i]).y()][getActualShotPosition(futuredShots[i]).x()]='S';
+    int x, y;
+    QMapIterator<int, Shot> i(futuredShots);
+    while(i.hasNext()){
+        i.next();
+        y=getActualShotPosition(i.value()).y();
+        x=getActualShotPosition(i.value()).x();
+        shotInBoard[y][x]='S';
     }
 }
 
@@ -709,7 +722,7 @@ bool Controller::isShotInPlayer(QPoint shot,QPoint player){
     else return false;
 }
 
-QPoint Controller::getActualShotPosition(const Shot & shot){
+QPoint Controller::getActualShotPosition(const Shot & shot) const{
     switch(shot.direction){
     case UP:
         return QPoint(shot.x_start,shot.y_start-shot.flight_periods);
