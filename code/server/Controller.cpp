@@ -834,7 +834,7 @@ void Controller::clearModelFromDataObject(){
 
 //zmienna statyczna;
 int Controller::getNewShotID=0;
-int Controller::testVariable=0;
+//int Controller::testVariable=0;
 
 void Controller::givePointsTeam(QMap<int, Player> &players, Player::GROUP grupa, int howPoints){
          QMutableMapIterator<int,Player> it(players);
@@ -845,6 +845,7 @@ void Controller::givePointsTeam(QMap<int, Player> &players, Player::GROUP grupa,
         }
     }
 }
+
 int Controller::fetchVariablePointsToRange(int i){
     if(i<0) return 0;
     else if(i>255)  return 255;
