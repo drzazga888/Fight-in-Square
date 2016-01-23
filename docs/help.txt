@@ -1,0 +1,34 @@
+CEL GRY:
+Gracze sterują swoimi czołgami. Mogą jeździć po planszy i strzelać do innych graczy. Są podzieleni na dwie rywalizujące ze sobą drużyni (czerwoni i niebiescy). Każdy gracz może zdobyć punkty oddatnie i ujemne, zgodnie z poniższą punkacją. Wygrywa ta drużyna, której gracze w momencie zakończenia gry zdobyli więcej punktów.
+Gracze mogą również niszczyć niektóre z przeszkód, strzelając do nich.
+
+INSTRUKCJA POŁĄCZENIA:
+1) Podaj swoją nazwę, która bedzie Cię identyfikować w grze
+2) Wpisz adres IP komputera, na  którym jest uruchomiony serwer gry
+3) Podaj numer portu, na którym nasłuchuje serwer
+4) Wciśnij przycisk Połącz
+
+STEROWANIE:
+* strzałki - kierunek obrócenia się i przesuwania czołgu
+* spacja - wystrzał w kierunku, w którym jest obrócony czołg
+
+PUNKTACJA:
+* Zastrzelenie czołgu ze swojej drużyny -5 pkt
+* Zestrzelenie czołgu z drużyny przeciwnej +3 pkt
+* Ktoś z drużyny zastrzeli wrogi czołg +1 pkt
+Dodatkowe informacje:
+* każdy gracz rozpoczyna z ilością punktów równą 0
+* maksymalna liczba punktów, jakie może zdobyć gracz to 255
+
+OGRANICZENIA W GRZE:
+* gra rozpoczyna się gdy ilość graczy wyniesie 2; gdy w trakcie gry ta ilość zmaleje, gra ma nadal trwać;
+* serwer może obsłużyć maksymalnie 8 graczy;
+* nazwa gracza musi być unikatowa;
+* nazwa gracza nie może być pusta;
+* nazwa gracza nie może być dłuższa niż 16 znaków;
+* nazwa gracza musi zawierać jedynie cyfry, małe i duże litery oraz znaki "_" i ".";
+* minimalny czas gry - 30 sekund;
+* maksymalny czas gry - 10 minut;
+
+AUTORZY:
+Herman Katarzyna, Drzazga Kamil,  Bartocha Łukasz, Bajorek Tomasz
