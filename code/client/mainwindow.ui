@@ -18,6 +18,10 @@
 	color: #fff;
 }
 
+QTextBrowser {
+	color: #000;
+}
+
 QStatusBar {
 	background-color: #666;
 	color: #fff;
@@ -58,7 +62,7 @@ QProgressBar#powerBar::chunk {
 }
 
 QWidget#menu {
-	background-image: url(../img/welcome_screen.png);
+	background-image: url(:/img/welcome_screen.png);
 }
 
 QWidget#game {
@@ -66,11 +70,11 @@ QWidget#game {
 }
 
 QWidget#gameOver {
-	background-image: url(../img/gameover_screen.png);
+	background-image: url(:/img/gameover_screen.png);
 }
 
 QWidget#canvasBack {
-	background-image: url(../img/canvas_outline.png);
+	background-image: url(:/img/canvas_outline.png);
 }
 
 QLabel#title{

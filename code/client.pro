@@ -28,7 +28,8 @@ SOURCES +=\
     client/NetworkManager.cpp \
     client/Sprites.cpp \
     shared/PlayerAction.cpp \
-    client/animation.cpp
+    client/animation.cpp \
+    client/help.cpp
 
 HEADERS  += client/mainwindow.h \
     config.h \
@@ -49,7 +50,12 @@ HEADERS  += client/mainwindow.h \
     shared/Frame/FrameApplyable.h \
     client/Sprites.h \
     shared/PlayerAction.h \
-    client/animation.h
+    client/animation.h \
+    client/help.h
 
 FORMS    += \
-    client/mainwindow.ui
+    client/mainwindow.ui \
+    client/help.ui
+
+RESOURCES += \
+    res.qrc

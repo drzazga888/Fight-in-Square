@@ -11,6 +11,7 @@
 #include "canvas.h"
 #include "Game.h"
 #include "NetworkManager.h"
+#include "help.h"
 
 namespace Ui {
     class MainWindow;
@@ -119,6 +120,7 @@ private:
     Canvas canvas;
     NetworkManager networkManager;
     bool updated;
+    Help *help;
 
 };
 

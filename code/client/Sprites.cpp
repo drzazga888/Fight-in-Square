@@ -16,6 +16,5 @@ QPixmap Sprites::get(int id)
         else
             return collection[id - 1];
     }
-    else
-        return QPixmap();
+    return QPixmap();
 }

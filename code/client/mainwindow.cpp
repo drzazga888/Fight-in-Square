@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-QMainWindow(parent), ui(new Ui::MainWindow), game(), canvas(&game), networkManager(&game)
+QMainWindow(parent), ui(new Ui::MainWindow), game(), canvas(&game), networkManager(&game), help(new Help(this))
 {
     ui->setupUi(this);
     canvas.setParent(ui->canvasBack);
@@ -182,7 +182,7 @@ void MainWindow::fillInTable(QTableWidget *table)
 
 void MainWindow::on_helpButton_clicked()
 {
-    ui->statusbar->showMessage("Brak dołączonej pomocy.");
+    help->show();
 }
 
 void MainWindow::on_exitButton_clicked()

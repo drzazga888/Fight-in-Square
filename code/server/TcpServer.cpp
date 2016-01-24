@@ -19,7 +19,7 @@ bool TcpServer::start(int port)
     if (tcpServer->listen(QHostAddress::Any, port))
     {
         connect(tcpServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
-        qDebug() << "server is running...";
+        //qDebug() << "server is running...";
 		return true;
     }
 	else
@@ -28,7 +28,7 @@ bool TcpServer::start(int port)
 
 bool TcpServer::stop()
 {
-    qDebug() << "stop function()";
+    //qDebug() << "stop function()";
     bool state = false;
     if(tcpServer!=NULL)
     {
@@ -92,7 +92,7 @@ void TcpServer::acceptConnection()
     connections.insert(connId++, conn);
     connect(conn,SIGNAL(reading(int,QByteArray)), this, SLOT(read(int,QByteArray)));
     connect(conn,SIGNAL(disconnecting(int)), this, SLOT(brokeConnection(int)));
-    qDebug() << "aaccepting connection...";
+    //qDebug() << "aaccepting connection...";
 }
 
 void TcpServer::read(int id, QByteArray message)
