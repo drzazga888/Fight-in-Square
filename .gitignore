@@ -32,11 +32,9 @@ moc_*.cpp
 
 # QtCreator
 *.pro.user
-code/build-client-Desktop-Debug/
-code/build-server-Desktop-Debug/
+BIN/server/
+BIN/client/
 
 # gedit
 *~
 
-# Doxygen
-docs/FIS_kod/
