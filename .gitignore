@@ -32,8 +32,8 @@ moc_*.cpp
 
 # QtCreator
 *.pro.user
-code/server
-code/client
+BIN/server
+BIN/client
 
 # gedit
 *~
