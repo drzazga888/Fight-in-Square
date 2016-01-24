@@ -85,6 +85,12 @@ Player &Controller::addPlayer(int id, QByteArray name)
     return data.model.players[id];
 }
 
+Player &Controller::addPlayer(int id, Player player){
+    data.model.players.insert(id, player);
+    data.playerActions.insert(id, PlayerAction(id));
+    return data.model.players[id];
+}
+
 void Controller::removePlayer(int id)
 {
     data.model.players.remove(id);
@@ -126,7 +132,7 @@ void Controller::nextModelStatus()
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext()){
         it.next();
-     //   qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
+       // qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
         if(IS_SHOT(it.value().id)==true){
              QString str;
         }
@@ -279,7 +285,7 @@ void Controller::nextModelStatus()
     RefreshPlayerInBoard(data.model.players, playerInBoard);
     refreshShotInBoard(data.model.shots, shotInBoard);
     refreshBoardInBoard(boardInBoard);
-  //  debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
+ //   debugDrawInBoard(playerInBoard,shotInBoard,boardInBoard);
     it.toFront();
     /*while(it.hasNext()){
         it.next();
@@ -521,7 +527,7 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
     if(!player2.is_alive)    return;
     int odl_x=abs(player1.x-player2.x);
     int odl_y=abs(player1.y-player2.y);
-    if(odl_x>4 || odl_y>4){
+    if(odl_x>=5 || odl_y>=5 || player1.id==player2.id){
         return;
     }
    /* if(DIRECT(player1.id)!=NONE){
@@ -531,22 +537,27 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         backmovePlayer(player2);
     }*/
     if(DIRECT(player1.id)==NONE){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else{
             backmovePlayer(player2);
         }
     }
     else if(DIRECT(player2.id)==NONE){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else{
             backmovePlayer(player1);
         }
     }
     else if(DIRECT(player1.id)==LEFT){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player2.id)==RIGHT){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player1);
-            backmovePlayer(player2);
+        }
         }
         else if(DIRECT(player2.id)==DOWN || DIRECT(player2.id)==UP){
             //int a = (c>8)?2:-2;
@@ -559,10 +570,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player2.id)==LEFT){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player1.id)==RIGHT){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player2);
-            backmovePlayer(player1);
+        }
         }
         else if(DIRECT(player1.id)==DOWN || DIRECT(player1.id)==UP){
             //int a = (c>8)?2:-2;
@@ -575,10 +591,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player1.id)==RIGHT){
-        if(odl_x>4 || odl_y>4)  return;
-        else if(DIRECT(player2.id)==LEFT){
+        if(odl_x>5 || odl_y>5)  return;
+        else if(DIRECT(player2.id)==RIGHT){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player1);
-            backmovePlayer(player2);
+        }
         }
         else if(DIRECT(player2.id)==DOWN || DIRECT(player2.id)==UP){
             //int a = (c>8)?2:-2;
@@ -591,10 +612,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player2.id)==RIGHT){
-        if(odl_x>4 || odl_y>4)  return;
-        else if(DIRECT(player1.id)==LEFT){
-            backmovePlayer(player2);
+        if(odl_x>5 || odl_y>5)  return;
+        else if(DIRECT(player1.id)==RIGHT){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player1);
+        }
         }
         else if(DIRECT(player1.id)==DOWN || DIRECT(player1.id)==UP){
             //int a = (c>8)?2:-2;
@@ -607,10 +633,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player1.id)==UP){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player2.id)==DOWN){
-            backmovePlayer(player1);
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player2);
+        }
         }
         else if(DIRECT(player2.id)==LEFT || DIRECT(player2.id)==RIGHT){
             //int a = (c>8)?2:-2;
@@ -623,10 +654,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player1.id)==DOWN){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player2.id)==UP){
-            backmovePlayer(player1);
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player2);
+        }
         }
         else if(DIRECT(player2.id)==LEFT || DIRECT(player2.id)==RIGHT){
             //int a = (c>8)?2:-2;
@@ -640,10 +676,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
     }
 
     else if(DIRECT(player2.id)==UP){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player1.id)==DOWN){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player2);
-            backmovePlayer(player1);
+        }
         }
         else if(DIRECT(player1.id)==LEFT || DIRECT(player1.id)==RIGHT){
             //int a = (c>8)?2:-2;
@@ -656,10 +697,15 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
     else if(DIRECT(player2.id)==DOWN){
-        if(odl_x>4 || odl_y>4)  return;
+        if(odl_x>5 || odl_y>5)  return;
         else if(DIRECT(player1.id)==UP){
+            if(odl_x==3 || odl_y==3){
+                backmovePlayer(player1);
+                backmovePlayer(player2);
+            }
+            else{
             backmovePlayer(player2);
-            backmovePlayer(player1);
+        }
         }
         else if(DIRECT(player1.id)==LEFT || DIRECT(player1.id)==RIGHT){
             //int a = (c>8)?2:-2;
@@ -672,47 +718,6 @@ void Controller::SolvePlayerConflict(Player & player1,Player & player2){
         }
     }
 
-
-
-    /*
-    if(DIRECT(player1.id)==NONE || DIRECT(player2.id)==NONE){
-        if(odl_x<=4 && odl_y<=4 && DIRECT(player1.id)==NONE)   backmovePlayer(player2);
-        else if(odl_x<=4 && odl_y<=4 && DIRECT(player2.id)==NONE)  backmovePlayer(player1);
-
-    }
-    if(((DIRECT(player1.id)==LEFT && DIRECT(player2.id)==RIGHT) || (DIRECT(player1.id)==RIGHT && DIRECT(player2.id)==LEFT))||((DIRECT(player1.id)==UP && DIRECT(player2.id)==DOWN) || (DIRECT(player1.id)==DOWN && DIRECT(player2.id)==UP))){
-
-        if(((odl_x!=4 && odl_x<=3 && odl_y<=4) ||(odl_y!=4 &&odl_y<=3 && odl_x<=4)) ){
-            backmovePlayer(player1);
-            backmovePlayer(player2);
-        }
-        else if(((odl_x==4 && odl_y==4) ||(odl_y==4 && odl_x==4)) ){
-            backmovePlayer(player1);
-        }
-    }
-    else if(odl_x==4 && odl_y==4){
-        backmovePlayer(player1);
-    }
-    else if(odl_x<=3 && odl_y==4){
-        if(DIRECT(player1.id)==UP || DIRECT(player1.id)==DOWN){
-            backmovePlayer(player1);
-        }
-        else{
-            backmovePlayer(player2);
-        }
-    }
-    else if(odl_y<=3 && odl_x==4){
-        if(DIRECT(player1.id)==LEFT || DIRECT(player1.id)==RIGHT){
-            backmovePlayer(player1);
-        }
-        else{
-            backmovePlayer(player2);
-        }
-    }
-    else if(odl_y==3 && odl_x==3){
-        backmovePlayer(player1);
-        backmovePlayer(player2);
-    }*/
 }
 
 bool Controller::isShotInPlayer(QPoint shot,QPoint player){

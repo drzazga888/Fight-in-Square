@@ -49,6 +49,16 @@ public:
      * zmienia planszę, graczy i pociski.
      */
     void nextModelStatus();
+    /**
+     * @brief
+     * Metoda dodaje gracza do planszy porzez
+     * umieszczenie go w modelu i akcjach graczy.
+     * @param id - id gracza
+     * @param player - gracz
+     * @return referencja na obiekie Player, który
+     * został w metodzie utworzony
+     */
+    Player &addPlayer(int id, Player player);
 private:
     /**
      * @brief extendedBoard Przechowuje informacje o planszy, w tym informacje,
@@ -114,6 +124,7 @@ private:
      * @param player1 Gracz, dla którego badamy konflikt z player2
      * @param player2 Gracz, dla którego badamy konflikt z player1
      */
+public:
     void SolvePlayerConflict(Player & player1,Player & player2);
     /**
      * @brief debugDrawInBoard  Wyświetla grę w postaci "literowo-cyferkowej" na konsoli qDebug'a
@@ -121,6 +132,7 @@ private:
      * @param shotInBoard Tablica dwuwymiarowa char'ów, która ilustruje położenie pocisków na planszy
      * @param boardInBoard Tablica dwuwymiarowa int'ów, która ilustruje obraz samej planszy
      */
+public:
     void debugDrawInBoard(QVector<QVector<char> > & playerInBoard, QVector<QVector<char> > &shotInBoard, QVector<QVector<int> > boardInBoard);
     /**
      * @brief RefreshPlayerInBoard Odświeża tablicę dwuwymiarowa char'ów,
@@ -157,12 +169,15 @@ private:
      * @param boardInBoard Tablica dwuwymiarowa int'ów, która ilustruje obraz samej planszy
      */
     void refreshBoardInBoard(QVector<QVector<int> > & boardInBoard);
+     public:
     /**
      * @brief howMuchHurt Zwraca wartość obrażeń w zależności od danego parametru mocy gracza
      * @param power Wartość mocy
      * @return wartość obrażeń
      */
+
     int howMuchHurt(int power);
+private:
     /**
      * @brief SolveFieldsWallAndPlayerConflict Wykrywa,
      * czy dwóch gracz wszedł na ścianę lub wyszedł za planszę.

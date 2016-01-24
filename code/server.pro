@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui network
-
+QT += testlib
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = server
@@ -27,7 +27,8 @@ SOURCES += \
     server/Connection.cpp \
     server/Data.cpp \
     shared/PlayerAction.cpp \
-    server/loader.cpp
+    server/loader.cpp \
+    testy_server/testcontroller.cpp
 
 HEADERS  += \
     server/serverwindow.h \
@@ -48,7 +49,8 @@ HEADERS  += \
     config.h \
     server/Data.h \
     shared/PlayerAction.h \
-    server/loader.h
+    server/loader.h \
+    testy_server/testcontroller.h
 
 FORMS    += \
     server/serverwindow.ui
