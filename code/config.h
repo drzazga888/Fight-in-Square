@@ -8,6 +8,7 @@
 // logika
 
 #define SPEEDSHOT 3
+#define SHOTINTERVAL 1
 
 // nazwa gracza
 
@@ -25,7 +26,7 @@
 // ogolnie przyjete ustawienia
 
 #define MAX_HEALTH 100
-#define INIT_POWER 10
+#define INIT_POWER 5
 #define MAX_PLAYERS 8
 
 // czasy w milisekundach

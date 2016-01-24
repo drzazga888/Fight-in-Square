@@ -134,7 +134,7 @@ void Controller::nextModelStatus()
     QMutableMapIterator<int,Player> it(data.model.players);
     while(it.hasNext()){
         it.next();
-       // qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
+        qDebug()<<"Kierunek :"<<DIRECT(it.value().id)<<"Czy strzelił"<<IS_SHOT(it.value().id);
         if(IS_SHOT(it.value().id)==true){
              QString str;
         }

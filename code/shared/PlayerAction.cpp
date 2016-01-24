@@ -34,5 +34,6 @@ void PlayerAction::applyFrame(const QByteArray &frame)
 {
     id = frame[1];
     moving_direction = (DIRECTION)frame[2];
-    player_shooted = frame[3];
+    if (!player_shooted)
+        player_shooted = frame[3];
 }

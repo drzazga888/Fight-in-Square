@@ -81,6 +81,7 @@ void NetworkManager::applyFrame(const QByteArray &frame)
             game->setStatus(Game::PLAYING);
         }
         game->applyFrame(frame);
+        game->player.player_shooted = false;
         break;
     case 3:
         if (frame[2] == 0)
@@ -101,7 +102,7 @@ void NetworkManager::timerEvent(QTimerEvent *)
 {
     if (game->player.player_shooted || game->player.moving_direction != NONE)
     {
+        qDebug() << "Kierunek: " << game->player.moving_direction << ", strzal: " << game->player.player_shooted;
         tcpClient.write(game->player.getFrame());
-        game->player.player_shooted = false;
     }
 }
