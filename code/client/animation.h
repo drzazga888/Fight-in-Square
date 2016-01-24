@@ -41,6 +41,9 @@ public:
      */
     int getplacey();
 private:
+    /**
+     * @brief step Numer kroku
+     */
     int step;
     int x;
     int y;

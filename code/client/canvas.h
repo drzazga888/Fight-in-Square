@@ -46,8 +46,15 @@ private:
      * do przemalowania płótna.
      */
     void timerEvent(QTimerEvent *);
+
+    /**
+     * @brief drawer Obiekt, na którym malowane są wszystkie elementy
+     */
     Drawer drawer;
 
+    /**
+     * @brief timerId Identyfikator timera
+     */
     int timerId;
 
 };

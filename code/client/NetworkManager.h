@@ -70,8 +70,19 @@ private:
      */
     void timerEvent(QTimerEvent *);
 
+    /**
+     * @brief game Obiekt gry
+     */
     Game *game;
+
+    /**
+     * @brief tcpClient Obiekt klienta TCP
+     */
     TcpClient tcpClient;
+
+    /**
+     * @brief timerId Identyfikator timer'a
+     */
     int timerId;
 
 };

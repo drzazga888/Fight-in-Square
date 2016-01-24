@@ -27,6 +27,9 @@ public:
     QPixmap get(int id);
 
 private:
+    /**
+     * @brief collection Kolekcja przechowująca bitmapy wszystkich sprite'ów
+     */
     QVector<QPixmap> collection;
 
 };
