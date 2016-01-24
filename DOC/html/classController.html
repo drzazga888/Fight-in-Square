@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Fight in Square: Dokumentacja klasy Controller</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Fight in Square
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Gra multiplayer w &#39;tanki&#39; jako projekt zaliczeniowy na &#39;Podstawy Grafiki Komputerowej&#39;</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klasy</span></a></li>
+      <li><a href="files.html"><span>Pliki</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Lista&#160;klas</span></a></li>
+      <li><a href="classes.html"><span>Indeks&#160;klas</span></a></li>
+      <li><a href="hierarchy.html"><span>Hierarchia&#160;klas</span></a></li>
+      <li><a href="functions.html"><span>Składowe&#160;klas</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasy</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funkcje</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Zmienne</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Wyliczenia</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Metody publiczne</a> &#124;
+<a href="#pub-static-attribs">Statyczne atrybuty publiczne</a> &#124;
+<a href="classController-members.html">Lista wszystkich składowych</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentacja klasy Controller</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Klasa zarządza logiką aplikacji. Dodaje ona gracza do planszy, potrafi go usunąć, oblicza też nowy stan planszy jeśli upłynie określona ilość czasu.  
+ <a href="classController.html#details">Więcej...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Controller_8h_source.html">Controller.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Metody publiczne</h2></td></tr>
+<tr class="memitem:ad7b9107da4495597f9213adfbedfc18e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7b9107da4495597f9213adfbedfc18e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Controller</b> (<a class="el" href="classData.html">Data</a> &amp;data)</td></tr>
+<tr class="separator:ad7b9107da4495597f9213adfbedfc18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad48e4ed938f47d82accc52319dc1e142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classPlayer.html">Player</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classController.html#ad48e4ed938f47d82accc52319dc1e142">addPlayer</a> (int id, QByteArray name)</td></tr>
+<tr class="memdesc:ad48e4ed938f47d82accc52319dc1e142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda dodaje gracza do planszy porzez umieszczenie go w modelu i akcjach graczy.  <a href="#ad48e4ed938f47d82accc52319dc1e142">Więcej...</a><br/></td></tr>
+<tr class="separator:ad48e4ed938f47d82accc52319dc1e142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9be6f2af9afed6b81e643d80b9a45199"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classController.html#a9be6f2af9afed6b81e643d80b9a45199">removePlayer</a> (int id)</td></tr>
+<tr class="memdesc:a9be6f2af9afed6b81e643d80b9a45199"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda usuwa gracza z plaszy i z akcji graczy.  <a href="#a9be6f2af9afed6b81e643d80b9a45199">Więcej...</a><br/></td></tr>
+<tr class="separator:a9be6f2af9afed6b81e643d80b9a45199"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95f05b4b636223599fc2fb88f825feda"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a95f05b4b636223599fc2fb88f825feda"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classController.html#a95f05b4b636223599fc2fb88f825feda">nextModelStatus</a> ()</td></tr>
+<tr class="memdesc:a95f05b4b636223599fc2fb88f825feda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda generuje następny stan planszy, czyli zmienia planszę, graczy i pociski. <br/></td></tr>
+<tr class="separator:a95f05b4b636223599fc2fb88f825feda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ae60fdade5209824bc1519424e91cbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1ae60fdade5209824bc1519424e91cbc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadExtendedBoard</b> ()</td></tr>
+<tr class="separator:a1ae60fdade5209824bc1519424e91cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa07639d40b11e5f2c48e2c6ed9e43d25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa07639d40b11e5f2c48e2c6ed9e43d25"></a>
+QPoint&#160;</td><td class="memItemRight" valign="bottom"><b>getActualShotPosition</b> (const <a class="el" href="classShot.html">Shot</a> &amp;shot) const </td></tr>
+<tr class="separator:aa07639d40b11e5f2c48e2c6ed9e43d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd34c5d86a791c042504ee193cd827ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afd34c5d86a791c042504ee193cd827ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>loadExtendedBoard</b> (QVector&lt; QVector&lt; int &gt; &gt; idBoard)</td></tr>
+<tr class="separator:afd34c5d86a791c042504ee193cd827ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ba3818f56ce3bf01577e9a54cdfd596"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0ba3818f56ce3bf01577e9a54cdfd596"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clearModelFromDataObject</b> ()</td></tr>
+<tr class="separator:a0ba3818f56ce3bf01577e9a54cdfd596"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Statyczne atrybuty publiczne</h2></td></tr>
+<tr class="memitem:a83660c7c1fcfb23ef189faf7bc9ea941"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83660c7c1fcfb23ef189faf7bc9ea941"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>getNewShotID</b> =0</td></tr>
+<tr class="separator:a83660c7c1fcfb23ef189faf7bc9ea941"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af06e865e51aaca14f546e91d86af0871"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af06e865e51aaca14f546e91d86af0871"></a>
+static int&#160;</td><td class="memItemRight" valign="bottom"><b>testVariable</b> =0</td></tr>
+<tr class="separator:af06e865e51aaca14f546e91d86af0871"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Klasa zarządza logiką aplikacji. Dodaje ona gracza do planszy, potrafi go usunąć, oblicza też nowy stan planszy jeśli upłynie określona ilość czasu. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji składowych</h2>
+<a class="anchor" id="ad48e4ed938f47d82accc52319dc1e142"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classPlayer.html">Player</a> &amp; Controller::addPlayer </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">QByteArray&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Metoda dodaje gracza do planszy porzez umieszczenie go w modelu i akcjach graczy. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>- id gracza </td></tr>
+    <tr><td class="paramname">name</td><td>- nazwa gracza </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>referencja na obiekie <a class="el" href="classPlayer.html" title="Obiekt reprezentuje gracza jak i czołg, który należy do tego gracza. Zawiera jedynie informacje potrz...">Player</a>, który został w metodzie utworzony </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9be6f2af9afed6b81e643d80b9a45199"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Controller::removePlayer </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Metoda usuwa gracza z plaszy i z akcji graczy. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>- id gracza do usunięcia </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>Dokumentacja dla tej klasy została wygenerowana z plików:<ul>
+<li>server/<a class="el" href="Controller_8h_source.html">Controller.h</a></li>
+<li>server/Controller.cpp</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano N, 24 sty 2016 02:51:30 dla Fight in Square programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

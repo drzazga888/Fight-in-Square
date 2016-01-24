@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Fight in Square: Plik źródłowy client/TcpClient.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Fight in Square
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Gra multiplayer w &#39;tanki&#39; jako projekt zaliczeniowy na &#39;Podstawy Grafiki Komputerowej&#39;</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li><a href="annotated.html"><span>Klasy</span></a></li>
+      <li class="current"><a href="files.html"><span>Pliki</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;plików</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasy</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funkcje</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Zmienne</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Wyliczenia</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_497e4e3aa8c5d739596aa019d8761f4a.html">client</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">TcpClient.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TCP_CLIENT_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define TCP_CLIENT_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QWidget&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;QTcpSocket&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;QHostAddress&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classTcpClient.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classTcpClient.html">TcpClient</a> : <span class="keyword">public</span> QWidget</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    Q_OBJECT</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classTcpClient.html#ad2e6b99a63964caa825c44e93ff8e777">TcpClient</a>();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    ~<a class="code" href="classTcpClient.html">TcpClient</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a0b8bbe549eb1e716f93aac474b6cf396">connectToHost</a>(QHostAddress address, <span class="keywordtype">int</span> port);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a56baf7d1b91aead7ac02b3c0aa2fd8b4">disconnectFromHost</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span> slots:</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a0d166c8eb918ccf3260eae05bd22d6d3">read</a>();</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a3c3586da42e13a6b9b5103492c56d623">write</a>(QByteArray message);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a57a960cb90295e6ff3dceb13e437a206">onConnected</a>();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a13c6c7d38fd2be50d93f6966291f5fc2">onDisconnected</a>();</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;signals:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a33d99c86442d817abb3e3f59f8448dc4">connecting</a>();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a7b44de7ec57329f6eb52aa75ae7f0c28">disconnecting</a>();</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#ae1a6c4e582a440cd667826c80d5d1c8a">reading</a>(QByteArray);</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classTcpClient.html#a6e52b5eee390a82844a912abe39870ca">writing</a>(QByteArray);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    QTcpSocket* socket;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">bool</span> connected;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;};</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classTcpClient_html_a3c3586da42e13a6b9b5103492c56d623"><div class="ttname"><a href="classTcpClient.html#a3c3586da42e13a6b9b5103492c56d623">TcpClient::write</a></div><div class="ttdeci">void write(QByteArray message)</div><div class="ttdoc">write Slot, który jest wywoływany, jesli jakieś dane maja zostać przesłane do serwera ...</div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:35</div></div>
+<div class="ttc" id="classTcpClient_html_a33d99c86442d817abb3e3f59f8448dc4"><div class="ttname"><a href="classTcpClient.html#a33d99c86442d817abb3e3f59f8448dc4">TcpClient::connecting</a></div><div class="ttdeci">void connecting()</div><div class="ttdoc">connecting Sygnał zgłaszany w momencie połączenia się z serwerem </div></div>
+<div class="ttc" id="classTcpClient_html_a7b44de7ec57329f6eb52aa75ae7f0c28"><div class="ttname"><a href="classTcpClient.html#a7b44de7ec57329f6eb52aa75ae7f0c28">TcpClient::disconnecting</a></div><div class="ttdeci">void disconnecting()</div><div class="ttdoc">disconnecting Sygnał zgłaszany w momencie rozłączenia się z serwerem </div></div>
+<div class="ttc" id="classTcpClient_html"><div class="ttname"><a href="classTcpClient.html">TcpClient</a></div><div class="ttdoc">The TcpClient class Klasa odpowiedzialna za obsługę połączenia i przesyłanie danych przez sieć ...</div><div class="ttdef"><b>Definition:</b> TcpClient.h:12</div></div>
+<div class="ttc" id="classTcpClient_html_ae1a6c4e582a440cd667826c80d5d1c8a"><div class="ttname"><a href="classTcpClient.html#ae1a6c4e582a440cd667826c80d5d1c8a">TcpClient::reading</a></div><div class="ttdeci">void reading(QByteArray)</div><div class="ttdoc">reading Sygnał zgłaszany w momencie, kiedy jakieś dane zostaną przysłane. Przekazuje te dane do obsłu...</div></div>
+<div class="ttc" id="classTcpClient_html_a0b8bbe549eb1e716f93aac474b6cf396"><div class="ttname"><a href="classTcpClient.html#a0b8bbe549eb1e716f93aac474b6cf396">TcpClient::connectToHost</a></div><div class="ttdeci">void connectToHost(QHostAddress address, int port)</div><div class="ttdoc">connectToHost Funkcja łącząca się z hostem o podanym adresie IP i numerze portu </div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:13</div></div>
+<div class="ttc" id="classTcpClient_html_a0d166c8eb918ccf3260eae05bd22d6d3"><div class="ttname"><a href="classTcpClient.html#a0d166c8eb918ccf3260eae05bd22d6d3">TcpClient::read</a></div><div class="ttdeci">void read()</div><div class="ttdoc">read Slot, który jest wywoływany jeżeli przyjdą jakieś dane z serwera </div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:47</div></div>
+<div class="ttc" id="classTcpClient_html_a6e52b5eee390a82844a912abe39870ca"><div class="ttname"><a href="classTcpClient.html#a6e52b5eee390a82844a912abe39870ca">TcpClient::writing</a></div><div class="ttdeci">void writing(QByteArray)</div><div class="ttdoc">writing Sygnał zgłaszany w momencie, kiedy jakieś dane zostaną wysłane. Przekazuje te dane do obsługu...</div></div>
+<div class="ttc" id="classTcpClient_html_ad2e6b99a63964caa825c44e93ff8e777"><div class="ttname"><a href="classTcpClient.html#ad2e6b99a63964caa825c44e93ff8e777">TcpClient::TcpClient</a></div><div class="ttdeci">TcpClient()</div><div class="ttdoc">TcpClient Konstruktor inicjujący nieaktywne połączenie. </div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:3</div></div>
+<div class="ttc" id="classTcpClient_html_a56baf7d1b91aead7ac02b3c0aa2fd8b4"><div class="ttname"><a href="classTcpClient.html#a56baf7d1b91aead7ac02b3c0aa2fd8b4">TcpClient::disconnectFromHost</a></div><div class="ttdeci">void disconnectFromHost()</div><div class="ttdoc">disconnectFromHost Metoda zamykająca połączenie TCP </div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:23</div></div>
+<div class="ttc" id="classTcpClient_html_a57a960cb90295e6ff3dceb13e437a206"><div class="ttname"><a href="classTcpClient.html#a57a960cb90295e6ff3dceb13e437a206">TcpClient::onConnected</a></div><div class="ttdeci">void onConnected()</div><div class="ttdoc">onConnected Slot, który jest wywoływany w momencie połączenia się z serwerem. Ustawia połączenie jako...</div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:55</div></div>
+<div class="ttc" id="classTcpClient_html_a13c6c7d38fd2be50d93f6966291f5fc2"><div class="ttname"><a href="classTcpClient.html#a13c6c7d38fd2be50d93f6966291f5fc2">TcpClient::onDisconnected</a></div><div class="ttdeci">void onDisconnected()</div><div class="ttdoc">onDisconnected Slot, który jest wywoływany w momencie rozłączenia się z serwerem. Ustawia połączenie ...</div><div class="ttdef"><b>Definition:</b> TcpClient.cpp:61</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano N, 24 sty 2016 02:51:30 dla Fight in Square programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

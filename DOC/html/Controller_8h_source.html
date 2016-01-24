@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Fight in Square: Plik źródłowy server/Controller.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Fight in Square
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Gra multiplayer w &#39;tanki&#39; jako projekt zaliczeniowy na &#39;Podstawy Grafiki Komputerowej&#39;</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li><a href="annotated.html"><span>Klasy</span></a></li>
+      <li class="current"><a href="files.html"><span>Pliki</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;plików</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasy</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funkcje</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Zmienne</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Wyliczenia</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_5a5bf97298b811acaf77c71926b65607.html">server</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Controller.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CONTROLLER_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CONTROLLER_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;QPoint&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QFileDialog&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include&lt;QtMath&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;Data.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;../config.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;../shared/Utils/Direction.h&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;../shared/Model/BoardElements/ObstacleBoardElement.h&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define DIRECT(id) data.playerActions[id].moving_direction</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define IS_SHOT(id) data.playerActions[id].player_shooted</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define REGENERATION_TIME 50</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classController.html">   21</a></span>&#160;<span class="keyword">class </span><a class="code" href="classController.html">Controller</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;{</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classController.html">Controller</a>(<a class="code" href="classData.html">Data</a> &amp;data);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="classPlayer.html">Player</a> &amp;<a class="code" href="classController.html#ad48e4ed938f47d82accc52319dc1e142">addPlayer</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, QByteArray name);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classController.html#a9be6f2af9afed6b81e643d80b9a45199">removePlayer</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classController.html#a95f05b4b636223599fc2fb88f825feda">nextModelStatus</a>();</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">void</span> loadExtendedBoard();</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    QVector&lt;QVector&lt;ObstacleBoardElement&gt; &gt; extendedBoard;  </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">Player::GROUP</a> assignGroup();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    DIRECTION assignDirection();</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    QPoint assignFreePosition();</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <a class="code" href="classData.html">Data</a> &amp;data;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    QMap&lt;int,Shot&gt; oldshots;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    QVector&lt;QVector&lt;char&gt; &gt; playerInBoard; </div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    QVector&lt;QVector&lt;char&gt; &gt; shotInBoard; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    QVector&lt;QVector&lt;int&gt; &gt; boardInBoard; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;   <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> movePlayer(<a class="code" href="classPlayer.html">Player</a> &amp; player);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> backmovePlayer(<a class="code" href="classPlayer.html">Player</a> &amp; player);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> SolvePlayerConflict(<a class="code" href="classPlayer.html">Player</a> &amp; player1,<a class="code" href="classPlayer.html">Player</a> &amp; player2);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">void</span> debugDrawInBoard(QVector&lt;QVector&lt;char&gt; &gt; &amp; playerInBoard, QVector&lt;QVector&lt;char&gt; &gt; &amp;shotInBoard, QVector&lt;QVector&lt;int&gt; &gt; boardInBoard);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> RefreshPlayerInBoard(QMap&lt;int, Player&gt; futuredPlayers,QVector&lt;QVector&lt;char&gt; &gt; &amp; playerInBoard);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">bool</span> isShotInPlayer(QPoint shot,QPoint player);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">bool</span> isShotInBoard(<span class="keyword">const</span> QPoint &amp;shot);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> refreshShotInBoard(<span class="keyword">const</span> QMap&lt;int,Shot&gt;&amp; futuredShots,QVector&lt;QVector&lt;char&gt; &gt; &amp; shotInBoard);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> refreshBoardInBoard(QVector&lt;QVector&lt;int&gt; &gt; &amp; boardInBoard);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">int</span> howMuchHurt(<span class="keywordtype">int</span> power);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> SolveFieldsWallAndPlayerConflict(<a class="code" href="classPlayer.html">Player</a> &amp; player);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">bool</span> isPlayerInFieldWall(QPoint player,QPoint field);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">bool</span> isFieldsWallAndShotConflict(<a class="code" href="classShot.html">Shot</a> &amp; shot);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">bool</span> isShotInFieldWall(QPoint shot,QPoint field);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> givePointsTeam(QMap&lt;int, Player&gt; &amp;players, <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">Player::GROUP</a> grupa, <span class="keywordtype">int</span> howPoints);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">int</span> fetchVariablePointsToRange(<span class="keywordtype">int</span> i);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">bool</span> isConflictTwoPlayers(QPoint player,QPoint player2 );</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    QPoint getActualShotPosition(<span class="keyword">const</span> <a class="code" href="classShot.html">Shot</a> &amp; shot) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">void</span> loadExtendedBoard(QVector&lt;QVector&lt;int&gt; &gt; idBoard);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> clearModelFromDataObject();</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> getNewShotID;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">int</span> testVariable;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;};</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="preprocessor">#endif // CONTROLLER_H</span></div>
+<div class="ttc" id="classShot_html"><div class="ttname"><a href="classShot.html">Shot</a></div><div class="ttdoc">Informacje o wystrzelonym pocisku na planszy. Obiekt takiej klasy jest &quot;Ramkowalny&quot;. </div><div class="ttdef"><b>Definition:</b> Shot.h:14</div></div>
+<div class="ttc" id="classController_html"><div class="ttname"><a href="classController.html">Controller</a></div><div class="ttdoc">Klasa zarządza logiką aplikacji. Dodaje ona gracza do planszy, potrafi go usunąć, oblicza też nowy st...</div><div class="ttdef"><b>Definition:</b> Controller.h:21</div></div>
+<div class="ttc" id="classController_html_ad48e4ed938f47d82accc52319dc1e142"><div class="ttname"><a href="classController.html#ad48e4ed938f47d82accc52319dc1e142">Controller::addPlayer</a></div><div class="ttdeci">Player &amp; addPlayer(int id, QByteArray name)</div><div class="ttdoc">Metoda dodaje gracza do planszy porzez umieszczenie go w modelu i akcjach graczy. ...</div><div class="ttdef"><b>Definition:</b> Controller.cpp:61</div></div>
+<div class="ttc" id="classPlayer_html_a0cbfd65f6891ec32d1bcc05673594b4b"><div class="ttname"><a href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">Player::GROUP</a></div><div class="ttdeci">GROUP</div><div class="ttdoc">grupa (drużyna), do której gracz może przynależeć </div><div class="ttdef"><b>Definition:</b> Player.h:26</div></div>
+<div class="ttc" id="classController_html_a9be6f2af9afed6b81e643d80b9a45199"><div class="ttname"><a href="classController.html#a9be6f2af9afed6b81e643d80b9a45199">Controller::removePlayer</a></div><div class="ttdeci">void removePlayer(int id)</div><div class="ttdoc">Metoda usuwa gracza z plaszy i z akcji graczy. </div><div class="ttdef"><b>Definition:</b> Controller.cpp:88</div></div>
+<div class="ttc" id="classController_html_a95f05b4b636223599fc2fb88f825feda"><div class="ttname"><a href="classController.html#a95f05b4b636223599fc2fb88f825feda">Controller::nextModelStatus</a></div><div class="ttdeci">void nextModelStatus()</div><div class="ttdoc">Metoda generuje następny stan planszy, czyli zmienia planszę, graczy i pociski. </div><div class="ttdef"><b>Definition:</b> Controller.cpp:94</div></div>
+<div class="ttc" id="classData_html"><div class="ttname"><a href="classData.html">Data</a></div><div class="ttdoc">Klasa, która przechowuje informacje o grze, czyli: </div><div class="ttdef"><b>Definition:</b> Data.h:14</div></div>
+<div class="ttc" id="classPlayer_html"><div class="ttname"><a href="classPlayer.html">Player</a></div><div class="ttdoc">Obiekt reprezentuje gracza jak i czołg, który należy do tego gracza. Zawiera jedynie informacje potrz...</div><div class="ttdef"><b>Definition:</b> Player.h:18</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano N, 24 sty 2016 02:51:30 dla Fight in Square programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
