@@ -73,9 +73,15 @@ public:
     void startPlaying();
 
     bool isWorking;
-
+    /**
+     * @brief refreshController Pobiera mapę do serwera,
+     * czyści kontroler oraz pobiera mapę do kontrolera
+     */
     void refreshController();
-
+    /**
+     * @brief setPathExtendedMap Ustawia ścieżkę do pliku z mapą
+     * @param load  Ścieżka do pliku z mapą
+     */
     void setPathExtendedMap(QString &load);
 
 public slots:

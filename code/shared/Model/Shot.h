@@ -32,10 +32,30 @@ public:
      */
     virtual QByteArray getFrame() const;
 
+    /**
+     * @brief getActualShotPosition Zwraca aktualne współrzędne połozenia lecącego pocisku
+     * @return Aktualne wspołrzedne położenia lecącego pocisku
+     */
     QPoint getActualShotPosition() const;
 
+    /**
+     * @brief operator == Sprawdza czy różnica między  dwoma lecącymi pociskami
+     * wystzelonymi przez tego samego gracza jest nie większa niż wartość prędkości pocisków
+     * @param dane Drugi pocisk
+     * @return  true, jeśli różnica między  dwoma lecącymi pociskami
+     * wystzelonymi przez tego samego gracza jest nie większa niż wartości prędkości pocisków,
+     * false jeśli różnica między  dwoma lecącymi pociskami
+     * wystzelonymi przez tego samego gracza nie jest nie większa niż wartości prędkości pocisków
+     * lub gdy jest różny kierunek lotu pocisków lub gdy pociski zostały wystrzelone przez różnych graczy lub
+     * gdy pocisków zostały wystrzelone z różnych miejsc
+     */
     bool operator ==( const Shot & dane) const;
-
+    /**
+     * @brief operator %= Sprawdza, czy dwa pociski od różnych graczy się ze sobą zderzają
+     * @param dane Drugi pocisk
+     * @return true, jeśli dwa pociski od różnych graczy się zderzają,
+     * false, jeśli się dwa pociski od różnych graczy się nie zderzają lub dwa pociski sa od tego samego gracza
+     */
     bool operator %=(  Shot & dane) const;
 
     /**

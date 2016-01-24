@@ -10,8 +10,10 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
+/*
 //testy jednostkowe
-/*#include "testcontroller.h"
+#include "testy_server/testcontroller.h"
 QTEST_MAIN(TestController)
 #include "moc_testcontroller.cpp"
+
 */
