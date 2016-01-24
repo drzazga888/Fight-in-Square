@@ -112,11 +112,27 @@ private:
      */
     void keyReleaseEvent(QKeyEvent *e);
 
+    /**
+     * @brief fillInTable Wypełnia tabelę
+     * @param table Widget tabeli do wypełnienia
+     */
     void fillInTable(QTableWidget *table);
 
     Ui::MainWindow *ui;
+
+    /**
+     * @brief game Obiekt gry
+     */
     Game game;
+
+    /**
+     * @brief canvas Obiekk do rysowania po nim
+     */
     Canvas canvas;
+
+    /**
+     * @brief networkManager Manager połączenia
+     */
     NetworkManager networkManager;
     bool updated;
 
