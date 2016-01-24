@@ -28,7 +28,6 @@ SOURCES += \
     server/Connection.cpp \
     server/Data.cpp \
     shared/PlayerAction.cpp \
-    server/testcontroller.cpp \
     server/loader.cpp
 
 HEADERS  += \
@@ -50,7 +49,6 @@ HEADERS  += \
     config.h \
     server/Data.h \
     shared/PlayerAction.h \
-    testcontroller.h \
     server/loader.h
 
 FORMS    += \

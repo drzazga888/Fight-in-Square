@@ -414,6 +414,8 @@ void Controller::movePlayer(Player & player){
             DIRECT(player.id)=NONE;
         }
         break;
+    default:
+        break;
     }
 }
 void Controller::backmovePlayer(Player & player){
@@ -434,6 +436,8 @@ void Controller::backmovePlayer(Player & player){
     case RIGHT:
                 (player.x)--;
         DIRECT(player.id)=NONE;
+        break;
+    default:
         break;
     }
 }

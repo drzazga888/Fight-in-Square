@@ -70,7 +70,7 @@
 #define BOARD_FIELD_WIDTH 65
 #define BOARD_FIELD_HEIGHT 65
 #define BOARD_SUBFIELDS 5
-#define BOARD_FIELD_PATH "../img/sprites/%1.png"
+#define BOARD_FIELD_PATH ":/img/sprites/%1.png"
 #define BOARD_FIELDS_LENGTH 17
 
 // bledy
