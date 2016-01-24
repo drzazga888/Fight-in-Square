@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1134</width>
+    <height>692</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Fight in square</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">* {
+	color: #fff;
+}
+
+QTextBrowser {
+	color: #000;
+}
+
+QStatusBar {
+	background-color: #666;
+	color: #fff;
+}
+
+QLineEdit {
+	color: #000;
+}
+
+QPushButton {
+	padding: 5px;
+}
+
+QProgressBar,
+QPushButton {
+	background-color: #666;
+	border: none;
+}
+
+QHeaderView,
+QTableWidget {
+	background-color: #222;
+}
+
+QTableCornerButton::section,
+QHeaderView::section {
+	background-color: #666;
+	border: none;
+	padding: 2px 4px;
+}
+
+QProgressBar#healthBar::chunk {
+	background-color: #f00;
+}
+
+QProgressBar#powerBar::chunk {
+	background-color: #0c0;
+}
+
+QWidget#menu {
+	background-image: url(:/img/welcome_screen.png);
+}
+
+QWidget#game {
+	background-color: #000;
+}
+
+QWidget#gameOver {
+	background-image: url(:/img/gameover_screen.png);
+}
+
+QWidget#canvasBack {
+	background-image: url(:/img/canvas_outline.png);
+}
+
+QLabel#title{
+	color: #C2E283;
+	font-size: 36px;
+	font-family: serif;
+}
+
+QLabel#playerName{
+	color: #ccc;
+	font-size: 26px;
+}
+
+QWidget#gameOverBlock {
+	background: rgba(0, 0, 0, 0.7);
+	border-width: 2px;
+	border-color: #666;
+	border-style: solid;
+}
+
+QLabel#yourStatusLabel {
+	font-size: 40px;
+}
+
+QLabel#bluePointsLabel,
+QLabel#redPointsLabel {
+	font-size: 26px;
+}
+
+QLabel#bluePointsLabel {
+	color: #09f;
+}
+
+QLabel#redPointsLabel {
+	color: #f00;
+}</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="menu">
+    <widget class="QWidget" name="verticalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>750</x>
+       <y>350</y>
+       <width>301</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="menuLayout">
+      <item>
+       <layout class="QGridLayout" name="connectionLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="playerNameLabel">
+          <property name="text">
+           <string>Nazwa gracza</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="serverIpLabel">
+          <property name="text">
+           <string>Adres IP serwera</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="serverPortEdit">
+          <property name="text">
+           <string>8001</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="serverIpEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="serverPortLabel">
+          <property name="text">
+           <string>Port serwera</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="playerNameEdit">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="connectButton">
+        <property name="text">
+         <string>Połącz</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="connectionSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="helpButton">
+        <property name="text">
+         <string>Pomoc</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="exitButton">
+        <property name="text">
+         <string>Wyjdź</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="game">
+    <widget class="QWidget" name="horizontalLayoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1135</width>
+       <height>731</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="gameLayout">
+      <property name="bottomMargin">
+       <number>60</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="canvasBack" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>930</width>
+          <height>670</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>930</width>
+          <height>670</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="gameInfo">
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="title">
+          <property name="text">
+           <string>Fight
+in
+square</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="titlePlayerSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>100</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="playerName">
+          <property name="text">
+           <string>Nazwa gracza</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="playerBarsSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="healthLabel">
+          <property name="text">
+           <string>Życie</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="healthBar">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="betweenBarsSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="powerLabel">
+          <property name="text">
+           <string>Moc wystrzałów</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QProgressBar" name="powerBar">
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="powerTopSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="pointsLabel">
+          <property name="text">
+           <string>Punkty: 212</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="pointsTimeSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="timeLabel">
+          <property name="text">
+           <string>Czas: 23:45 / 23:45</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="timeTopSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>100</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="topLabel">
+          <property name="text">
+           <string>TOP</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="top">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>189</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
+          <property name="cornerButtonEnabled">
+           <bool>false</bool>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>90</number>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <attribute name="verticalHeaderDefaultSectionSize">
+           <number>21</number>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>5</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>6</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>7</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>8</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Gracz</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Punkty</string>
+           </property>
+          </column>
+          <item row="0" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="0" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="1" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="1" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="2" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="2" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="3" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="3" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="4" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="4" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="5" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="5" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="6" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="6" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="7" column="0">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+          <item row="7" column="1">
+           <property name="text">
+            <string>---</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="exitGameSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>100</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exitGameButton">
+          <property name="text">
+           <string>Rozłącz z serwerem</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="gameOver">
+    <widget class="QWidget" name="gameOverBlock" native="true">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>200</y>
+       <width>791</width>
+       <height>441</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QVBoxLayout" name="gameOverLayout">
+        <item>
+         <widget class="QLabel" name="yourStatusLabel">
+          <property name="text">
+           <string>Wygrana!</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="redPointsLabel">
+          <property name="text">
+           <string>&lt;font color=&quot;#f00&quot;&gt;Czerwoni: 0 punktów&lt;/font&gt;</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="bluePointsLabel">
+          <property name="text">
+           <string>Niebiescy: 0 punktów</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTableWidget" name="topSummary">
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::NoSelection</enum>
+          </property>
+          <property name="cornerButtonEnabled">
+           <bool>false</bool>
+          </property>
+          <attribute name="horizontalHeaderDefaultSectionSize">
+           <number>500</number>
+          </attribute>
+          <attribute name="horizontalHeaderStretchLastSection">
+           <bool>true</bool>
+          </attribute>
+          <row>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>5</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>6</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>7</string>
+           </property>
+          </row>
+          <row>
+           <property name="text">
+            <string>8</string>
+           </property>
+          </row>
+          <column>
+           <property name="text">
+            <string>Gracz</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Punkty</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exitGameOverButton">
+          <property name="text">
+           <string>Wróć do menu</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="sizeGripEnabled">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

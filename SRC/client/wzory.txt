@@ -1,0 +1,19 @@
+Przy obrocie czołgu wielkość rysowanego pola musi się zwiększać zgodnie z wzorem:
+y=(sqrt(2)-1)/45*(h*x*x/45+(z-1)x);
+nowa_h=h+2*y;
+
+Detekcja zderzeń - 3 typy:
+1. zderzenia powodujące zatrzymanie (czołg-czołg, czołg-przeszkoda)
+2. zderzenie powoduje zniknięcie (czołg-herb)
+3. zderzenie powoduje zniknięcie i animacje (pocisk-czołg, pocisk-przeszkoda możliwa do zniszczenia)
+
+Rysowanie:
+ (Skąd wiem, że doszło do podmiany modeli?)
+	1. narysowanie elementów niezminnych:
+	(problem brakującego sprite'a)
+	2. przeszkody zniszalne:
+	(na jaki sprite podniam przeszkodę, gdy ją zniszczę?)
+	3. czołgi:
+	(obrót - powiększanie pola rysowania, jazda - wyznaczanie prędkości i ciągłości, kolorowanie - czy?)
+	4. pociski:
+	(lot - prędkość, wybuch na właściwym polu (id strzelającego), animacja wybuchu/ew.lotu)

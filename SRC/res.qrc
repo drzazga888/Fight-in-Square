@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/welcome_screen.png</file>
+        <file>img/gameover_screen.png</file>
+        <file>img/credits.png</file>
+        <file>img/canvas_outline.png</file>
+        <file>img/sprites/17.png</file>
+        <file>img/sprites/16.png</file>
+        <file>img/sprites/15.png</file>
+        <file>img/sprites/14.png</file>
+        <file>img/sprites/13.png</file>
+        <file>img/sprites/12.png</file>
+        <file>img/sprites/11.png</file>
+        <file>img/sprites/10.png</file>
+        <file>img/sprites/9.png</file>
+        <file>img/sprites/8.png</file>
+        <file>img/sprites/7.png</file>
+        <file>img/sprites/6.png</file>
+        <file>img/sprites/5.png</file>
+        <file>img/sprites/4.png</file>
+        <file>img/sprites/3.png</file>
+        <file>img/sprites/2.png</file>
+        <file>img/sprites/1.png</file>
+    </qresource>
+</RCC>

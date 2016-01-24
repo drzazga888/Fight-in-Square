@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Fight in Square: Plik źródłowy shared/Model/Player.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Fight in Square
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Gra multiplayer w &#39;tanki&#39; jako projekt zaliczeniowy na &#39;Podstawy Grafiki Komputerowej&#39;</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li><a href="annotated.html"><span>Klasy</span></a></li>
+      <li class="current"><a href="files.html"><span>Pliki</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;plików</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasy</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funkcje</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Zmienne</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Wyliczenia</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_d95f8c37507e870497a91afd8b9c7f15.html">shared</a></li><li class="navelem"><a class="el" href="dir_498265e707a49dd4a8c1d59b0f11dcfa.html">Model</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Player.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef PLAYER_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define PLAYER_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;QString&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;../../config.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;../../shared/Utils/Direction.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;../Frame/Frameable.h&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classPlayer.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classPlayer.html">Player</a>: <span class="keyword">public</span> <a class="code" href="classFrameable.html">Frameable</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">   26</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">GROUP</a> {</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        RED_GROUP = 0,</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        BLUE_GROUP = 1</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    };</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="classPlayer.html">Player</a>();</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="classPlayer.html">Player</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">GROUP</a> <a class="code" href="classPlayer.html#ae3fec0d8add26223e5ea3d8bc0c37e01">group</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#ae76b26a7cbcc555af8acb5ecd7ec2f54">x</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#a8c319d9c390255c8a8384e3ee06869f8">y</a>, DIRECTION <a class="code" href="classPlayer.html#ac9a6bcf194879661dbe6c2d515d762e1">direction</a>, QByteArray <a class="code" href="classPlayer.html#a75705ef656438f86d508e686f913a718">name</a>);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="classPlayer.html">Player</a>(<span class="keywordtype">int</span> <span class="keywordtype">id</span>, <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">Player::GROUP</a> <a class="code" href="classPlayer.html#ae3fec0d8add26223e5ea3d8bc0c37e01">group</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#ad841029b4a8a6bb5bc22f8eb8b1f28f4">points</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#af5539d28d1c24e7f21170d76ab6e19e3">health</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#a5f68eed008272ed25cd3d66b40012b48">power</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#ae76b26a7cbcc555af8acb5ecd7ec2f54">x</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#a8c319d9c390255c8a8384e3ee06869f8">y</a>, DIRECTION <a class="code" href="classPlayer.html#ac9a6bcf194879661dbe6c2d515d762e1">direction</a>, QByteArray <a class="code" href="classPlayer.html#a75705ef656438f86d508e686f913a718">name</a>, <span class="keywordtype">bool</span> <a class="code" href="classPlayer.html#a2ad8b519ac8138b031b8f49f1b04a06b">is_alive</a>, <span class="keywordtype">int</span> <a class="code" href="classPlayer.html#a51f1440115329079d05e49a2873ef032">death_time</a>);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classPlayer.html">Player</a>(QByteArray frame);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="classPlayer.html#a426da761ee209f69a4bf0d0b4cc49a19">applyFrame</a>(<span class="keyword">const</span> QByteArray &amp;frame);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">virtual</span> QByteArray <a class="code" href="classPlayer.html#acdede38cac38cbc6ce853edfad3772c6">getFrame</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classPlayer.html#a754013712d47fff675578890849b8caa">   51</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#a754013712d47fff675578890849b8caa">id</a>;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classPlayer.html#ae3fec0d8add26223e5ea3d8bc0c37e01">   56</a></span>&#160;    <a class="code" href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">GROUP</a> <a class="code" href="classPlayer.html#ae3fec0d8add26223e5ea3d8bc0c37e01">group</a>;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classPlayer.html#ad841029b4a8a6bb5bc22f8eb8b1f28f4">   61</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#ad841029b4a8a6bb5bc22f8eb8b1f28f4">points</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classPlayer.html#af5539d28d1c24e7f21170d76ab6e19e3">   66</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#af5539d28d1c24e7f21170d76ab6e19e3">health</a>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classPlayer.html#a5f68eed008272ed25cd3d66b40012b48">   71</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#a5f68eed008272ed25cd3d66b40012b48">power</a>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="classPlayer.html#ae76b26a7cbcc555af8acb5ecd7ec2f54">   76</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#ae76b26a7cbcc555af8acb5ecd7ec2f54">x</a>;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="classPlayer.html#a8c319d9c390255c8a8384e3ee06869f8">   81</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#a8c319d9c390255c8a8384e3ee06869f8">y</a>;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classPlayer.html#ac9a6bcf194879661dbe6c2d515d762e1">   86</a></span>&#160;    DIRECTION <a class="code" href="classPlayer.html#ac9a6bcf194879661dbe6c2d515d762e1">direction</a>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="classPlayer.html#a75705ef656438f86d508e686f913a718">   91</a></span>&#160;    QByteArray <a class="code" href="classPlayer.html#a75705ef656438f86d508e686f913a718">name</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="classPlayer.html#a2ad8b519ac8138b031b8f49f1b04a06b">   96</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classPlayer.html#a2ad8b519ac8138b031b8f49f1b04a06b">is_alive</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classPlayer.html#a51f1440115329079d05e49a2873ef032">  101</a></span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> <a class="code" href="classPlayer.html#a51f1440115329079d05e49a2873ef032">death_time</a>;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;};</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="classPlayer_html_acdede38cac38cbc6ce853edfad3772c6"><div class="ttname"><a href="classPlayer.html#acdede38cac38cbc6ce853edfad3772c6">Player::getFrame</a></div><div class="ttdeci">virtual QByteArray getFrame() const </div><div class="ttdoc">getFrame tworzy ramkę z obiektu </div><div class="ttdef"><b>Definition:</b> Player.cpp:39</div></div>
+<div class="ttc" id="classPlayer_html_a75705ef656438f86d508e686f913a718"><div class="ttname"><a href="classPlayer.html#a75705ef656438f86d508e686f913a718">Player::name</a></div><div class="ttdeci">QByteArray name</div><div class="ttdoc">name Nazwa gracza </div><div class="ttdef"><b>Definition:</b> Player.h:91</div></div>
+<div class="ttc" id="classPlayer_html_ac9a6bcf194879661dbe6c2d515d762e1"><div class="ttname"><a href="classPlayer.html#ac9a6bcf194879661dbe6c2d515d762e1">Player::direction</a></div><div class="ttdeci">DIRECTION direction</div><div class="ttdoc">direction Kierunek, w którym jest ustawiony gracz </div><div class="ttdef"><b>Definition:</b> Player.h:86</div></div>
+<div class="ttc" id="classPlayer_html_af5539d28d1c24e7f21170d76ab6e19e3"><div class="ttname"><a href="classPlayer.html#af5539d28d1c24e7f21170d76ab6e19e3">Player::health</a></div><div class="ttdeci">unsigned char health</div><div class="ttdoc">health Zdrowie </div><div class="ttdef"><b>Definition:</b> Player.h:66</div></div>
+<div class="ttc" id="classPlayer_html_a5f68eed008272ed25cd3d66b40012b48"><div class="ttname"><a href="classPlayer.html#a5f68eed008272ed25cd3d66b40012b48">Player::power</a></div><div class="ttdeci">unsigned char power</div><div class="ttdoc">power Moc pocisków, które gracz w tym momencie wystrzeliwuje </div><div class="ttdef"><b>Definition:</b> Player.h:71</div></div>
+<div class="ttc" id="classPlayer_html_a754013712d47fff675578890849b8caa"><div class="ttname"><a href="classPlayer.html#a754013712d47fff675578890849b8caa">Player::id</a></div><div class="ttdeci">unsigned char id</div><div class="ttdoc">id Identyfikator gracza </div><div class="ttdef"><b>Definition:</b> Player.h:51</div></div>
+<div class="ttc" id="classPlayer_html_a0cbfd65f6891ec32d1bcc05673594b4b"><div class="ttname"><a href="classPlayer.html#a0cbfd65f6891ec32d1bcc05673594b4b">Player::GROUP</a></div><div class="ttdeci">GROUP</div><div class="ttdoc">grupa (drużyna), do której gracz może przynależeć </div><div class="ttdef"><b>Definition:</b> Player.h:26</div></div>
+<div class="ttc" id="classPlayer_html_a426da761ee209f69a4bf0d0b4cc49a19"><div class="ttname"><a href="classPlayer.html#a426da761ee209f69a4bf0d0b4cc49a19">Player::applyFrame</a></div><div class="ttdeci">virtual void applyFrame(const QByteArray &amp;frame)</div><div class="ttdoc">applyFrame przyjmuje ramkę i ją aplikuje na obiekt </div><div class="ttdef"><b>Definition:</b> Player.cpp:24</div></div>
+<div class="ttc" id="classPlayer_html_a2ad8b519ac8138b031b8f49f1b04a06b"><div class="ttname"><a href="classPlayer.html#a2ad8b519ac8138b031b8f49f1b04a06b">Player::is_alive</a></div><div class="ttdeci">bool is_alive</div><div class="ttdoc">is_alive Flaga informująca, czy gracz w danym mmencie żyje </div><div class="ttdef"><b>Definition:</b> Player.h:96</div></div>
+<div class="ttc" id="classPlayer_html_ae3fec0d8add26223e5ea3d8bc0c37e01"><div class="ttname"><a href="classPlayer.html#ae3fec0d8add26223e5ea3d8bc0c37e01">Player::group</a></div><div class="ttdeci">GROUP group</div><div class="ttdoc">group Grupa, do której należy gracz </div><div class="ttdef"><b>Definition:</b> Player.h:56</div></div>
+<div class="ttc" id="classPlayer_html_ae76b26a7cbcc555af8acb5ecd7ec2f54"><div class="ttname"><a href="classPlayer.html#ae76b26a7cbcc555af8acb5ecd7ec2f54">Player::x</a></div><div class="ttdeci">unsigned char x</div><div class="ttdoc">x Pozycja pozioma gracza </div><div class="ttdef"><b>Definition:</b> Player.h:76</div></div>
+<div class="ttc" id="classPlayer_html_a8c319d9c390255c8a8384e3ee06869f8"><div class="ttname"><a href="classPlayer.html#a8c319d9c390255c8a8384e3ee06869f8">Player::y</a></div><div class="ttdeci">unsigned char y</div><div class="ttdoc">y Pozycja pionowa gracza </div><div class="ttdef"><b>Definition:</b> Player.h:81</div></div>
+<div class="ttc" id="classFrameable_html"><div class="ttname"><a href="classFrameable.html">Frameable</a></div><div class="ttdoc">Klasa, która łączy dwie klasy abstrakcyjne, które narzucają implementację metod od przyjmowania ramek...</div><div class="ttdef"><b>Definition:</b> Frameable.h:16</div></div>
+<div class="ttc" id="classPlayer_html"><div class="ttname"><a href="classPlayer.html">Player</a></div><div class="ttdoc">Obiekt reprezentuje gracza jak i czołg, który należy do tego gracza. Zawiera jedynie informacje potrz...</div><div class="ttdef"><b>Definition:</b> Player.h:18</div></div>
+<div class="ttc" id="classPlayer_html_a51f1440115329079d05e49a2873ef032"><div class="ttname"><a href="classPlayer.html#a51f1440115329079d05e49a2873ef032">Player::death_time</a></div><div class="ttdeci">unsigned char death_time</div><div class="ttdoc">death_time </div><div class="ttdef"><b>Definition:</b> Player.h:101</div></div>
+<div class="ttc" id="classPlayer_html_ad841029b4a8a6bb5bc22f8eb8b1f28f4"><div class="ttname"><a href="classPlayer.html#ad841029b4a8a6bb5bc22f8eb8b1f28f4">Player::points</a></div><div class="ttdeci">unsigned char points</div><div class="ttdoc">points Liczba punktów </div><div class="ttdef"><b>Definition:</b> Player.h:61</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano N, 24 sty 2016 16:20:59 dla Fight in Square programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>

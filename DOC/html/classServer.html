@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>Fight in Square: Dokumentacja klasy Server</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Fight in Square
+   &#160;<span id="projectnumber">0.1</span>
+   </div>
+   <div id="projectbrief">Gra multiplayer w &#39;tanki&#39; jako projekt zaliczeniowy na &#39;Podstawy Grafiki Komputerowej&#39;</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Wygenerowano przez Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Szukaj');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Strona&#160;główna</span></a></li>
+      <li class="current"><a href="annotated.html"><span>Klasy</span></a></li>
+      <li><a href="files.html"><span>Pliki</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Szukaj" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>Lista&#160;klas</span></a></li>
+      <li><a href="classes.html"><span>Indeks&#160;klas</span></a></li>
+      <li><a href="hierarchy.html"><span>Hierarchia&#160;klas</span></a></li>
+      <li><a href="functions.html"><span>Składowe&#160;klas</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Klasy</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funkcje</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Zmienne</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Wyliczenia</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-slots">Sloty publiczne</a> &#124;
+<a href="#signals">Sygnały</a> &#124;
+<a href="#pub-methods">Metody publiczne</a> &#124;
+<a href="#pub-attribs">Atrybuty publiczne</a> &#124;
+<a href="classServer-members.html">Lista wszystkich składowych</a>  </div>
+  <div class="headertitle">
+<div class="title">Dokumentacja klasy Server</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Główna klasa zarządzająca wszystkim. Zawiera tcpServer, który jest odpowiedzialny za komunikację z klientami. Klasa potrafi wysłać ramki i je odbrać, a potem odpowiednio obrobić i przekazać. Klasa jest sterowana przez główny timer i sygnały od serwera.  
+ <a href="classServer.html#details">Więcej...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Server_8h_source.html">Server.h</a>&gt;</code></p>
+<div class="dynheader">
+Diagram dziedziczenia dla Server</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classServer.png" usemap="#Server_map" alt=""/>
+  <map id="Server_map" name="Server_map">
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-slots"></a>
+Sloty publiczne</h2></td></tr>
+<tr class="memitem:a5df9e945eeb492229a6cd50efe7118b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a5df9e945eeb492229a6cd50efe7118b2">read</a> (int playerId, const QByteArray &amp;message)</td></tr>
+<tr class="memdesc:a5df9e945eeb492229a6cd50efe7118b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot do czytania ramki, która przyszła od klienta.  <a href="#a5df9e945eeb492229a6cd50efe7118b2">Więcej...</a><br/></td></tr>
+<tr class="separator:a5df9e945eeb492229a6cd50efe7118b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9a9efc2613ee399b06a6a7e7380d762"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#aa9a9efc2613ee399b06a6a7e7380d762">disconnected</a> (int playerId)</td></tr>
+<tr class="memdesc:aa9a9efc2613ee399b06a6a7e7380d762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Slot do obsługi rozłączenia się któregoś z klientów.  <a href="#aa9a9efc2613ee399b06a6a7e7380d762">Więcej...</a><br/></td></tr>
+<tr class="separator:aa9a9efc2613ee399b06a6a7e7380d762"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
+Sygnały</h2></td></tr>
+<tr class="memitem:ac55d3b889a94ec39dc0ea4b59145c0c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#ac55d3b889a94ec39dc0ea4b59145c0c1">logged</a> (const QString &amp;message)</td></tr>
+<tr class="memdesc:ac55d3b889a94ec39dc0ea4b59145c0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sygnał emitowany, gdy serwer otrzyma wiadomość.  <a href="#ac55d3b889a94ec39dc0ea4b59145c0c1">Więcej...</a><br/></td></tr>
+<tr class="separator:ac55d3b889a94ec39dc0ea4b59145c0c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae46ecab4be0f6429e4db1e677755100b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#ae46ecab4be0f6429e4db1e677755100b">playerAdded</a> (<a class="el" href="classPlayer.html">Player</a> &amp;player)</td></tr>
+<tr class="memdesc:ae46ecab4be0f6429e4db1e677755100b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sygnał emitowany, gdy nowy gracz zostanie dodany.  <a href="#ae46ecab4be0f6429e4db1e677755100b">Więcej...</a><br/></td></tr>
+<tr class="separator:ae46ecab4be0f6429e4db1e677755100b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2526ea68518b395bad4d3c5448106444"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a2526ea68518b395bad4d3c5448106444">playerRemoved</a> (int id)</td></tr>
+<tr class="memdesc:a2526ea68518b395bad4d3c5448106444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sygnał emitowany, gdy gracz zostanie usunięty.  <a href="#a2526ea68518b395bad4d3c5448106444">Więcej...</a><br/></td></tr>
+<tr class="separator:a2526ea68518b395bad4d3c5448106444"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b126ed37ab65829f68b50aebf68c7c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9b126ed37ab65829f68b50aebf68c7c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#ae9b126ed37ab65829f68b50aebf68c7c">serverClosed</a> ()</td></tr>
+<tr class="memdesc:ae9b126ed37ab65829f68b50aebf68c7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">serverClosed Sygnał emitowany, gdy serwer zostanie wyłączony <br/></td></tr>
+<tr class="separator:ae9b126ed37ab65829f68b50aebf68c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Metody publiczne</h2></td></tr>
+<tr class="memitem:a668ebf71af6630c10f791054248b4b74"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a668ebf71af6630c10f791054248b4b74"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Server</b> (<a class="el" href="classData.html">Data</a> &amp;data, QObject *parent=0)</td></tr>
+<tr class="separator:a668ebf71af6630c10f791054248b4b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecedc7385846b0c34d6ca37231841d4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#aecedc7385846b0c34d6ca37231841d4e">log</a> (const QString &amp;message)</td></tr>
+<tr class="memdesc:aecedc7385846b0c34d6ca37231841d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda, którą należy wywołać, jeśli chcemy zachować informację o tym, co się stało w danej chwili.  <a href="#aecedc7385846b0c34d6ca37231841d4e">Więcej...</a><br/></td></tr>
+<tr class="separator:aecedc7385846b0c34d6ca37231841d4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0c59de7a15c8c2e87bbef107616fd92"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#ab0c59de7a15c8c2e87bbef107616fd92">switchOn</a> (int port, const QTime &amp;maxTime)</td></tr>
+<tr class="memdesc:ab0c59de7a15c8c2e87bbef107616fd92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda włącza serwer.  <a href="#ab0c59de7a15c8c2e87bbef107616fd92">Więcej...</a><br/></td></tr>
+<tr class="separator:ab0c59de7a15c8c2e87bbef107616fd92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf3a5d1c5d655e07342c33b1e3692132"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#acf3a5d1c5d655e07342c33b1e3692132">switchOff</a> ()</td></tr>
+<tr class="memdesc:acf3a5d1c5d655e07342c33b1e3692132"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metoda wyłącza serwer.  <a href="#acf3a5d1c5d655e07342c33b1e3692132">Więcej...</a><br/></td></tr>
+<tr class="separator:acf3a5d1c5d655e07342c33b1e3692132"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe2525567b78cbef62af525ae1c17fc1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afe2525567b78cbef62af525ae1c17fc1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#afe2525567b78cbef62af525ae1c17fc1">startPlaying</a> ()</td></tr>
+<tr class="memdesc:afe2525567b78cbef62af525ae1c17fc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">startPlaying Jeśli conajmniej dwóch graczy się połączy, to serwer może zacząć rozsyłać planszę i naliczać czas gry. To jest funkcja, która wykonuje tą akcję, jest ona niezależna względem switchOn, bo wspomniana metoda włącza serwer i pozwala tylko połączyć się z serwerem. <br/></td></tr>
+<tr class="separator:afe2525567b78cbef62af525ae1c17fc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a945e6178f3642e34c9ee2a36a19b8828"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a945e6178f3642e34c9ee2a36a19b8828"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a945e6178f3642e34c9ee2a36a19b8828">refreshController</a> ()</td></tr>
+<tr class="memdesc:a945e6178f3642e34c9ee2a36a19b8828"><td class="mdescLeft">&#160;</td><td class="mdescRight">refreshController Pobiera mapę do serwera, czyści kontroler oraz pobiera mapę do kontrolera <br/></td></tr>
+<tr class="separator:a945e6178f3642e34c9ee2a36a19b8828"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21ebf5a41afc8ec0544ddfd26f9a92b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a21ebf5a41afc8ec0544ddfd26f9a92b9">setPathExtendedMap</a> (QString &amp;load)</td></tr>
+<tr class="memdesc:a21ebf5a41afc8ec0544ddfd26f9a92b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">setPathExtendedMap Ustawia ścieżkę do pliku z mapą  <a href="#a21ebf5a41afc8ec0544ddfd26f9a92b9">Więcej...</a><br/></td></tr>
+<tr class="separator:a21ebf5a41afc8ec0544ddfd26f9a92b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Atrybuty publiczne</h2></td></tr>
+<tr class="memitem:a62a3639ebe6a8d811b72777e7b2ad46d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62a3639ebe6a8d811b72777e7b2ad46d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isWorking</b></td></tr>
+<tr class="separator:a62a3639ebe6a8d811b72777e7b2ad46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Opis szczegółowy</h2>
+<div class="textblock"><p>Główna klasa zarządzająca wszystkim. Zawiera tcpServer, który jest odpowiedzialny za komunikację z klientami. Klasa potrafi wysłać ramki i je odbrać, a potem odpowiednio obrobić i przekazać. Klasa jest sterowana przez główny timer i sygnały od serwera. </p>
+</div><h2 class="groupheader">Dokumentacja funkcji składowych</h2>
+<a class="anchor" id="aa9a9efc2613ee399b06a6a7e7380d762"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::disconnected </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>playerId</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Slot do obsługi rozłączenia się któregoś z klientów. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">playerId</td><td>- nr id gracza </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aecedc7385846b0c34d6ca37231841d4e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::log </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Metoda, którą należy wywołać, jeśli chcemy zachować informację o tym, co się stało w danej chwili. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>- wiadomość tego, co się stało </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac55d3b889a94ec39dc0ea4b59145c0c1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::logged </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>message</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sygnał emitowany, gdy serwer otrzyma wiadomość. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>- wiadomość, która dalej jest przekazywana </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ae46ecab4be0f6429e4db1e677755100b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::playerAdded </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classPlayer.html">Player</a> &amp;&#160;</td>
+          <td class="paramname"><em>player</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sygnał emitowany, gdy nowy gracz zostanie dodany. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">player</td><td>- obiekt gracza </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a2526ea68518b395bad4d3c5448106444"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::playerRemoved </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">signal</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sygnał emitowany, gdy gracz zostanie usunięty. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>- nr id gracza </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5df9e945eeb492229a6cd50efe7118b2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::read </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>playerId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QByteArray &amp;&#160;</td>
+          <td class="paramname"><em>message</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Slot do czytania ramki, która przyszła od klienta. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">playerId</td><td>- nr id gracza </td></tr>
+    <tr><td class="paramname">message</td><td>- wiadomość jako ramka </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a21ebf5a41afc8ec0544ddfd26f9a92b9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Server::setPathExtendedMap </td>
+          <td>(</td>
+          <td class="paramtype">QString &amp;&#160;</td>
+          <td class="paramname"><em>load</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>setPathExtendedMap Ustawia ścieżkę do pliku z mapą </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">load</td><td>Ścieżka do pliku z mapą </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acf3a5d1c5d655e07342c33b1e3692132"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Server::switchOff </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Metoda wyłącza serwer. </p>
+<dl class="section return"><dt>Zwraca</dt><dd>informacja, czy wyłączanie przebiegło pomyślnie: true - wszystko ok false - błąd </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ab0c59de7a15c8c2e87bbef107616fd92"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Server::switchOn </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QTime &amp;&#160;</td>
+          <td class="paramname"><em>maxTime</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Metoda włącza serwer. </p>
+<dl class="params"><dt>Parametry</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>- numer portu, który będzie nasłuchiwany </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Zwraca</dt><dd>informacja, czy włączanie przebiegło pomyślnie: true - wszystko ok false - błąd </dd></dl>
+
+</div>
+</div>
+<hr/>Dokumentacja dla tej klasy została wygenerowana z plików:<ul>
+<li>server/<a class="el" href="Server_8h_source.html">Server.h</a></li>
+<li>server/Server.cpp</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Wygenerowano N, 24 sty 2016 16:20:59 dla Fight in Square programem &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
