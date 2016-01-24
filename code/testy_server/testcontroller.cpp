@@ -46,25 +46,26 @@ void TestController::test_conflictPlayers_data(){
    // QTest::addColumn<QPoint>("PlayerTwo");
 
     QTest::newRow("sa obok siebie")<<26<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<26<<40<<31<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40;
-    QTest::newRow("nakladaja sie single RIGHT LEFT")<<26<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<26<<40<<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40;
+    QTest::newRow("nakladaja sie single RIGHT LEFT")<<26<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<25<<40<<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<30<<40;
     QTest::newRow("nakladaja sie double RIGHT LEFT")<<26<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<25<<40<<29<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<30<<40;
     QTest::newRow("sa obok siebie DOWN UP")<<30<<39<<DIRECTION::DOWN<<DIRECTION::DOWN<<30<<39<<30<<44<<DIRECTION::UP<<DIRECTION::UP<<30<<44;
-    QTest::newRow("nakladaja sie single DOWN UP")<<30<<39<<DIRECTION::DOWN<<DIRECTION::DOWN<<30<<39<<30<<43<<DIRECTION::UP<<DIRECTION::UP<<30<<44;
+    QTest::newRow("nakladaja sie single DOWN UP")<<30<<39<<DIRECTION::DOWN<<DIRECTION::DOWN<<30<<38<<30<<43<<DIRECTION::UP<<DIRECTION::UP<<30<<43;
     QTest::newRow("nakladaja sie double DOWN UP")<<30<<39<<DIRECTION::DOWN<<DIRECTION::DOWN<<30<<38<<30<<42<<DIRECTION::UP<<DIRECTION::UP<<30<<43;
     QTest::newRow("nakladaja sie odwraca sie z prawo na lewo; idzie na lewo")
-            <<30<<40<<DIRECTION::NONE<<DIRECTION::LEFT<<30<<40<<33<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<34<<40;
+            <<30<<40<<DIRECTION::NONE<<DIRECTION::LEFT<<30<<40<<34<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<35<<40;
     QTest::newRow("nakladaja sie odwraca sie z lewo na prawo; idzie na lewo")
-            <<30<<40<<DIRECTION::NONE<<DIRECTION::RIGHT<<30<<40<<33<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<34<<40;
-    QTest::newRow("nakladaja sie RIGHT DOWN single")
-            <<30<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<29<<40<<33<<37<<DIRECTION::DOWN<<DIRECTION::DOWN<<33<<37;
+            <<30<<40<<DIRECTION::NONE<<DIRECTION::RIGHT<<30<<40<<34<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<35<<40;
+
+    QTest::newRow("nakladaja sie  DOWN RIGHT single")
+            <<33<<36<<DIRECTION::DOWN<<DIRECTION::DOWN<<33<<35<<30<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<30<<40;
     QTest::newRow("nakladaja sie RIGHT DOWN double")
-            <<30<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<30<<40<<32<<37<<DIRECTION::DOWN<<DIRECTION::DOWN<<32<<36;
+            <<30<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<30<<40<<32<<36<<DIRECTION::DOWN<<DIRECTION::DOWN<<32<<35;
     QTest::newRow("nakladaja sie LEFT UP single")
-            <<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40<<27<<37<<DIRECTION::UP<<DIRECTION::UP<<27<<37;
+            <<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40<<27<<37<<DIRECTION::UP<<DIRECTION::UP<<27<<38;
     QTest::newRow("nakladaja sie UP LEFT single")
-            <<27<<37<<DIRECTION::UP<<DIRECTION::UP<<27<<37<<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40;
-    //QTest::newRow("nakladaja sie RIGHT UP double")
-      //      <<29<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<31<<40<<28<<37<<DIRECTION::UP<<DIRECTION::UP<<32<<36;
+            <<27<<37<<DIRECTION::UP<<DIRECTION::UP<<27<<38<<30<<40<<DIRECTION::LEFT<<DIRECTION::LEFT<<31<<40;
+    QTest::newRow("nakladaja sie LEFT DOWN")
+            <<30<<40<<DIRECTION::RIGHT<<DIRECTION::RIGHT<<29<<40<<34<<36<<DIRECTION::DOWN<<DIRECTION::DOWN<<34<<36;
 
 }
 void TestController::test_conflictPlayers(){

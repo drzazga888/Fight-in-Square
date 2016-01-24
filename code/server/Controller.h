@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include<QtMath>
 #include "Data.h"
+#include <QTime>
 
 #include "../config.h"
 #include "../shared/Utils/Direction.h"
