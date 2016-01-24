@@ -19,7 +19,14 @@ public:
     ObstacleBoardElement(int id, bool isDestructable, int health);
     virtual ~ObstacleBoardElement(){}
 
+    /**
+     * @brief isDestructable Flaga informująca, czy przeszkodę mozna niszczyć
+     */
     bool isDestructable;
+
+    /**
+     * @brief health "Zdrowie" przeszkody
+     */
     int health;
 
 };

@@ -45,16 +45,59 @@ public:
      */
     virtual QByteArray getFrame() const;
 
+    /**
+     * @brief id Identyfikator gracza
+     */
     unsigned char id;
+
+    /**
+     * @brief group Grupa, do której należy gracz
+     */
     GROUP group;
+
+    /**
+     * @brief points Liczba punktów
+     */
     unsigned char points;
+
+    /**
+     * @brief health Zdrowie
+     */
     unsigned char health;
+
+    /**
+     * @brief power Moc pocisków, które gracz w tym momencie wystrzeliwuje
+     */
     unsigned char power;
+
+    /**
+     * @brief x Pozycja pozioma gracza
+     */
     unsigned char x;
+
+    /**
+     * @brief y Pozycja pionowa gracza
+     */
     unsigned char y;
+
+    /**
+     * @brief direction Kierunek, w którym jest ustawiony gracz
+     */
 	DIRECTION direction;
+
+    /**
+     * @brief name Nazwa gracza
+     */
     QByteArray name;
+
+    /**
+     * @brief is_alive Flaga informująca, czy gracz w danym mmencie żyje
+     */
     bool is_alive;
+
+    /**
+     * @brief death_time
+     */
     unsigned char death_time;
 
 };

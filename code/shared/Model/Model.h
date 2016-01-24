@@ -34,8 +34,19 @@ public:
      */
     virtual QByteArray getFrame() const;
 
+    /**
+     * @brief board Obiekt planszy, na któryj toczy się rozgrywka
+     */
     Board board;
+
+    /**
+     * @brief players Zbiór wszystkich graczy, uczestniczacych w grze
+     */
     QMap<int, Player> players;
+
+    /**
+     * @brief shots Zbiór wszystkich pocisków, które aktualnie są na planszy
+     */
     QMap<int, Shot> shots;
 };
 

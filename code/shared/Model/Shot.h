@@ -38,12 +38,39 @@ public:
 
     bool operator %=(  Shot & dane) const;
 
+    /**
+     * @brief id Identyfikator pocisku
+     */
     unsigned char id;
+
+    /**
+     * @brief player_id Identyfikator gracza, który wystrzelił pocisk
+     */
     unsigned char player_id;
+
+    /**
+     * @brief x_start Początkowa pozycja pozioma pocisku
+     */
     unsigned char x_start;
+
+    /**
+     * @brief y_start Początkowa pozycja pionowa pocisku
+     */
     unsigned char y_start;
+
+    /**
+     * @brief direction Kierunek, w którym leci pocisk
+     */
 	DIRECTION direction;
+
+    /**
+     * @brief flight_periods Liczba okresów gry, w których pocisk już leci
+     */
     unsigned int flight_periods;
+
+    /**
+     * @brief power Siła pocisku
+     */
     unsigned char power;
 
 };

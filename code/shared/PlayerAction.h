@@ -34,8 +34,19 @@ public:
      */
     virtual void applyFrame(const QByteArray &frame);
 
+    /**
+     * @brief player_shooted Informacja o tym, czy gracz wystrzelił pocisk
+     */
     bool player_shooted;
+
+    /**
+     * @brief moving_direction Kierunek, w którym gracz się przesunął
+     */
     DIRECTION moving_direction;
+
+    /**
+     * @brief id Identyfikator gracza
+     */
     int id;
 
 };

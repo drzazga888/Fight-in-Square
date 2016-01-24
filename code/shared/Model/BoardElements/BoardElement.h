@@ -17,6 +17,9 @@ public:
     BoardElement(int id = BOARD_FIELD_ID(EMPTY));
     virtual ~BoardElement(){}
 
+    /**
+     * @brief id Identyfikator elementu planszy
+     */
     unsigned char id;
 
 };
